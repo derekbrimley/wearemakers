@@ -1,0 +1,33 @@
+.trash { color:rgb(209, 91, 71); }
+.admin-nav{
+    display:flex;
+    flex-direction:row;
+    width: 100%;
+}
+.admin-nav div{
+    background-color:gray;
+    margin:5px;
+    color:white;
+}
+
+.admin-nav .active{
+    background-color:$secondary-background
+}
+.user-list {
+	li {
+		display: flex;
+		border: none;
+		border-bottom: 1px lightgray solid;
+		margin-bottom: 0;
+		&:last-child { border-bottom: none; }
+
+		.user-info {
+			flex-grow: 1;
+		}
+		.trash {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+		}
+	}
+}

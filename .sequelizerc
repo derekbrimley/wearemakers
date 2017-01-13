@@ -1,0 +1,5 @@
+module.exports = {
+    "config": "sequelizeConfig/config.json",
+    "migrations-path":"migrations",
+    "models-path":"server/sqldb",
+}

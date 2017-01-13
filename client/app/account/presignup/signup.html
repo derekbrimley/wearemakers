@@ -1,0 +1,13 @@
+<div class="signup-container">
+    <img class='bg' src='assets/images/ocean.jpg'/>
+    <div class='banner' ng-hide='vm.submitted'>
+        <h2>Register now (insert tagline here)</h2>
+        <div>
+            <input name='email' class="text-input" placeholder='Email Address' type='email' ng-model='vm.email'/>
+            <input ng-click="vm.register()" class="btn btn-primary" type='submit'/>
+        </div>
+    </div>
+    <div class='banner' ng-show='vm.submitted'>
+        <h2>Thank you, we'll email you when Slade Research is ready to launch!</h2>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="container">
+<div class='admin-nav'>
+    <div class ='btn' ng-click="admin.list = 'users'" ng-class="{'active' : admin.list == 'users'}">Users</div>
+    <!-- <div class ='btn' ng-click="admin.list = 'preRegistered'" ng-class="{'active' : admin.list == 'preRegistered'}">Pre Registered <span ng-show='admin.preUsers.length > 0'>({{admin.preUsers.length}})</span></div> -->
+</div>
+  <ul class="list-group user-list">
+    <li class="list-group-item" ng-repeat="user in admin.users" ng-show="admin.list == 'users'">
+	    <div class="user-info">
+	        <strong>{{user.name}}</strong><br>
+	        <span class="text-muted">{{user.email}}</span><br>
+	        <span class="text-muted">{{user.type}}</span>
+	    </div>
+        <a ng-click="admin.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
+    </li>
+  </ul>
+
+</div>
