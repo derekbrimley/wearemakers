@@ -90,7 +90,7 @@ router.post('/', function(req, res, next) {
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: '', /
+                    user: '', 
                     pass: 'testpassword'
                 }
             });
