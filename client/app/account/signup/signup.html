@@ -13,7 +13,7 @@
                   <label><input type="radio" name="type" value="student" ng-model="type" selected>Student</label>
                 </div>
                 <div class="radio">
-                  <label><input type="radio" value="professor" name="type" ng-model="vm.user.type">Professor</label>
+                  <label><input type="radio" value="volunteer" name="type" ng-model="vm.user.type">Volunteer</label>
                 </div>
          </div>
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && vm.submitted,
@@ -73,7 +73,9 @@
             Passwords must match.
           </p>
         </div>
-
+        <div ng-repeat="error in vm.errors" style="color:red;">
+            *{{error.message}}
+        </div>
         <div>
           <button class="btn btn-default btn-register" type="submit">
             Sign up

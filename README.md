@@ -2,6 +2,8 @@
 
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.1.0.
 
+## Resources
+Angular UI Bootstrap: https://angular-ui.github.io
 ## Getting Started
 
 ### Prerequisites

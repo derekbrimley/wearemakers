@@ -46,6 +46,23 @@ $fa-font-path: '/assets/fonts/font-awesome/';
     background-color:$secondary-background;
 }
 
+// Bootstrap overrides
+.form-control{
+    max-width:270px !important;
+    margin:5px !important;
+}
+.btn{
+    margin:5px !important;
+}
+
+
+//Utility CSS
+.flex-row{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 // Component styles are injected through gulp
 /* inject:scss */
 @import 'account/presignup/style';

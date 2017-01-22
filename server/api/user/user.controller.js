@@ -149,3 +149,33 @@ export function me(req, res, next) {
 export function authCallback(req, res) {
   res.redirect('/');
 }
+
+/**
+ * Promote a user to admin
+ */
+export function promote(req, res) {
+    return User.update({role:'admin'},{
+      where: {
+        _id: req.params.id
+      }
+    })
+    .then(function(user){
+        res.status(200).send();
+    })
+    .catch(handleError(res));
+}
+
+/**
+ * Revoke a users admin privileges
+ */
+export function revoke(req, res) {
+    return User.update({role:'user'},{
+      where: {
+        _id: req.params.id
+      }
+    })
+    .then(function(user){
+        res.status(200).send();
+    })
+    .catch(handleError(res));
+}
