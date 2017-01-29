@@ -1,0 +1,30 @@
+<div class="container">
+  <h2>Welcome to the volunteer section</h2>
+
+
+<!-- LOOK AT https://angular-ui.github.io/bootstrap/ FOR
+DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
+ IT IS JUST PLUG AND PLAY, NO IMPORTING OR ANYTHING REQUIRED-->
+
+  <uib-tabset active="active">
+
+    <uib-tab index="0" heading="NG Repeat example">
+        <div class="test-class" ng-repeat="obj in ctrl.data">
+          Attribute1:
+          {{obj.attribute1}}<br>
+          Attribute2:
+          {{obj.attribute2}}
+        </div>
+    </uib-tab>
+
+    <uib-tab index="1" heading="Another Section">
+        Static content goes here
+    </uib-tab>
+
+    <uib-tab index="2" heading="Last Tab">
+        You can put more content here
+    </uib-tab>
+
+  </uib-tabset>
+
+</div>
