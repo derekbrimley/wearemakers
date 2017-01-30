@@ -10,6 +10,9 @@ import path from 'path';
 export default function(app) {
   // Insert routes below
   app.use('/api/things', require('./api/thing'));
+  app.use('/api/classes', require('./api/class'));
+    app.use('/api/classes/:class/students', require('./api/class/student'));
+    app.use('/api/classes/:class/volunteers', require('./api/class/volunteer'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/preSignup', require('./api/pre_signup'));
 

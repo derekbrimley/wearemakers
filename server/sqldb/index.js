@@ -22,7 +22,23 @@ var db = {
 };
 // Insert models below
 db.Thing = db.sequelize.import('../api/thing/thing.model');
+db.Class = db.sequelize.import('../api/class/class.model');
+    db.ClassStudent = db.sequelize.import('../api/class/student/student.model');
+    db.ClassVolunteer = db.sequelize.import('../api/class/volunteer/volunteer.model');
 db.PreSignup = db.sequelize.import('../api/pre_signup/pre_signup.model');
 db.User = db.sequelize.import('../api/user/user.model');
 db.RecoveryToken = db.sequelize.import('../auth/recovery/recoveryToken.model');
+
+
+// Associations
+
+db.ClassStudent.belongsTo(db.User,{foreignKey:'userID'});
+db.ClassStudent.belongsTo(db.Class,{foreignKey:'classID'});
+
+db.ClassVolunteer.belongsTo(db.User,{foreignKey:'userID'});
+db.ClassVolunteer.belongsTo(db.Class,{foreignKey:'classID'});
+
+db.Class.hasMany(db.ClassStudent,{foreignKey:'classID'});
+db.Class.hasMany(db.ClassVolunteer,{foreignKey:'classID'});
+
 module.exports = db;
