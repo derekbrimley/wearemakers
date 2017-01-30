@@ -18,6 +18,8 @@ import {
 import _Auth from '../components/auth/auth.module';
 import account from './account';
 import admin from './admin';
+import student from './student';
+import volunteer from './volunteer';
 import navbar from '../components/navbar/navbar.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
@@ -28,7 +30,7 @@ import util from '../components/util/util.module';
 import './app.scss';
 
 angular.module('refugeeApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, _Auth,
-    account, admin, navbar, footer, main, front, constants, util
+    account, admin, navbar, footer, main, constants, util, student, volunteer
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth, $state) {

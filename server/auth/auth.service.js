@@ -64,6 +64,23 @@ export function hasRole(roleRequired) {
     });
 }
 
+export function isType(roleRequired) {
+  if(!roleRequired) {
+    throw new Error('Required role needs to be set');
+  }
+
+  return compose()
+    .use(isAuthenticated())
+    .use(function meetsRequirements(req, res, next) {
+        console.log("ROLE",req.user.type);
+      if(req.user.type == roleRequired) {
+        return next();
+      } else {
+        return res.status(403).send('Forbidden');
+      }
+    });
+}
+
 /**
  * Returns a jwt token signed by the app secret
  */

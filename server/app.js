@@ -36,6 +36,7 @@ var app = express();
 var server = http.createServer(app);
 require('./config/express').default(app);
 require('./routes').default(app);
+require('./params').default(app);
 
 // Start server
 function startServer() {
