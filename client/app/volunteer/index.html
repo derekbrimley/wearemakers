@@ -8,21 +8,111 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
 
   <uib-tabset active="active">
 
-    <uib-tab index="0" heading="NG Repeat example">
-        <div class="test-class" ng-repeat="obj in ctrl.data">
-          Attribute1:
-          {{obj.attribute1}}<br>
-          Attribute2:
-          {{obj.attribute2}}
+    <uib-tab index="0" heading="Current Volunteers">
+        <h4>Add New Volunteer</h4>
+        <div class="flex-row">
+            <form class="form" name="form" ng-submit="ctrl.create(form)" >
+                <div class="form-group" ng-class="{ 'has-success': form.name.$valid && vm.submitted,
+                                            'has-error': form.name.$invalid && vm.submitted }">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" ng-model="vm.user.name"
+                         required/>
+                    <p class="help-block" ng-show="form.name.$error.required && vm.submitted">
+                    A name is required
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-success': form.email.$valid && vm.submitted,
+                                            'has-error': form.email.$invalid && vm.submitted }">
+                    <label>Email</label>
+
+                    <input type="email" name="email" class="form-control" ng-model="vm.user.email"
+                         required
+                         mongoose-error/>
+                    <p class="help-block" ng-show="form.email.$error.email && vm.submitted">
+                    Doesn't look like a valid email.
+                    </p>
+                    <p class="help-block" ng-show="form.email.$error.required && vm.submitted">
+                    What's your email address?
+                    </p>
+                    <p class="help-block" ng-show="form.email.$error.mongoose">
+                    {{ vm.errors.email }}
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-success': form.password.$valid && vm.submitted,
+                                            'has-error': form.password.$invalid && vm.submitted }">
+                    <label>Password</label>
+
+                    <input type="password" name="password" class="form-control" ng-model="vm.user.password"
+                     ng-minlength="3"
+                     required
+                     mongoose-error/>
+                    <p class="help-block"
+                    ng-show="(form.password.$error.minlength || form.password.$error.required) && vm.submitted">
+                    Password must be at least 3 characters.
+                    </p>
+                    <p class="help-block" ng-show="form.password.$error.mongoose">
+                    {{ vm.errors.password }}
+                    </p>
+                    
+                </div>
+                <div class="form-group" ng-class="{ 'has-success': form.confirmPassword.$valid && vm.submitted,
+                                            'has-error': form.confirmPassword.$invalid && vm.submitted }">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
+                         match="vm.user.password"
+                         ng-minlength="3" required/>
+                    <p class="help-block"
+                     ng-show="form.confirmPassword.$error.match && vm.submitted">
+                    Passwords must match.
+                    </p>
+                </div>
+                <div ng-repeat="error in vm.errors" style="color:red;">
+                    *{{error.message}}
+                </div>
+                <div>
+                    <button class="btn btn-default btn-register" type="submit">
+                        Sign up
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="test-class" ng-repeat="vol in ctrl.volunteers">
+            Name:
+            {{vol.name}}<br>
+            Class:
+            {{vol.class}}<br>
+            Date Joined:
+            {{vol.date_joined}}
+            <a ng-click="ctrl.delete(vol)" class="trash"><button class="btn btn-danger">Delete</button></a>
         </div>
     </uib-tab>
 
-    <uib-tab index="1" heading="Another Section">
-        Static content goes here
+    <uib-tab index="1" heading="Volunteer Requests">
+        <div class="test-class" ng-repeat="vol in ctrl.volunteer_requests">
+            Name:
+            {{vol.name}}<br>
+            Class:
+            {{vol.class}}<br>
+            Description:
+            {{vol.desc}}<br>
+            Skills:
+            <div class="test-class" ng-repeat="skill in vol.skills">
+                {{skill}}
+            </div>
+            <button>Delete</button>
+        </div>
     </uib-tab>
 
-    <uib-tab index="2" heading="Last Tab">
-        You can put more content here
+    <uib-tab index="2" heading="Volunteer Organizations">
+        <div class="test-class" ng-repeat="org in ctrl.organizations">
+            Name:
+            {{org.name}}<br>
+            Description:
+            {{org.desc}}<br>
+            Date Added:
+            {{org.date_added}}<br>
+            <button>Edit</button>
+        </div>
     </uib-tab>
 
   </uib-tabset>
