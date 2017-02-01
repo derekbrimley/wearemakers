@@ -46,7 +46,16 @@ function handleError(res, statusCode) {
 
 // Gets a list of Classs
 export function index(req, res) {
-  return Class.findAll()
+  return Class.findAll({
+      where:{active:true},
+      include:[{
+          model:ClassStudent,
+          include:[User]
+      },{
+          model:ClassVolunteer,
+          include:[User]
+      }]
+        })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
