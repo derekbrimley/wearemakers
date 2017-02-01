@@ -46,6 +46,8 @@ export default function(sequelize, DataTypes) {
     },
     organization: DataTypes.STRING,
     primaryLanguage: DataTypes.STRING,
+
+
     provider: DataTypes.STRING,
     salt: DataTypes.STRING,
     facebook: DataTypes.JSON,

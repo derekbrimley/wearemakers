@@ -1,0 +1,18 @@
+<div ng-show="ctrl.class" class="class-editor">
+    <div class="section student-section">
+        <h4>Registered Students</h4>
+        <div class="student" ng-repeat="student in ctrl.class.ClassStudents">
+            <strong>Name:</strong> &nbsp{{student.User.name}}
+        </div>
+    </div>
+    <div ng-show="ctrl.class.ClassStudents.length == 0">No students registered</div>
+    <div class=" section volunteer-section">
+        <h4>Registered Volunteers</h4>
+        <div class="volunteer" ng-repeat="volunteer in ctrl.class.ClassVolunteers">
+            {{volunteer.User.name}}
+        </div>
+
+        <div ng-show="ctrl.class.ClassVolunteers.length == 0">No volunteers registered</div>
+    </div>
+</div>
+<h3 ng-hide="ctrl.class">Select a class to view its students/volunteers</h3>
