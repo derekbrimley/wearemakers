@@ -11,7 +11,12 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
     <uib-tab index="0" heading="My Classes">
         <h4>Sign up for classes</h4>
         <div class="test-class" ng-repeat="class in ctrl.my_classes">
-            
+            Name:
+            {{class.name}}<br>
+            Class:
+            {{class.class}}<br>
+            Date Joined:
+            {{class.date_joined}}
         </div>
         <div class="test-class" ng-repeat="vol in ctrl.volunteers">
             Name:

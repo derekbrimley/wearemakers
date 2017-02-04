@@ -20,4 +20,19 @@ export default function routes($stateProvider) {
     template: require('./who-we-work-with.html'),
     parent:'front'
   })
+  .state('front.courses', {
+    url: 'courses',
+    template: require('./courses.html'),
+    parent:'front'
+  })
+  .state('front.how-you-can-help', {
+    url: 'how-you-can-help',
+    template: require('./how-you-can-help.html'),
+    parent:'front'
+  })
+  .state('front.students', {
+    url: 'students',
+    template: require('./students.html'),
+    parent:'front'
+  })
 }
