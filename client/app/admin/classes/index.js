@@ -24,6 +24,7 @@ export class AdminClasses {
         .then(function(res){
             console.log("RES",res);
             this.classes.push(res.data)
+            ctrl.showAdd=false;
         })
 
         this.newClass = {
@@ -38,6 +39,20 @@ export class AdminClasses {
         .then(function(res){
             console.log("RES",res);
             ctrl.classes.splice(ctrl.classes.indexOf(course),1);
+        })
+    }
+
+    select(course){
+        var ctrl = this;
+        course.startTime = new Date(course.startTime);
+        course.endTime = new Date(course.endTime);
+        ctrl.selectedClass = course;
+    }
+
+    updateClass(){
+        this.$http.put('/api/classes/'+this.selectedClass._id,this.selectedClass)
+        .then(res =>{
+            console.log("RES Updates",res);
         })
     }
 }
