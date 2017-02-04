@@ -9,52 +9,47 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
   <uib-tabset active="active">
 
     <uib-tab index="0" heading="My Classes">
-        <h4>Sign up for classes</h4>
         <div class="test-class" ng-repeat="class in ctrl.my_classes">
             Name:
-            {{class.name}}<br>
-            Class:
-            {{class.class}}<br>
-            Date Joined:
-            {{class.date_joined}}
-        </div>
-        <div class="test-class" ng-repeat="vol in ctrl.volunteers">
-            Name:
-            {{vol.name}}<br>
-            Class:
-            {{vol.class}}<br>
-            Date Joined:
-            {{vol.date_joined}}
-            <a ng-click="ctrl.delete(vol)" class="trash"><button class="btn btn-danger">Delete</button></a>
+            {{class.Class.name}}<br>
+            Location:
+            {{class.Class.location}}<br>
+            Dates:
+            {{class.Class.days}}<br>
+            Time:
+            {{class.Class.startTime | date : format : shortTime }} to {{class.Class.endTime | date : format : shortTime }}<br>
+            Date Added:
+            {{class.Class.createdAt | date}}
         </div>
     </uib-tab>
 
-    <uib-tab index="1" heading="Register">
+    <uib-tab index="1" heading="All Classes">
         <div class="test-class" ng-repeat="class in ctrl.classes">
             Name:
             {{class.name}}<br>
-            Info:
-            {{class.info}}<br>
             Location:
             {{class.location}}<br>
-            Start Time:
-            {{class.startTime}}<br>
-            End Time:
-            {{class.endTime}}<br>
-            Days:
+            Dates:
             {{class.days}}<br>
-            <button ng-click=register_for_class({{class.id}})>Register</button>
+            Time:
+            {{class.startTime | date : format : shortTime }} to {{class.endTime | date : format : shortTime }}<br>
         </div>
     </uib-tab>
 
-    <uib-tab index="2" heading="Volunteer Organizations">
-        <div class="test-class" ng-repeat="org in ctrl.organizations">
+    <uib-tab index="2" heading="Profile">
+        <div class="test-class">
             Name:
-            {{org.name}}<br>
-            Description:
-            {{org.desc}}<br>
-            Date Added:
-            {{org.date_added}}<br>
+            {{ctrl.myUser.name}}<br>
+            Email:
+            {{ctrl.myUser.email}}<br>
+            Role:
+            {{ctrl.myUser.role}}<br>
+            Organization:
+            {{ctrl.myUser.organization}}<br>
+            Primary Language:
+            {{ctrl.myUser.primaryLanguage}}<br>
+            Added on:
+            {{ctrl.myUser.createdAt | date }}<br>
             <button>Edit</button>
         </div>
     </uib-tab>

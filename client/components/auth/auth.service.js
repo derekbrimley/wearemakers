@@ -6,6 +6,8 @@ class _User {
   email = '';
   role = '';
   type = '';
+  organization = '';
+  primaryLanguage = '';
   $promise = undefined;
 }
 
