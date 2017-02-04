@@ -54,7 +54,9 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 .btn{
     margin:5px !important;
 }
-
+.glyphicon{
+    cursor: pointer;
+}
 
 //Utility CSS
 .flex-row{
@@ -67,9 +69,11 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 /* inject:scss */
 @import 'account/presignup/style';
 @import 'admin/admin';
+@import 'admin/classes/style';
 @import 'main/main';
 @import 'student/style';
 @import 'volunteer/style';
+@import '../components/classEditor/style';
 @import '../components/components';
 @import '../components/footer/footer';
 @import '../components/modal/modal';

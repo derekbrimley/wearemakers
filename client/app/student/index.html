@@ -8,13 +8,27 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
 
   <uib-tabset active="active">
 
-    <uib-tab index="0" heading="NG Repeat example">
-        <div class="test-class" ng-repeat="obj in ctrl.data">
-          Attribute1:
-          {{obj.attribute1}}<br>
-          Attribute2:
-          {{obj.attribute2}}
+    <uib-tab index="0" heading="Classes">
+
+      <div class="admin-classes-section">
+        <div class="pane">
+          <div class="classes-section">
+              <h3>Classes</h3>
+              <div class="class" ng-repeat="class in ctrl.classes">
+                  <div>
+                      Name: <span class="class-name"> {{class.name}} </span>
+                  </div>
+                    <div>
+                      <span class="glyphicon glyphicon-plus" ng-click="ctrl.registerStudent(class)"></span>
+                      <span ng-show=class.added>Added</span>
+                  </div>
+
+              </div>
+          </div>
         </div>
+      </div>
+
+
     </uib-tab>
 
     <uib-tab index="1" heading="Another Section">
