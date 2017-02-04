@@ -67,9 +67,12 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 /* inject:scss */
 @import 'account/presignup/style';
 @import 'admin/admin';
+@import 'admin/classes/style';
+@import 'front/front';
 @import 'main/main';
 @import 'student/style';
 @import 'volunteer/style';
+@import '../components/classEditor/style';
 @import '../components/components';
 @import '../components/footer/footer';
 @import '../components/modal/modal';

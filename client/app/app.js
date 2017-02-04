@@ -23,13 +23,14 @@ import volunteer from './volunteer';
 import navbar from '../components/navbar/navbar.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
+import front from './front/front.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 
 import './app.scss';
 
 angular.module('refugeeApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, _Auth,
-    account, admin, navbar, footer, main, constants, util, student, volunteer
+    account, admin, navbar, footer, main, front, constants, util, student, volunteer
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth, $state) {
