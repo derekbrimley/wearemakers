@@ -60,6 +60,26 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+// Gets a list of Classs
+export function showMine(req, res) {
+    var type = req.user.type
+    if(type == 'student'){
+        return ClassStudent.findAll({
+            where:{active:true,userID:req.user._id},
+            include:[Class]
+        })
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+    }
+
+  return ClassVolunteer.findAll({
+      where:{active:true,userID:req.user._id},
+      include:[Class]
+        })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Gets a single Class from the DB
 export function show(req, res) {
   return Class.find({

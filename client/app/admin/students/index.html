@@ -1,0 +1,52 @@
+<div class="admin-students-section">
+    <div class="pane">
+        <div class="students-section">
+            <h3>Students</h3>
+            <div class="class" ng-repeat="class in ctrl.students">
+                <div>
+                    Name: <span class="class-name" ng-click="ctrl.selectedStudent = class"> {{class.name}} </span>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-remove" ng-click="ctrl.removeStudent(class)"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="new-class-section">
+            <h3>Add a new class</h3>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" ng-model="ctrl.newStudent.name"/>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-control" ng-model="ctrl.newStudent.info"/>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" class="form-control" ng-model="ctrl.newStudent.location"/>
+            </div>
+
+            <div class="form-group">
+                <label>Days</label>
+                <input type="text" class="form-control" ng-model="ctrl.newStudent.days"/>
+            </div>
+
+            <div class="form-group">
+                <label>Start Time</label>
+                <input type="time" class="form-control" ng-model="ctrl.newStudent.startTime" placeholder="HH:mm" required />
+            </div>
+
+            <div class="form-group">
+                <label>End Time</label>
+                <input type="time" class="form-control" ng-model="ctrl.newStudent.endTime" placeholder="HH:mm" required />
+            </div>
+            <button class="btn btn-primary" ng-click="ctrl.addStudent()">Add</button>
+        </div>
+    </div>
+    <div class="right-pane">
+        <class-editor class="ctrl.selectedStudent"></class-editor>
+    </div>
+</div>

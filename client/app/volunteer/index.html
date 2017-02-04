@@ -8,21 +8,50 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
 
   <uib-tabset active="active">
 
-    <uib-tab index="0" heading="NG Repeat example">
-        <div class="test-class" ng-repeat="obj in ctrl.data">
-          Attribute1:
-          {{obj.attribute1}}<br>
-          Attribute2:
-          {{obj.attribute2}}
+    <uib-tab index="0" heading="My Classes">
+        <div class="test-class" ng-repeat="class in ctrl.my_classes">
+            Name:
+            {{class.Class.name}}<br>
+            Location:
+            {{class.Class.location}}<br>
+            Dates:
+            {{class.Class.days}}<br>
+            Time:
+            {{class.Class.startTime | date : format : shortTime }} to {{class.Class.endTime | date : format : shortTime }}<br>
+            Date Added:
+            {{class.Class.createdAt | date}}
         </div>
     </uib-tab>
 
-    <uib-tab index="1" heading="Another Section">
-        Static content goes here
+    <uib-tab index="1" heading="All Classes">
+        <div class="test-class" ng-repeat="class in ctrl.classes">
+            Name:
+            {{class.name}}<br>
+            Location:
+            {{class.location}}<br>
+            Dates:
+            {{class.days}}<br>
+            Time:
+            {{class.startTime | date : format : shortTime }} to {{class.endTime | date : format : shortTime }}<br>
+        </div>
     </uib-tab>
 
-    <uib-tab index="2" heading="Last Tab">
-        You can put more content here
+    <uib-tab index="2" heading="Profile">
+        <div class="test-class">
+            Name:
+            {{ctrl.myUser.name}}<br>
+            Email:
+            {{ctrl.myUser.email}}<br>
+            Role:
+            {{ctrl.myUser.role}}<br>
+            Organization:
+            {{ctrl.myUser.organization}}<br>
+            Primary Language:
+            {{ctrl.myUser.primaryLanguage}}<br>
+            Added on:
+            {{ctrl.myUser.createdAt | date }}<br>
+            <button>Edit</button>
+        </div>
     </uib-tab>
 
   </uib-tabset>
