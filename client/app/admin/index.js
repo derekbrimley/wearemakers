@@ -4,8 +4,10 @@ import angular from 'angular';
 import routes from './admin.routes';
 import AdminController from './admin.controller';
 import classes from './classes';
+import students from './students';
+import volunteers from './volunteers';
 import classEditor from '../../components/classEditor';
-export default angular.module('refugeeApp.admin', ['refugeeApp.auth', 'ui.router',classes, classEditor])
+export default angular.module('refugeeApp.admin', ['refugeeApp.auth', 'ui.router',classes, classEditor, volunteers, students])
   .config(routes)
   .controller('AdminController', AdminController)
   .name;

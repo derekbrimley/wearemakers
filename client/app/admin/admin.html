@@ -1,8 +1,8 @@
 <div class="container">
-  <uib-tabset active="active">
+  <uib-tabset active="ctrl.tab">
 
   <!--  USERS TAB-->
-    <uib-tab index="0" heading="Users">
+    <uib-tab index="0" heading="Users" >
         <ul class="list-group user-list">
           <li class="list-group-item" ng-repeat="user in ctrl.users">
       	    <div class="user-info">
@@ -35,8 +35,12 @@
           </li>
         </ul>
     </uib-tab>
-    <uib-tab index="2" heading="Classes">
-        <admin-classes></admin-classes>
+    <uib-tab index="2" heading="Classes" ui-sref='admin.classes'>
+    </uib-tab>
+    <uib-tab index="3" heading="Students" ui-sref='admin.students'>
+    </uib-tab>
+    <uib-tab index="4" heading="Volunteers" ui-sref='admin.volunteers'>
     </uib-tab>
   </uib-tabset>
+  <div ui-view=""></div>
 </div>

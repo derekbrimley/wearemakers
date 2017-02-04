@@ -4,7 +4,7 @@ import _ from 'lodash';
 export default class AdminController {
   list='users';
   /*@ngInject*/
-  constructor(User, $http) {
+  constructor(User, $http, $state) {
     // Use the User $resource to fetch all users
     var ctrl = this;
     this.users = User.query(function(users){
@@ -12,6 +12,20 @@ export default class AdminController {
         ctrl.admins = _.filter(users,{role:'admin'})
     })
     this.$http = $http;
+
+    switch($state.current.name){
+        case 'admin.classes':
+            ctrl.tab = 2;
+            break;
+        case 'admin.students':
+            ctrl.tab = 3;
+            break;
+        case 'admin.volunteers':
+            ctrl.tab = 4;
+            break;
+        default:
+            ctrl.tab = 0;
+    }
   }
 
   delete(user) {
