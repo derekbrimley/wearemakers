@@ -29,29 +29,20 @@ export class VolunteerController {
             console.log('classes',res);
             ctrl.classes = res.data;
         })
+        
+        Auth.getCurrentUser()
+        .then(function(res){
+            console.log("user",res);
+            ctrl.myUser = res;
+        });
+//        $http.get('/api/users/me')
+//        .then(function(res){
+//            console.log("me",res);
+//            ctrl.my_info = res.data;
+//        })
 
     }
     
-    register_for_class(id) {
-        var ctrl = this;
-        this.$http.post('/api/class/volunteer')
-        .then(function(res){
-            console.log("RES",res);
-            this.my_classes.push(res.data);
-        })
-        
-        
-        this.$http.post('/api/classes',this.newClass)
-        .then(function(res){
-            console.log("RES",res);
-            this.classes.push(res.data)
-        })
-
-        this.newVolunteerClass = {
-            classID: 0,
-            userID: 0
-        }
-    }
 }
 
 export default angular.module('refugeeApp.volunteer', [uiRouter])
