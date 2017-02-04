@@ -6,75 +6,50 @@ import routes from './routes';
 import _ from 'lodash';
 
 export class VolunteerController {
-
-    list='volunteers';
-    user = {
-        name: '',
-        email: '',
-        password: '',
-        type:'student'
-    };
-    submitted = false;
-
-    constructor(Auth, User, $state, $http) {
+    
+    newVolunteerClass = {
+        classID: 0,
+        userID: 0
+    }
+    
+    constructor(Auth, $state, $http) {
         'ngInject';
-        this.Auth = Auth;
-        // Use the User $resource to fetch all users
         var ctrl = this;
-        this.volunteers = User.query(function(volunteers){
-            console.log("Volunteers",volunteers);
-            ctrl.volunteers = _.filter(volunteers,{role:'volunteer'})
-        })
-        this.volunteer_requests = User.query(function(volunteer_requests) {
-            ctrl.volunteer_requests = _.filter(volunteer_requests,{role:'volunteer'});
-        })
-        this.organizations = [
-          {
-              name:"Trader Joes",
-              date_added:"12/03/16",
-              desc:"Brings food during coding classes."
-          },
-          {
-              name:"Adobe",
-              date_added:"05/03/16",
-              desc:"Provides volunteers for bi-weekly coding class"
-          }
-        ]
-
-        this.$http = $http;
-    }
-
-    delete(user) {
-        user.$remove();
-        this.volunteers.splice(this.volunteers.indexOf(user), 1);
-    }
-
-    create(form) {
-        var ctrl = this;
-        this.submitted = true;
         
-        if(form.$valid) {
-            return this.Auth.createUser({
-                name: this.user.name,
-                email: this.user.email,
-                password: this.user.password,
-                type: this.user.type
-            })
-            .then(() => {
-                this.$state.go('volunteer');
-            })
-            .catch(err => {
-                err = err.data;
-                this.erros = [];
-                
-                if(err.name) {
-                    angular.forEach(err.fields, field => {
-                        console.log(field,ctrl.errors);
-                        ctrl.errors.push(err)
-                    //   this.errors[field] = err.message;
-                    });
-                }
-            });
+        this.$http = $http;
+
+        $http.get('/api/classes/{classid}/mine')
+        .then(function(res){
+            console.log("classes",res);
+            ctrl.my_classes = res.data;
+        })
+        
+        $http.get('/api/classes')
+        .then(function(res) {
+            console.log('classes',res);
+            ctrl.classes = res.data;
+        })
+
+    }
+    
+    register_for_class(id) {
+        var ctrl = this;
+        this.$http.post('/api/class/volunteer')
+        .then(function(res){
+            console.log("RES",res);
+            this.my_classes.push(res.data);
+        })
+        
+        
+        this.$http.post('/api/classes',this.newClass)
+        .then(function(res){
+            console.log("RES",res);
+            this.classes.push(res.data)
+        })
+
+        this.newVolunteerClass = {
+            classID: 0,
+            userID: 0
         }
     }
 }

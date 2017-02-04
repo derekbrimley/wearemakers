@@ -30,7 +30,7 @@ import util from '../components/util/util.module';
 import './app.scss';
 
 angular.module('refugeeApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, _Auth,
-    account, admin, navbar, footer, main, constants, util, student, volunteer
+    account, admin, navbar, footer, main, front, constants, util, student, volunteer
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth, $state) {
