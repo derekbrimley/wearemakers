@@ -7,11 +7,32 @@ import routes from './routes';
 
 export class StudentController {
 
-  constructor(Auth, $state, $http) {
-      'ngInject';
-    //   Array of sample data
-      this.data = [{attribute1:"A value",attribute2:"Another value"},{attribute1:"a value for the second object",attribute2:"Another value for the second object"}]
+  constructor(Auth,$http) {
+        'ngInject'
 
+        var ctrl = this;
+        this.$http = $http;
+
+        $http.get('/api/classes')
+        .then(function(res){
+            console.log("classes",res);
+            ctrl.classes = res.data;
+        })
+    }
+
+    registerStudent(course){
+        var ctrl = this;
+        this.$http.get('/api/classes/' + course._id +'/students/register' )
+        .then(function(res){
+            console.log("RES",res);
+            // this.classes.push(res.data)
+            course.added=true
+        })
+
+        // this.newClass = {
+        //     startTime: new Date(1970,1,1,8,0,0,0),
+        //     endTime: new Date(1970,1,1,9,0,0,0)
+        // }
     }
 }
 
