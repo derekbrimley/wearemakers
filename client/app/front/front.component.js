@@ -8,33 +8,11 @@ export class FrontController {
   newThing = '';
 
   /*@ngInject*/
-  constructor($http,$state,$location) {
-    //TODO:   Change this after launch
-    // if($location.host() != 'localhost'){
-    //     $state.go('pre_signup');
-    // }
-    this.$http = $http;
+  constructor() {
+      'use strict'
+
   }
 
-  $onInit() {
-    this.$http.get('/api/things')
-      .then(response => {
-        this.awesomeThings = response.data;
-      });
-  }
-
-  addThing() {
-    if(this.newThing) {
-      this.$http.post('/api/things', {
-        name: this.newThing
-      });
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(thing) {
-    this.$http.delete(`/api/things/${thing._id}`);
-  }
 }
 
 export default angular.module('refugeeApp.front', [uiRouter])
