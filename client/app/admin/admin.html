@@ -2,7 +2,7 @@
   <uib-tabset active="ctrl.tab">
 
   <!--  USERS TAB-->
-    <uib-tab index="0" heading="Users" >
+    <uib-tab index="0" ui-sref="admin" heading="Users" >
         <ul class="list-group user-list">
           <li class="list-group-item" ng-repeat="user in ctrl.users">
       	    <div class="user-info">
@@ -16,7 +16,7 @@
     </uib-tab>
 
     <!--  ADMIN TAB -->
-    <uib-tab index="1" heading="Admins">
+    <uib-tab index="1"  ui-sref="admin" heading="Admins">
         <h4>Add New Admin</h4>
         <div class="flex-row">
             <div>Email:</div>

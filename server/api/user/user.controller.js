@@ -1,6 +1,6 @@
 'use strict';
 
-import {User} from '../../sqldb';
+import {User, Volunteer} from '../../sqldb';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 
@@ -52,6 +52,11 @@ export function create(req, res) {
         expiresIn: 60 * 60 * 5
       });
       res.json({ token });
+
+      if(newUser.type == 'volunteer'){
+          Volunteer.build({userID:user._id,status:'pending'})
+      }
+
     })
     .catch(validationError(res));
 }
