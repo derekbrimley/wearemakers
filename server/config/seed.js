@@ -13,6 +13,10 @@
 // var ClassVolunteer = sqldb.ClassVolunteer;
 import {Thing, User,Class,ClassStudent,Volunteer,ClassVolunteer} from '../sqldb'
 User.sync()
+	.then(() => Class.sync())
+	.then(() => ClassStudent.sync())
+	.then(() => Volunteer.sync())
+	.then(() => ClassVolunteer.sync())
 	.then(() => ClassStudent.destroy({where:{}}))
 	.then(() => Class.destroy({where:{}}))
 	.then(() => Volunteer.destroy({where:{}}))
