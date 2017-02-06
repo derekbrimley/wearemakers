@@ -54,7 +54,9 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 .btn{
     margin:5px !important;
 }
-
+.glyphicon{
+    cursor: pointer;
+}
 
 //Utility CSS
 .flex-row{
