@@ -1,19 +1,22 @@
-<div class="admin-students-section">
+<div class="admin-volunteer-section">
     <div class="pane">
-        <div class="students-section">
-            <h3>Students</h3>
-            <div class="class" ng-repeat="class in ctrl.students">
-                <div>
-                    Name: <span class="class-name" ng-click="ctrl.selectedStudent = class"> {{class.name}} </span>
-                </div>
-                <div>
-                    <span class="glyphicon glyphicon-remove" ng-click="ctrl.removeStudent(class)"></span>
-                </div>
-            </div>
-        </div>
+        <table class="volunteer_table table" style="width:100%;">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Role</td>
+                <td>Date Added</td>
+            </tr>
+            <tr class="volunteer_row" ng-repeat="stud in ctrl.students" ng-click="ctrl.select(stud)">
+                <td>{{stud.name}}</td>
+                <td>{{stud.email}}</td>
+                <td>{{stud.role}}</td>
+                <td></td>
+            </tr>
+        </table>
 
-        <div class="new-class-section">
-            <h3>Add a new class</h3>
+<!--         <div class="new-Student-section">
+            <h3>Add a new Student</h3>
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" class="form-control" ng-model="ctrl.newStudent.name"/>
@@ -44,9 +47,9 @@
                 <input type="time" class="form-control" ng-model="ctrl.newStudent.endTime" placeholder="HH:mm" required />
             </div>
             <button class="btn btn-primary" ng-click="ctrl.addStudent()">Add</button>
+        </div> -->
+    </div>
+        <div class="right-pane">
+            <class-editor class="ctrl.selectedStudent"></class-editor>
         </div>
-    </div>
-    <div class="right-pane">
-        <class-editor class="ctrl.selectedStudent"></class-editor>
-    </div>
 </div>
