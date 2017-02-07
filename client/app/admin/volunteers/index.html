@@ -1,52 +1,76 @@
-<div class="admin-volunteers-section">
-    <div class="pane">
-        <div class="volunteers-section">
-            <h3>Volunteers</h3>
-            <div class="class" ng-repeat="class in ctrl.volunteers">
-                <div>
-                    Name: <span class="class-name" ng-click="ctrl.selectedVolunteer = class"> {{class.name}} </span>
+<div class="admin-volunteer-section">
+    <table class="volunteer_table" style="width:100%;">
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Role</td>
+            <td>Organization</td>
+            <td>Date Added</td>
+        </tr>
+        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers" ng-click="ctrl.select(vol)">
+            <td>{{vol.name}}</td>
+            <td>{{vol.email}}</td>
+            <td>{{vol.role}}</td>
+            <td>{{vol.organization}}</td>
+            <td>{{vol.createdAt}}</td>
+        </tr>
+    </table>
+    <div class="admin-volunteers-section">
+        <div class="pane">
+            <div class="volunteers-section">
+                <h3>Volunteers</h3>
+                <div class="volunteer_container">
+    <!--
+                    <div class="test-class">
+                        Name: <span class="class-name" ng-click="ctrl.selectedVolunteer = class"> {{vol.name}} </span><br>
+                        Email: <span class="class-name" ng-click="ctrl.selectedVolunteer = class"> {{vol.email}} </span><br>
+                        Role: <span class="class-name" ng-click="ctrl.selectedVolunteer = class"> {{vol.role}} </span><br>
+                        Organization: <span class="class-name" ng-click="ctrl.selectedVolunteer = class"> {{vol.organization}} </span>
+                        <span class="glyphicon glyphicon-remove" ng-click="ctrl.removeVolunteer(vol)"></span>
+                    </div>
+    -->
                 </div>
-                <div>
-                    <span class="glyphicon glyphicon-remove" ng-click="ctrl.removeVolunteer(class)"></span>
+            </div>
+            <div ng-if="!ctrl.showAdd && ctrl.selectedVolunteer" class="edit-volunteer-section">
+                <h3>Edit {{ctrl.selectedVolunteer.name}}</h3>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.name"/>
                 </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.email"/>
+                </div>
+
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.organization"/>
+                </div>
+                <button class="btn btn-primary" ng-click="ctrl.updateVolunteer()">Save</button>
+            </div>
+            <div class="btn btn-primary" ng-click="ctrl.showAdd = true" ng-hide="ctrl.showAdd" >Add</div>
+            <div ng-show="ctrl.showAdd" class="new-volunteer-section">
+                <h3>Add a new volunteer</h3>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" ng-model="ctrl.newVolunteer.name"/>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" ng-model="ctrl.newVolunteer.email" required/>
+                </div>
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input type="text" class="form-control" ng-model="ctrl.newVolunteer.organization" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" ng-model="ctrl.newVolunteer.password" required/>
+                </div>
+                <button class="btn btn-primary" ng-click="ctrl.addVolunteer()">Add</button>
             </div>
         </div>
-
-        <div class="new-class-section">
-            <h3>Add a new class</h3>
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" ng-model="ctrl.newVolunteer.name"/>
-            </div>
-
-            <div class="form-group">
-                <label>Description</label>
-                <input type="text" class="form-control" ng-model="ctrl.newVolunteer.info"/>
-            </div>
-
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" class="form-control" ng-model="ctrl.newVolunteer.location"/>
-            </div>
-
-            <div class="form-group">
-                <label>Days</label>
-                <input type="text" class="form-control" ng-model="ctrl.newVolunteer.days"/>
-            </div>
-
-            <div class="form-group">
-                <label>Start Time</label>
-                <input type="time" class="form-control" ng-model="ctrl.newVolunteer.startTime" placeholder="HH:mm" required />
-            </div>
-
-            <div class="form-group">
-                <label>End Time</label>
-                <input type="time" class="form-control" ng-model="ctrl.newVolunteer.endTime" placeholder="HH:mm" required />
-            </div>
-            <button class="btn btn-primary" ng-click="ctrl.addVolunteer()">Add</button>
-        </div>
-    </div>
-    <div class="right-pane">
-        <class-editor class="ctrl.selectedVolunteer"></class-editor>
     </div>
 </div>

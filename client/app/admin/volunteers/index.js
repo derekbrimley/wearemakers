@@ -1,8 +1,12 @@
 'use strict'
 export class AdminVolunteers {
     newVolunteer = {
-        startTime: new Date(1970,1,1,8,0,0,0),
-        endTime: new Date(1970,1,1,9,0,0,0)
+        name: '',
+        email: '',
+        role: 'user',
+        type: 'volunteer',
+        organization: '',
+        password: ''
     }
     /*@ngInject*/
     constructor($http){
@@ -25,17 +29,29 @@ export class AdminVolunteers {
         })
 
         this.newVolunteer = {
-            startTime: new Date(1970,1,1,8,0,0,0),
-            endTime: new Date(1970,1,1,9,0,0,0)
+            name: '',
+            email: '',
+            role: 'user',
+            type: 'volunteer',
+            organization: '',
+            password: ''
         }
     }
 
-    removeVolunteer(course){
+    select(volunteer){
         var ctrl = this;
-        this.$http.delete('/api/volunteers/'+course._id)
+        volunteer.name = volunteer.name;
+        volunteer.email = volunteer.email;
+        volunteer.organization = volunteer.organization;
+        ctrl.selectedVolunteer = volunteer;
+    }
+
+    removeVolunteer(volunteer){
+        var ctrl = this;
+        this.$http.delete('/api/volunteers/'+volunteer._id)
         .then(function(res){
-            console.log("RES",res);
-            ctrl.volunteers.splice(ctrl.volunteers.indexOf(course),1);
+//            console.log("RES",res);
+            ctrl.volunteers.splice(ctrl.volunteers.indexOf(volunteer),1);
         })
     }
 }
