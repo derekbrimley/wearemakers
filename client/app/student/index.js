@@ -13,11 +13,23 @@ export class StudentController {
         var ctrl = this;
         this.$http = $http;
 
+        $http.get('/api/classes/mine')
+        .then(function(res){
+            console.log("my classes",res);
+            ctrl.my_classes = res.data;
+        })
+
         $http.get('/api/classes')
         .then(function(res){
             console.log("classes",res);
             ctrl.classes = res.data;
         })
+
+        Auth.getCurrentUser()
+        .then(function(res){
+            console.log("user",res);
+            ctrl.myUser = res;
+        });
     }
 
     registerStudent(course){
