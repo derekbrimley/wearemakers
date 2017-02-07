@@ -19,7 +19,9 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
             Time:
             {{class.Class.startTime | date : format : shortTime }} to {{class.Class.endTime | date : format : shortTime }}<br>
             Date Added:
-            {{class.Class.createdAt | date}}
+            {{class.Class.createdAt | date}}<br>
+            Status:
+            {{class.status}}
         </div>
 
     </uib-tab>
@@ -34,10 +36,12 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
               {{class.days}}<br>
               Time:
               {{class.startTime | date : format : shortTime }} to {{class.endTime | date : format : shortTime }}<br>
+
               <div>
-                <span type="button" class="btn btn-primary" ng-click="ctrl.registerStudent(class)">ADD</span>
+                  <span type="button" class="btn btn-primary" ng-click="ctrl.registerStudent(class)">Request</span>
+              </div>
             </div>
-          </div>
+
     </uib-tab>
 
     <uib-tab index="2" heading="Profile">
