@@ -14,18 +14,22 @@
     .left-pane{
         width:50%;
     }
-    .class{
-        display:flex;
-        flex-direction:row;
-        div{
-            margin:10px;
-        }
-        .class-name{
-            cursor:pointer;
-        }
-        .glyphicon-remove{
-            cursor:pointer;
-        }
+    .volunteer_table{
+//        display:flex;
+//        flex-direction:row;
+        width: 100%;
+//        .volunteer_row {
+//            cursor:pointer;
+//        }
+//        div{
+//            margin:10px;
+//        }
+//        .volunteer-name{
+//            cursor:pointer;
+//        }
+//        .glyphicon-remove{
+//            cursor:pointer;
+//        }
     }
     .new-class-section{
         label{
