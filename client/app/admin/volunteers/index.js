@@ -6,6 +6,7 @@ export class AdminVolunteers {
         role: 'user',
         type: 'volunteer',
         organization: '',
+        status: '',
         password: ''
     }
     /*@ngInject*/
@@ -15,35 +16,71 @@ export class AdminVolunteers {
         var ctrl = this;
         this.$http = $http;
 
-        $http.get('/api/users')
+        $http.get('/api/volunteers')
         .then(function(res){
-            ctrl.volunteers = _.filter(res.data,{type:'volunteer'});
+            console.log("users:",res);
+            ctrl.volunteers = res.data;
         })
-    }
-
-    addVolunteer(){
-        var ctrl = this;
-        this.$http.post('/api/volunteers',this.newVolunteer)
+        
+        $http.get('/api/volunteers')
         .then(function(res){
-            this.volunteers.push(res.data)
+            console.log("users:",res);
+            ctrl.pending_volunteers = _.filter(res.data,{status:'pending'});
         })
-
-        this.newVolunteer = {
-            name: '',
-            email: '',
-            role: 'user',
-            type: 'volunteer',
-            organization: '',
-            password: ''
-        }
+        
+        $http.get('/api/volunteers')
+        .then(function(res){
+            console.log("users:",res);
+            ctrl.inactive_volunteers = _.filter(res.data,{status:'inactive'});
+        })
+        
+        ctrl.statuses = ['active','pending','inactive'];
+        ctrl.selected = ctrl.statuses[0];
+        
     }
+//
+//    addVolunteer(){
+//        var ctrl = this;
+//        this.$http.post('/api/volunteer',this.newVolunteer)
+//        .then(function(res){
+//            this.volunteers.push(res.data)
+//        })
+//
+//        this.newVolunteer = {
+//            name: '',
+//            email: '',
+//            role: 'user',
+//            type: 'volunteer',
+//            organization: '',
+//            password: ''
+//        }
+//    }
 
     select(volunteer){
         var ctrl = this;
-        volunteer.name = volunteer.name;
-        volunteer.email = volunteer.email;
-        volunteer.organization = volunteer.organization;
+        volunteer.name = volunteer.User.name;
+        volunteer.email = volunteer.User.email;
+        volunteer.organization = volunteer.User.organization;
         ctrl.selectedVolunteer = volunteer;
+        
+//        this.$http.get('/api/classes/volunteer/' + this.selectedVolunteer._id + '/getClasses')
+//        .then(function(res) {
+//            console.log("volunteerclasses",res);
+//            ctrl.volunteerclasses = res.data;
+//        })
+    }
+
+    updateVolunteer() {
+        console.log("USER ID", this.selectedVolunteer.userID);
+        this.$http.put('/api/users/' + this.selectedVolunteer.userID + '/upsert',this.selectedVolunteer)
+        .then(res => {
+            console.log("RES User update", res);
+        })
+        
+        this.$http.put('/api/volunteers/'+this.selectedVolunteer._id, this.selectedVolunteer)
+        .then(res => {
+            console.log("RES Updates", res);
+        })
     }
 
     removeVolunteer(volunteer){
@@ -53,6 +90,10 @@ export class AdminVolunteers {
 //            console.log("RES",res);
             ctrl.volunteers.splice(ctrl.volunteers.indexOf(volunteer),1);
         })
+    }
+    
+    addVolunteerToClass(course) {
+        this.$http.post('/api/classes/' + course.id + '/volunteers')
     }
 }
 

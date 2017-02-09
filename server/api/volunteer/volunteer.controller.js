@@ -65,7 +65,9 @@ function handleError(res, statusCode) {
 
 // Gets a list of Volunteers
 export function index(req, res) {
-  return Volunteer.findAll({include:[User]})
+  return Volunteer.findAll({
+      include:[User]
+  })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -77,6 +79,17 @@ export function show(req, res) {
       _id: req.params.id
     }
   })
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+export function getClasses(req, res) {
+    return ClassVolunteer.findAll({
+        where: {
+            userID: req.params.id
+        }
+    })
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -101,23 +114,29 @@ export function update(req, res) {
     delete req.body._id;
   }
   if(req.user.role == 'admin'){
-      return Volunteer.update({
-          where: {
+      return Volunteer.update(
+          req.body,
+          {
+              where: {
               _id: req.params.id
-          }},req.body)
-          .then(handleEntityNotFound(res))
-          .then(respondWithResult(res))
-          .catch(handleError(res));
+          }
+      })
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
   else{
-      return Volunteer.update({
-          where: {
+      return Volunteer.update(
+          req.body,
+          {
+              where: {
               _id: req.params.id,
               userID: req.user._id
-          }},req.body)
-          .then(handleEntityNotFound(res))
-          .then(respondWithResult(res))
-          .catch(handleError(res));
+          }
+      })
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
 }
 

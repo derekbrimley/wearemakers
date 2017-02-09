@@ -61,6 +61,7 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+
 // Creates a new ClassVolunteer in the DB
 export function create(req, res) {
   return ClassVolunteer.create(req.body)

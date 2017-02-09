@@ -4,6 +4,16 @@ import {User, Volunteer} from '../../sqldb';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 
+function respondWithResult(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if(entity) {
+      return res.status(statusCode).json(entity);
+    }
+    return null;
+  };
+}
+
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -30,7 +40,10 @@ export function index(req, res) {
       'email',
       'role',
       'provider',
-      'type'
+      'type',
+      'organization',
+      'primaryLanguage',
+      'createdAt'
     ]
   })
     .then(users => {
@@ -79,6 +92,22 @@ export function show(req, res, next) {
       res.json(user.profile);
     })
     .catch(err => next(err));
+}
+
+
+// Updates user in the DB
+export function upsert(req, res) {
+  if(req.body._id) {
+    delete req.body._id;
+  }
+
+  return User.update(req.body, {
+    where: {
+      _id: req.params.userID,
+    }
+  })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
 }
 
 /**
