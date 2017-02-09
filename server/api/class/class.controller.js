@@ -107,6 +107,23 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+//shows all students for a given course.
+export function showStudents(req, res) {
+  return ClassStudent.findAll({
+      where: {
+        userID: req.params.id 
+      },
+      include:[{
+        model:Class,
+        attributes:['name']
+      }]
+    })
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+
 // Creates a new Class in the DB
 export function create(req, res) {
   return Class.create(req.body)

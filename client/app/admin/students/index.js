@@ -27,6 +27,18 @@ export class AdminStudents {
         }
     }
 
+    showStudents(stud){
+            var ctrl = this;
+            //this.$http.get('/api/classes/' + course._id +'/students/showStudents' )
+            this.$http.get('/api/classes/showStudents/' + stud._id)
+            .then(function(res){
+                console.log("RES",res.data);
+                ctrl.selectedStudent = res.data
+                // this.classes.push(res.data)
+                //course.added=true
+        })
+    }
+
     removeStudent(course){
         var ctrl = this;
         this.$http.delete('/api/students/'+course._id)
