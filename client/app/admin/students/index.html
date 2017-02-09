@@ -7,6 +7,7 @@
                 <td>Role</td>
                 <td>Date Added</td>
                 <td>Show Classes</td>
+                <td>Edit</td>
             </tr>
             <tr class="volunteer_row" ng-repeat="stud in ctrl.students" ng-click="ctrl.select(stud)">
                 <td>{{stud.name}}</td>
@@ -14,19 +15,37 @@
                 <td>{{stud.role}}</td>
                 <td></td>
                 <td><button class="btn btn-primary" ng-click="ctrl.showStudents(stud)">Show</button></td>
+                <td><button class="btn btn-primary" ng-click="ctrl.select(stud)">Edit</button></td>
             </tr>
         </table>
-        Selected Students Classes
-        <table class="table table-sm">
-            <tr>
-                <th>Class Name</th>
-                <th>Student Status</th>
-            </tr>
-            <tr ng-repeat="test in ctrl.selectedStudent">
-                <td>{{test.Class.name}}</td>
-                <td>{{test.status}}</td>
-            </tr>
-        </table>
+
+        <div ng-if="ctrl.showStudentsEdit" class="edit-student-section">
+            <h3>Edit {{ctrl.showStudentsEdit.name}}</h3>
+            <div class="form-group">
+                <label>Name</label>
+                <input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.name"/>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.email"/>
+            </div>
+            <button class="btn btn-primary" ng-click="ctrl.updateStudent()">Save</button>
+        </div>
+
+        <div ng-if="ctrl.selectedStudent">
+            <h3>Selected Students Classes</h3>
+            <table class="table table-sm">
+                <tr>
+                    <th>Class Name</th>
+                    <th>Student Status</th>
+                </tr>
+                <tr ng-repeat="test in ctrl.selectedStudent">
+                    <td>{{test.Class.name}}</td>
+                    <td>{{test.status}}</td>
+                </tr>
+            </table>
+        </div>
 
 <!--         <div class="new-Student-section">
             <h3>Add a new Student</h3>
