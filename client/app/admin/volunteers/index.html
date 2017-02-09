@@ -1,24 +1,28 @@
 <div class="admin-volunteer-section">
+    <select ng-model="ctrl.selected" ng-options="status for status in ctrl.statuses">
+    </select>
+    <h3>Volunteers</h3>
     <table class="volunteer_table table" style="width:100%;">
         <tr>
             <td>Name</td>
             <td>Email</td>
             <td>Role</td>
             <td>Organization</td>
+            <td>Status</td>
             <td>Date Added</td>
         </tr>
-        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers" ng-click="ctrl.select(vol)">
-            <td>{{vol.name}}</td>
-            <td>{{vol.email}}</td>
-            <td>{{vol.role}}</td>
-            <td>{{vol.organization}}</td>
-            <td>{{vol.createdAt}}</td>
+        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected}: true" ng-click="ctrl.select(vol)" style="cursor:pointer;">
+            <td>{{vol.User.name}}</td>
+            <td>{{vol.User.email}}</td>
+            <td>{{vol.User.role}}</td>
+            <td>{{vol.User.organization}}</td>
+            <td>{{vol.status}}</td>
+            <td>{{vol.createdAt | date}}</td>
         </tr>
     </table>
     <div class="admin-volunteers-section">
         <div class="pane">
             <div class="volunteers-section">
-                <h3>Volunteers</h3>
                 <div class="volunteer_container">
     <!--
                     <div class="test-class">
@@ -35,20 +39,47 @@
                 <h3>Edit {{ctrl.selectedVolunteer.name}}</h3>
                 <div class="form-group">
                     <label>Name</label>
-                    <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.name"/>
+                    <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.name"/>
                 </div>
 
                 <div class="form-group">
                     <label>Email</label>
-                    <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.email"/>
+                    <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.email"/>
                 </div>
 
                 <div class="form-group">
                     <label>Organization</label>
-                    <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.organization"/>
+                    <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.organization"/>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select ng-blur="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteer.status">
+                        <option value="pending">Pending</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
                 </div>
                 <button class="btn btn-primary" ng-click="ctrl.updateVolunteer()">Save</button>
             </div>
+            
+<!--
+            <div ng-if="!ctrl.showAdd && ctrl.selectedVolunteer" class="edit-volunteer-section">
+                <h3>Add {{ctrl.selectedVolunteer.name}} to a class</h3>
+                <div class="form-group">
+                    <label>Class</label>
+                    <select ng-model="ctrl.classes" ng-options="class as class.name for class in ctrl.classes"></select>
+                </div>
+                <button class="btn btn-primary" ng-click="ctrl.addVolunteerToClass(class)">Add</button>
+            </div>
+-->
+            
+            <div ng-if="!ctrl.showAdd && ctrl.selectedVolunteer" class="edit-volunteer-section">
+                <h3>{{ctrl.selectedVolunteer.name}}'s classes</h3>
+                <div ng-repeat="class in ctrl.volunteerclasses">
+                    {{class.name}}
+                </div>
+            </div>
+<!--        
             <div class="btn btn-primary" ng-click="ctrl.showAdd = true" ng-hide="ctrl.showAdd" >Add</div>
             <div ng-show="ctrl.showAdd" class="new-volunteer-section">
                 <h3>Add a new volunteer</h3>
@@ -71,6 +102,7 @@
                 </div>
                 <button class="btn btn-primary" ng-click="ctrl.addVolunteer()">Add</button>
             </div>
+-->
         </div>
     </div>
 </div>
