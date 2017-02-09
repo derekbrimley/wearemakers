@@ -138,7 +138,7 @@ function initClasses(){
                 location: 'W221',
                 startTime: new Date('1970-02-01T15:00:00.000Z'),
                 endTime: new Date('1970-02-01T16:00:00.000Z'),
-                days: 'Saturday'
+                day: 'Saturday'
             }, {
                 _id: 2,
                 name: 'Professional Development',
@@ -146,7 +146,7 @@ function initClasses(){
                 location: 'Upper Meeting Room',
                 startTime: new Date('1970-02-01T16:00:00.000Z'),
                 endTime: new Date('1970-02-01T17:00:00.000Z'),
-                days: 'Saturday'
+                day: 'Saturday'
             }, {
                 _id: 3,
                 name: 'Game Development',
@@ -154,7 +154,7 @@ function initClasses(){
                 location: 'A25',
                 startTime: new Date('1970-02-01T15:00:00.000Z'),
                 endTime: new Date('1970-02-01T17:00:00.000Z'),
-                days: 'Saturday'
+                day: 'Saturday'
             }, {
                 _id: 4,
                 name: 'ESL',
@@ -162,7 +162,7 @@ function initClasses(){
                 location: 'A25',
                 startTime: new Date('1970-02-01T18:00:00.000Z'),
                 endTime: new Date('1970-02-01T19:00:00.000Z'),
-                days: 'Saturday'
+                day: 'Saturday'
             }])
         })
     })

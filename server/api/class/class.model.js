@@ -22,7 +22,7 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    days: {
+    day: {
       type: DataTypes.STRING,
       allowNull: false
     },

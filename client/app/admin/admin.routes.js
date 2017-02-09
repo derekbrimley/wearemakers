@@ -28,4 +28,10 @@ export default function routes($stateProvider) {
     authenticate: 'admin',
     parent:'admin'
   })
+  .state('admin.scheduling', {
+    url: '/scheduling',
+    template: '<admin-scheduling></admin-scheduling>',
+    authenticate: 'admin',
+    parent:'admin'
+  })
 }

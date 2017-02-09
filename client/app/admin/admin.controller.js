@@ -23,6 +23,9 @@ export default class AdminController {
         case 'admin.volunteers':
             ctrl.tab = 4;
             break;
+        case 'admin.scheduling':
+            ctrl.tab = 5;
+            break;
         default:
             ctrl.tab = 0;
     }
