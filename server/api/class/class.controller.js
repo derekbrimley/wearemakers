@@ -123,6 +123,22 @@ export function showStudents(req, res) {
     .catch(handleError(res));
 }
 
+//shows all volunteers for a given course.
+export function showVolunteers(req, res) {
+  return ClassVolunteer.findAll({
+      where: {
+        userID: req.params.id 
+      },
+      include:[{
+        model:Class,
+        attributes:['name']
+      }]
+    })
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 
 // Creates a new Class in the DB
 export function create(req, res) {

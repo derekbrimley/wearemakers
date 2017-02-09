@@ -63,10 +63,17 @@ export class AdminVolunteers {
         volunteer.organization = volunteer.User.organization;
         ctrl.selectedVolunteer = volunteer;
         
-//        this.$http.get('/api/classes/volunteer/' + this.selectedVolunteer._id + '/getClasses')
-//        .then(function(res) {
-//            console.log("volunteerclasses",res);
-//            ctrl.volunteerclasses = res.data;
+        this.$http.get('/api/classes/showVolunteers/' + this.selectedVolunteer._id)
+        .then(function(res) {
+            console.log("volunteerclasses",res);
+            ctrl.volunteerclasses = res.data;
+        })
+//        this.$http.get('/api/classes/showStudents/' + stud._id)
+//            .then(function(res){
+//                console.log("RES",res.data);
+//                ctrl.selectedStudent = res.data
+//                // this.classes.push(res.data)
+//                //course.added=true
 //        })
     }
 
