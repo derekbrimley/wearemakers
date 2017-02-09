@@ -1,5 +1,13 @@
 'use strict'
 export class AdminStudents {
+    newSudent = {
+        name: '',
+        email: '',
+        role: 'user',
+        type: 'student',
+        status: '',
+        password: ''
+    }
     /*@ngInject*/
     constructor($http){
         'ngInject'
@@ -39,12 +47,28 @@ export class AdminStudents {
         })
     }
 
+    select(student){
+        var ctrl = this;
+        student.name = student.name;
+        student.email = student.email;
+        ctrl.showStudentsEdit = student;
+        
+    }
+
     removeStudent(course){
         var ctrl = this;
         this.$http.delete('/api/students/'+course._id)
         .then(function(res){
             console.log("RES",res);
             ctrl.students.splice(ctrl.students.indexOf(course),1);
+        })
+    }
+
+     updateStudent() {
+        console.log("USER ID", this.showStudentsEdit._id);
+        this.$http.put('/api/users/' + this.showStudentsEdit._id + '/upsert',this.showStudentsEdit)
+        .then(res => {
+            console.log("RES User update", res);
         })
     }
 }
