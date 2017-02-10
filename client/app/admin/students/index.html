@@ -6,7 +6,7 @@
                 <td>Email</td>
                 <td>Role</td>
                 <td>Date Added</td>
-                <td>Show Classes</td>
+                <td>Classes</td>
                 <td>Edit</td>
             </tr>
             <tr class="volunteer_row" ng-repeat="stud in ctrl.students" ng-click="ctrl.select(stud)">
@@ -25,12 +25,17 @@
                 <tr>
                     <th>Class Name</th>
                     <th>Student Status</th>
-                    <th>Aprrove</th>
+                    <th>Action</th>
                 </tr>
                 <tr ng-repeat="studClass in ctrl.selectedStudent">
                     <td>{{studClass.Class.name}}</td>
                     <td>{{studClass.status}}</td>
-                    <td><button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass)">Approve</button></td>
+                    <td ng-if="studClass.status == 'Active'">
+                        <button class="btn btn-warning" ng-click="ctrl.approveStudent(studClass)">Remove</button>
+                    </td>
+                    <td ng-if="studClass.status == 'Removed' || studClass.status == 'Pending'">
+                        <button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass)">Approve</button>
+                    </td>
                 </tr>
             </table>
         </div>
