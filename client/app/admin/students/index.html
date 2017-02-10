@@ -19,7 +19,23 @@
             </tr>
         </table>
 
-        <div ng-if="ctrl.showStudentsEdit" class="edit-student-section">
+        <div ng-if="!ctrl.showAdd && ctrl.selectedStudent">
+            <h3>Selected Students Classes</h3>
+            <table class="table table-sm">
+                <tr>
+                    <th>Class Name</th>
+                    <th>Student Status</th>
+                    <th>Aprrove</th>
+                </tr>
+                <tr ng-repeat="studClass in ctrl.selectedStudent">
+                    <td>{{studClass.Class.name}}</td>
+                    <td>{{studClass.status}}</td>
+                    <td><button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass)">Approve</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div ng-if="!ctrl.showAdd && ctrl.showStudentsEdit" class="edit-student-section">
             <h3>Edit {{ctrl.showStudentsEdit.name}}</h3>
             <div class="form-group">
                 <label>Name</label>
@@ -32,54 +48,6 @@
             </div>
             <button class="btn btn-primary" ng-click="ctrl.updateStudent()">Save</button>
         </div>
-
-        <div ng-if="ctrl.selectedStudent">
-            <h3>Selected Students Classes</h3>
-            <table class="table table-sm">
-                <tr>
-                    <th>Class Name</th>
-                    <th>Student Status</th>
-                </tr>
-                <tr ng-repeat="test in ctrl.selectedStudent">
-                    <td>{{test.Class.name}}</td>
-                    <td>{{test.status}}</td>
-                </tr>
-            </table>
-        </div>
-
-<!--         <div class="new-Student-section">
-            <h3>Add a new Student</h3>
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" ng-model="ctrl.newStudent.name"/>
-            </div>
-
-            <div class="form-group">
-                <label>Description</label>
-                <input type="text" class="form-control" ng-model="ctrl.newStudent.info"/>
-            </div>
-
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" class="form-control" ng-model="ctrl.newStudent.location"/>
-            </div>
-
-            <div class="form-group">
-                <label>Days</label>
-                <input type="text" class="form-control" ng-model="ctrl.newStudent.days"/>
-            </div>
-
-            <div class="form-group">
-                <label>Start Time</label>
-                <input type="time" class="form-control" ng-model="ctrl.newStudent.startTime" placeholder="HH:mm" required />
-            </div>
-
-            <div class="form-group">
-                <label>End Time</label>
-                <input type="time" class="form-control" ng-model="ctrl.newStudent.endTime" placeholder="HH:mm" required />
-            </div>
-            <button class="btn btn-primary" ng-click="ctrl.addStudent()">Add</button>
-        </div> -->
     </div>
     
 </div>

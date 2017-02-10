@@ -55,6 +55,19 @@ export class AdminStudents {
         
     }
 
+
+    approveStudent(ClassStudent){
+        var ctrl = this;
+        console.log(ClassStudent)
+        ClassStudent.status = "Active"
+        console.log(ClassStudent)
+        this.$http.put('/api/classes/' + ClassStudent.classID + '/students/' + ClassStudent._id,ClassStudent)
+        .then(res => {
+            console.log("RES User update", res);
+        })
+        
+    }
+
     removeStudent(course){
         var ctrl = this;
         this.$http.delete('/api/students/'+course._id)
