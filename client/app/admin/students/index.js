@@ -58,9 +58,12 @@ export class AdminStudents {
 
     approveStudent(ClassStudent){
         var ctrl = this;
-        console.log(ClassStudent)
-        ClassStudent.status = "Active"
-        console.log(ClassStudent)
+
+        if(ClassStudent.status == "Active"){
+            ClassStudent.status = "Removed" 
+        }else{
+            ClassStudent.status = "Active"    
+        }  
         this.$http.put('/api/classes/' + ClassStudent.classID + '/students/' + ClassStudent._id,ClassStudent)
         .then(res => {
             console.log("RES User update", res);
