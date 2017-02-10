@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/mine', auth.isAuthenticated(), controller.showMine);
+//router.get('/notmine', auth.isAuthenticated(), controller.showNotMine);
 router.get('/:id', controller.show);
 router.get('/showStudents/:id', auth.hasRole('admin'),controller.showStudents);
 router.get('/showVolunteers/:id', auth.hasRole('admin'),controller.showVolunteers);

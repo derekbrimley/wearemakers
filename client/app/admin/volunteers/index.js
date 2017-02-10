@@ -68,6 +68,11 @@ export class AdminVolunteers {
             console.log("volunteerclasses",res);
             ctrl.volunteerclasses = res.data;
         })
+        
+//        this.$http.get('/api/class/volunteer/' + this.selectedVolunteer._id + '/getClasses')
+//        .then(function(res) {
+//            console.log("v")  
+//        })
     }
 
     updateVolunteer() {
@@ -91,6 +96,10 @@ export class AdminVolunteers {
         })
     }
     
+    approveCourse(course) {
+        
+    }
+
     addVolunteerToClass(course) {
         this.$http.post('/api/classes/' + course.id + '/volunteers')
     }

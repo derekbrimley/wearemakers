@@ -43,16 +43,6 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
             </tr>
             
         </table>
-        <div class="test-class" ng-repeat="class in ctrl.classes">
-            Name:
-            {{class.name}}<br>
-            Location:
-            {{class.location}}<br>
-            Dates:
-            {{class.days}}<br>
-            Time:
-            {{class.startTime | date : format : shortTime }} to {{class.endTime | date : format : shortTime }}<br>
-        </div>
     </uib-tab>
 
     <uib-tab index="2" heading="Profile">
