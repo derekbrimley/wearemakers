@@ -43,6 +43,19 @@ export class VolunteerController {
 
     }
     
+    request_course(course) {
+        var ctrl = this;
+        var body = {
+            classID: course._id,
+            userID: this.myUser._id
+        }
+
+        this.$http.get('/api/classes/'+course._id+'/volunteers/register', body)
+        .then(function(res) {
+            console.log("RES Request", res)
+        })
+    }
+    
 }
 
 export default angular.module('refugeeApp.volunteer', [uiRouter])

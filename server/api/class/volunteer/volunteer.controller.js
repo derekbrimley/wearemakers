@@ -70,7 +70,11 @@ export function create(req, res) {
 }
 
 export function register(req, res) {
-  return ClassVolunteer.create({classID:req.class._id, userID:req.user._id})
+  return ClassVolunteer.create({
+      classID:req.class._id,
+      userID:req.user._id,
+      active:false
+  })
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }

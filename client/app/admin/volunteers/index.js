@@ -68,17 +68,9 @@ export class AdminVolunteers {
             console.log("volunteerclasses",res);
             ctrl.volunteerclasses = res.data;
         })
-//        this.$http.get('/api/classes/showStudents/' + stud._id)
-//            .then(function(res){
-//                console.log("RES",res.data);
-//                ctrl.selectedStudent = res.data
-//                // this.classes.push(res.data)
-//                //course.added=true
-//        })
     }
 
     updateVolunteer() {
-        console.log("USER ID", this.selectedVolunteer.userID);
         this.$http.put('/api/users/' + this.selectedVolunteer.userID + '/upsert',this.selectedVolunteer)
         .then(res => {
             console.log("RES User update", res);
