@@ -33,7 +33,7 @@
                     <td ng-if="studClass.status == 'Active'">
                         <button class="btn btn-warning" ng-click="ctrl.approveStudent(studClass)">Remove</button>
                     </td>
-                    <td ng-if="studClass.status == 'Removed' || studClass.status == 'Pending'">
+                    <td ng-if="studClass.status != 'Active'">
                         <button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass)">Approve</button>
                     </td>
                 </tr>
