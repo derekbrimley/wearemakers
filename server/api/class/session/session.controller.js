@@ -12,7 +12,7 @@
 
 import jsonpatch from 'fast-json-patch';
 import {
-  ClassSession
+  ClassSession,SessionVolunteer,User
 } from '../../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -63,17 +63,31 @@ export function show(req, res) {
 
 // Creates a new ClassSession in the DB
 export function create(req, res) {
-  return ClassSession.create(req.body)
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
+    if(!req.body.date){
+        res.status(400).json({message:"A date is required"})
+        return;
+    }
+    ClassSession.find({
+        where:{date:req.body.date,
+            classID:req.body.classID
+        },
+        include:[{
+            model:SessionVolunteer,
+            include:[User]
+        }]})
+    .then(function(entity){
+        if(entity){
+            res.status(403).json({message:'Session already exists for given date',session:entity})
+            return;
+        }
+        else{
+            return ClassSession.create(req.body)
+            .then(respondWithResult(res, 201))
+            .catch(handleError(res));
+        }
+    })
 }
 
-// Creates a new ClassSession in the DB
-export function register(req, res) {
-  return ClassSession.create({classID:req.class._id, userID:req.user._id})
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
-}
 
 export function update(req, res) {
   //TODO:ADD SECURITY CHECK HERE TO MAKE SURE REQUEST IS ADMIN OR CURRENT USER

@@ -41,11 +41,15 @@ db.ClassStudent.belongsTo(db.Class,{foreignKey:'classID'});
 db.ClassVolunteer.belongsTo(db.User,{foreignKey:'userID'});
 db.ClassVolunteer.belongsTo(db.Class,{foreignKey:'classID'});
 
+db.SessionVolunteer.belongsTo(db.User,{foreignKey:'userID'});
+db.SessionVolunteer.belongsTo(db.ClassSession,{foreignKey:'sessionID'});
+
 db.Class.hasMany(db.ClassStudent,{foreignKey:'classID'});
 db.Class.hasMany(db.ClassVolunteer,{foreignKey:'classID'});
 db.Class.hasMany(db.ClassSession,{foreignKey:'classID'});
 
-db.ClassSession.hasMany(db.ClassVolunteer,{foreignKey:'sessionID'});
+db.ClassSession.hasMany(db.SessionVolunteer,{foreignKey:'sessionID'});
+db.ClassSession.belongsTo(db.Class,{foreignKey:'classID'});
 
 db.Volunteer.belongsTo(db.User,{foreignKey:'userID'});
 

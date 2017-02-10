@@ -1,5 +1,6 @@
 'use strict'
 import moment from 'moment'
+import _ from 'lodash'
 export class AdminScheduling {
 
     /*@ngInject*/
@@ -70,6 +71,29 @@ export class AdminScheduling {
             day = day.clone().add(1, 'd');
         }
         this.days = days;
+    }
+
+    createSession(course,date){
+        var ctrl = this;
+        var body = {
+            classID:course._id,
+            date:date.toDate()
+        }
+        ctrl.$http.post('/api/classes/'+course._id+'/sessions',body)
+        .then(function(res){
+            console.log("RES",res);
+            res.Class = _.cloneDeep(course);
+            res.Class.startTime = new Date(res.startTime);
+            ctrl.selectedDate = date;
+            ctrl.selectedSession = res;
+        },function(err){
+            console.log("ERR",err);
+            var selectedCourse = _.cloneDeep(course);
+            selectedCourse.startTime = new Date(course.startTime);
+            err.data.session.Class = selectedCourse;
+            ctrl.selectedDate = date;
+            ctrl.selectedSession = err.data.session;
+        })
     }
 }
 
