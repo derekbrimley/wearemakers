@@ -9,21 +9,40 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
   <uib-tabset active="active">
 
     <uib-tab index="0" heading="My Classes">
-        <div class="test-class" ng-repeat="class in ctrl.my_classes">
+        <div class="test-class" ng-repeat="course in ctrl.my_classes">
             Name:
-            {{class.Class.name}}<br>
+            {{course.Class.name}}<br>
             Location:
-            {{class.Class.location}}<br>
+            {{course.Class.location}}<br>
             Dates:
-            {{class.Class.days}}<br>
+            {{course.Class.days}}<br>
             Time:
-            {{class.Class.startTime | date : format : shortTime }} to {{class.Class.endTime | date : format : shortTime }}<br>
+            {{course.Class.startTime | date : format : shortTime }} to {{course.Class.endTime | date : format : shortTime }}<br>
             Date Added:
-            {{class.Class.createdAt | date}}
+            {{course.Class.createdAt | date}}
         </div>
     </uib-tab>
 
     <uib-tab index="1" heading="All Classes">
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Dates</th>
+                <th>Time</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="course in ctrl.classes">
+                <td>{{course.name}}</td>
+                <td>{{course.location}}</td>
+                <td>{{course.days}}</td>
+                <td>{{course.startTime | date : format : shortTime }} to {{course.endTime | date : format : shortTime }}</td>
+                <td>
+                    <button ng-click="ctrl.request_course(course)" class="btn btn-primary">Request</button>
+                </td>
+            </tr>
+            
+        </table>
         <div class="test-class" ng-repeat="class in ctrl.classes">
             Name:
             {{class.name}}<br>

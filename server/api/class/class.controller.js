@@ -80,6 +80,17 @@ export function showMine(req, res) {
     .catch(handleError(res));
 }
 
+// Gets a list of classes I have not requested or registered
+export function showNotMine(req, res) {
+    var type = req.user.type
+    if(type == 'student') {
+        return ClassStudent.findAll({
+            where:{active:false,userID:req.user._id},
+            include:[Class]
+        })
+    }
+}
+
 // Gets a single Class from the DB
 export function show(req, res) {
   return Class.find({
