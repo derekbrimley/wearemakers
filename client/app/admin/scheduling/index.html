@@ -40,5 +40,26 @@
                 <strong>Location:</strong> {{ctrl.selectedSession.Class.location}}
             </div>
         </div>
+        <div class="volunteers-section">
+            <h3>Volunteers</h3>
+            <div class="assigned-volunteers">
+                <h4>Assigned</h4>
+                <div class="assigned volunteer" ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
+
+                </div>
+                <div ng-show="ctrl.selectedSession.SessionVolunteers.length == 0" class="">
+                    No volunteers are assigned to this session.
+                </div>
+            </div>
+            <div class="interested-volunteers">
+                <h4>Interested</h4>
+                <div class="interested volunteer">
+
+                </div>
+                <div ng-show="ctrl.selectedSession.Class.ClassVolunteers.length == 0" class="">
+                    No volunteers have shown interest in this course.
+                </div>
+            </div>
+        </div>
     </div>
 </div>

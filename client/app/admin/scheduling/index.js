@@ -83,7 +83,7 @@ export class AdminScheduling {
         .then(function(res){
             console.log("RES",res);
             res.Class = _.cloneDeep(course);
-            res.Class.startTime = new Date(res.startTime);
+            res.Class.startTime = new Date(course.startTime);
             ctrl.selectedDate = date;
             ctrl.selectedSession = res;
         },function(err){
