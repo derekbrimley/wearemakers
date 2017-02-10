@@ -59,6 +59,14 @@
                         <option value="inactive">Inactive</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label>Add to class</label>
+                    <select ng-blur="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteer.status">
+                        <option value="pending">Pending</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
                 <button class="btn btn-primary" ng-click="ctrl.updateVolunteer()">Save</button>
             </div>
             
@@ -75,9 +83,26 @@
             
             <div ng-if="!ctrl.showAdd && ctrl.selectedVolunteer" class="edit-volunteer-section">
                 <h3>{{ctrl.selectedVolunteer.name}}'s classes</h3>
-                <div ng-repeat="class in ctrl.volunteerclasses">
-                    {{class.Class.name}}
-                </div>
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Day</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-repeat="class in ctrl.volunteerclasses">
+                        <td>{{class.Class.name}}</td>
+                        <td>{{class.Class.description}}</td>
+                        <td>{{class.Class.location}}</td>
+                        <td>{{class.Class.day}}</td>
+                        <td>{{class.Class.startTime}} - {{class.Class.endTime}}</td>
+                        <td>
+                            <button ng-click="approveCourse(class)">Approve</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
 <!--        
             <div class="btn btn-primary" ng-click="ctrl.showAdd = true" ng-hide="ctrl.showAdd" >Add</div>

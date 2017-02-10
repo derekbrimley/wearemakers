@@ -121,6 +121,7 @@ User.sync()
             }])
 			.then(initVolunteers)
             .then(initClasses)
+            .then(initClassVolunteers)
             .then(initClassStudents)
 	});
 
@@ -177,11 +178,11 @@ function initVolunteers(){
                 return Volunteer.bulkCreate([{
                     _id: 1,
                     userID:1,
-                    status: 'pending'
+                    status: 'active'
                 },{
                     _id: 2,
                     userID:2,
-                    status: 'pending'
+                    status: 'active'
                 },{
                     _id: 3,
                     userID:3,
@@ -256,6 +257,38 @@ function initClassStudents(){
             _id: 13,
             classID: 4,
             userID: 11,
+            status: 'pending'
+        }])
+    })
+}
+
+function initClassVolunteers(){
+    return ClassVolunteer.sync()
+    .then(() => {
+        ClassVolunteer.bulkCreate([{
+            _id: 1,
+            classID: 1,
+            userID: 1,
+            status: 'active'
+        }, {
+            _id: 2,
+            classID: 1,
+            userID: 2,
+            status: 'pending'
+        }, {
+            _id: 3,
+            classID: 2,
+            userID: 3,
+            status: 'active'
+        }, {
+            _id: 4,
+            classID: 3,
+            userID: 4,
+            status: 'pending'
+        }, {
+            _id: 5,
+            classID: 4,
+            userID: 5,
             status: 'pending'
         }])
     })

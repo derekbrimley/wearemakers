@@ -24,9 +24,9 @@ export class VolunteerController {
             ctrl.my_classes = res.data;
         })
         
-        $http.get('/api/classes')
+        $http.get('/api/classes/')
         .then(function(res) {
-            console.log('classes',res);
+            console.log('not my classes',res);
             ctrl.classes = res.data;
         })
         
