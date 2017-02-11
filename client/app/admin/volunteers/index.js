@@ -34,8 +34,15 @@ export class AdminVolunteers {
             ctrl.inactive_volunteers = _.filter(res.data,{status:'inactive'});
         })
         
+        $http.get('/api/classes')
+        .then(function(res){
+            console.log("classes:",res);
+            ctrl.classes = _.filter(res.data,{active:true});
+            ctrl.selected_class = ctrl.classes[0];
+        })
+        
         ctrl.statuses = ['active','pending','inactive'];
-        ctrl.selected = ctrl.statuses[0];
+        ctrl.selected_status = ctrl.statuses[0];
         
     }
 //
@@ -55,6 +62,12 @@ export class AdminVolunteers {
 //            password: ''
 //        }
 //    }
+
+    filterChanged() {
+        var ctrl = this;
+        ctrl.selectedVolunteer = null;
+        console.log("selectedVolunteer", ctrl.selectedVolunteer);
+    }
 
     select(volunteer){
         var ctrl = this;
@@ -97,11 +110,41 @@ export class AdminVolunteers {
     }
     
     approveCourse(course) {
+        var ctrl = this;
+        var body = {
+            status: 'active' 
+        };
         
+        this.$http.put('/api/classes/' + course._id + '/volunteers/' + this.selectedVolunteer._id, body)
+        .then(res => {
+            console.log("volunteerclass update",res)
+        })
     }
 
-    addVolunteerToClass(course) {
-        this.$http.post('/api/classes/' + course.id + '/volunteers')
+    showApprove(course) {
+        console.log("course",course);
+        this.$http.get('/api/classes/' + course._id + '/volunteers/' + this.selectedVolunteer._id)
+        .then(res => {
+            console.log("class",res);
+            if(res.data.status.active=="pending") {
+                return true;
+            }
+            return false;
+        })
+    }
+    
+    addVolunteerToClass() {
+        var body = {
+            classID: this.selected_class._id,
+            userID: this.selectedVolunteer._id,
+            active: true,
+            status: 'pending'
+        }
+        
+        this.$http.post('/api/classes/' + this.selected_class._id + '/volunteers/', body)
+        .then(res => {
+            console.log("Added class", res);
+        })
     }
 }
 

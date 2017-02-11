@@ -1,5 +1,5 @@
 <div class="admin-volunteer-section">
-    <select ng-model="ctrl.selected" ng-options="status for status in ctrl.statuses">
+    <select ng-model="ctrl.selected_status" ng-options="status for status in ctrl.statuses" ng-change="ctrl.filterChanged()">
     </select>
     <h3>Volunteers</h3>
     <table class="volunteer_table table" style="width:100%;">
@@ -11,7 +11,7 @@
             <td>Status</td>
             <td>Date Added</td>
         </tr>
-        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected}: true" ng-click="ctrl.select(vol)" style="cursor:pointer;">
+        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected_status}: true" ng-click="ctrl.select(vol)" style="cursor:pointer;">
             <td>{{vol.User.name}}</td>
             <td>{{vol.User.email}}</td>
             <td>{{vol.User.role}}</td>
@@ -59,14 +59,7 @@
                         <option value="inactive">Inactive</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Add to class</label>
-                    <select ng-blur="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteer.status">
-                        <option value="pending">Pending</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
+                
                 <button class="btn btn-primary" ng-click="ctrl.updateVolunteer()">Save</button>
             </div>
             
@@ -90,19 +83,31 @@
                         <th>Location</th>
                         <th>Day</th>
                         <th>Time</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
-                    <tr ng-repeat="class in ctrl.volunteerclasses">
-                        <td>{{class.Class.name}}</td>
-                        <td>{{class.Class.description}}</td>
-                        <td>{{class.Class.location}}</td>
-                        <td>{{class.Class.day}}</td>
-                        <td>{{class.Class.startTime}} - {{class.Class.endTime}}</td>
+                    <tr ng-repeat="course in ctrl.volunteerclasses">
+                        <td>{{course.Class.name}}</td>
+                        <td>{{course.Class.info}}</td>
+                        <td>{{course.Class.location}}</td>
+                        <td>{{course.Class.day}}</td>
+                        <td>{{course.Class.startTime | date : shortTime}} - {{course.Class.endTime | date:shortTime}}</td>
+                        <td>{{course.status}}</td>
                         <td>
-                            <button ng-click="approveCourse(class)">Approve</button>
+                            <button ng-click="ctrl.approveCourse(course)" class="btn btn-primary">Approve</button>
                         </td>
                     </tr>
                 </table>
+            </div>
+            
+            <div ng-if="ctrl.selectedVolunteer">
+                <form novalidate class="simple-form">
+                    <div class="form-group">
+                        <label>Add to class</label>
+                        <select ng-model="ctrl.selected_class" ng-options="class as class.name for class in ctrl.classes track by class._id" class="form-control"></select>
+                    </div>
+                    <input type="submit" class="btn btn-primary" ng-click="ctrl.addVolunteerToClass()" value="Add to Class"/>
+                </form>
             </div>
 <!--        
             <div class="btn btn-primary" ng-click="ctrl.showAdd = true" ng-hide="ctrl.showAdd" >Add</div>

@@ -179,8 +179,7 @@ export function showVolunteers(req, res) {
         userID: req.params.id 
       },
       include:[{
-        model:Class,
-        attributes:['name']
+        model:Class
       }]
     })
     .then(handleEntityNotFound(res))
