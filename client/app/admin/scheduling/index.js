@@ -66,11 +66,37 @@ export class AdminScheduling {
         var days = [];
         var day = startOfWeek;
         while (day <= endOfWeek) {
-            console.log(day,endOfWeek);
             days.push(day);
             day = day.clone().add(1, 'd');
         }
         this.days = days;
+    }
+
+    assignToSession(volunteer){
+        var ctrl = this;
+        ctrl.$http.post('/api/classes/'+ctrl.selectedSession.classID+'/sessions/'+ctrl.selectedSession._id+'/volunteers',{userID:volunteer.User._id})
+        .then(function(res){
+            console.log("RES",res);
+            volunteer._id = res.data._id
+            ctrl.selectedSession.SessionVolunteers.push(volunteer);
+        },function(err){
+            console.log("ERR",err);
+        })
+    }
+
+    removeFromSession(volunteer){
+        var ctrl = this;
+        ctrl.$http.delete('/api/classes/'+ctrl.selectedSession.classID+'/sessions/'+ctrl.selectedSession._id+'/volunteers/'+volunteer._id)
+        .then(function(res){
+            console.log("RES",res)
+            ctrl.selectedSession.SessionVolunteers.splice(ctrl.selectedSession.SessionVolunteers.indexOf(volunteer),1);
+        },function(err){
+            console.log("ERR",err);
+        })
+    }
+
+    notInSession(volunteer){
+        return !_.find(this.selectedSession.SessionVolunteers, {userID: volunteer.User._id})
     }
 
     createSession(course,date){
@@ -86,6 +112,7 @@ export class AdminScheduling {
             res.Class.startTime = new Date(course.startTime);
             ctrl.selectedDate = date;
             ctrl.selectedSession = res;
+            ctrl.selectedSession.SessionVolunteers = [];
         },function(err){
             console.log("ERR",err);
             var selectedCourse = _.cloneDeep(course);

@@ -1,8 +1,9 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
+import _ from 'lodash';
 import {
-  SessionVolunteer
+  SessionVolunteer,User
 } from '../../../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -53,14 +54,20 @@ export function show(req, res) {
 
 // Creates a new SessionVolunteer in the DB
 export function create(req, res) {
-  return SessionVolunteer.create(req.body)
+    req.body.sessionID = req.classSession._id;
+    if(_.find(req.classSession.SessionVolunteers,{userID:req.body.userID})){
+        res.status(403).json({message:'Volunteer is already registered for this course'})
+        return;
+    }
+
+  return SessionVolunteer.create(req.body,{include:[User]})
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
 // Creates a new SessionVolunteer in the DB
 export function register(req, res) {
-  return SessionVolunteer.create({classID:req.class._id, userID:req.user._id})
+  return SessionVolunteer.create({sessionID:req.session._id, userID:req.user._id})
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
@@ -83,9 +90,7 @@ export function update(req, res) {
 
 // Deletes a SessionVolunteer from the DB
 export function destroy(req, res) {
-  return SessionVolunteer.update({
-      active: false
-    }, {
+  return SessionVolunteer.destroy({
       where: {
         _id: req.params.id
       }

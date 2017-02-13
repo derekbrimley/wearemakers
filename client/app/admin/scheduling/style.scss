@@ -50,4 +50,18 @@
     .session-section{
         margin:15px;
     }
+    .volunteer{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        max-width:400px;
+        button{
+            margin-left:10px;
+        }
+        margin:10px 0px;
+        padding:10px;
+    }
+    .interested-volunteers{
+    }
 }

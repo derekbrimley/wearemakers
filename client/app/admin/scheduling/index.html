@@ -45,7 +45,12 @@
             <div class="assigned-volunteers">
                 <h4>Assigned</h4>
                 <div class="assigned volunteer" ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
-
+                    <div>
+                        {{volunteer.User.name}}
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" ng-click="ctrl.removeFromSession(volunteer)">Remove</button>
+                    </div>
                 </div>
                 <div ng-show="ctrl.selectedSession.SessionVolunteers.length == 0" class="">
                     No volunteers are assigned to this session.
@@ -53,8 +58,13 @@
             </div>
             <div class="interested-volunteers">
                 <h4>Interested</h4>
-                <div class="interested volunteer">
-
+                <div ng-if="ctrl.notInSession(volunteer)" class="interested volunteer" ng-repeat="volunteer in ctrl.selectedSession.Class.ClassVolunteers">
+                    <div>
+                        {{volunteer.User.name}}
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" ng-click="ctrl.assignToSession(volunteer)">Assign</button>
+                    </div>
                 </div>
                 <div ng-show="ctrl.selectedSession.Class.ClassVolunteers.length == 0" class="">
                     No volunteers have shown interest in this course.
