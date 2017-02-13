@@ -43,6 +43,21 @@ export class VolunteerController {
 
     }
     
+    showRequest(course) {
+        var ctrl = this;
+        var volunteers = [];
+        course.ClassVolunteers.forEach(function(res) {
+            volunteers.push(res._id);
+        })
+        console.log("user id",ctrl.myUser._id);
+        console.log("volunteers",volunteers);
+        if(volunteers.indexOf(ctrl.myUser._id) > -1) {
+            return false;
+        }
+        return true;
+//        if(course.ClassVolunteers.)
+    }
+    
     request_course(course) {
         var ctrl = this;
         var body = {

@@ -9,18 +9,22 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
   <uib-tabset active="active">
 
     <uib-tab index="0" heading="My Classes">
-        <div class="test-class" ng-repeat="course in ctrl.my_classes">
-            Name:
-            {{course.Class.name}}<br>
-            Location:
-            {{course.Class.location}}<br>
-            Dates:
-            {{course.Class.days}}<br>
-            Time:
-            {{course.Class.startTime | date : format : shortTime }} to {{course.Class.endTime | date : format : shortTime }}<br>
-            Date Added:
-            {{course.Class.createdAt | date}}
-        </div>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Days</th>
+                <th>Time</th>
+                <th>Status</th>
+            </tr>
+            <tr ng-repeat="course in ctrl.my_classes">
+                <td>{{course.Class.name}}</td>
+                <td>{{course.Class.location}}</td>
+                <td>{{course.Class.days}}</td>
+                <td>{{course.Class.startTime | date:'MM/dd/yyyy' }} to {{course.Class.endTime | date:'MM/dd/yyyy' }}</td>
+                <td>{{course.status}}</td>
+            </tr>
+        </table>
     </uib-tab>
 
     <uib-tab index="1" heading="All Classes">
@@ -36,9 +40,10 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <td>{{course.name}}</td>
                 <td>{{course.location}}</td>
                 <td>{{course.days}}</td>
-                <td>{{course.startTime | date : format : shortTime }} to {{course.endTime | date : format : shortTime }}</td>
+                <td>{{course.startTime | date:mediumTime }} to {{course.endTime | date:mediumTime }}</td>
                 <td>
-                    <button ng-click="ctrl.request_course(course)" class="btn btn-primary">Request</button>
+                    <button ng-if="ctrl.showRequest(course)" ng-click="ctrl.request_course(course)" class="btn btn-primary">Request</button>
+                    <div ng-if="!ctrl.showRequest(course)">Requested</div>
                 </td>
             </tr>
             
