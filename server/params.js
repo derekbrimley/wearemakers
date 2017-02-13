@@ -9,6 +9,7 @@ export default function(app) {
          })
          .catch(function(err){
              console.log("ERR",err);
+             res.status(500).send(err)
          })
     })
 
@@ -22,7 +23,8 @@ export default function(app) {
              return next();
          })
          .catch(function(err){
-             console.log("ERR",err);
+             console.log("ERR",err);         
+             res.status(500).send(err)
          })
     })
 }

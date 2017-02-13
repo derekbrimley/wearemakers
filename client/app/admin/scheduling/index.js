@@ -74,6 +74,7 @@ export class AdminScheduling {
 
     assignToSession(volunteer){
         var ctrl = this;
+        console.log(ctrl.selectedSession);
         ctrl.$http.post('/api/classes/'+ctrl.selectedSession.classID+'/sessions/'+ctrl.selectedSession._id+'/volunteers',{userID:volunteer.User._id})
         .then(function(res){
             console.log("RES",res);
@@ -108,10 +109,10 @@ export class AdminScheduling {
         ctrl.$http.post('/api/classes/'+course._id+'/sessions',body)
         .then(function(res){
             console.log("RES",res);
-            res.Class = _.cloneDeep(course);
-            res.Class.startTime = new Date(course.startTime);
+            res.data.Class = _.cloneDeep(course);
+            res.data.Class.startTime = new Date(course.startTime);
             ctrl.selectedDate = date;
-            ctrl.selectedSession = res;
+            ctrl.selectedSession = res.data;
             ctrl.selectedSession.SessionVolunteers = [];
         },function(err){
             console.log("ERR",err);
