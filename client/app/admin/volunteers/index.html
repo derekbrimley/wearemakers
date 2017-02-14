@@ -1,6 +1,7 @@
 <div class="admin-volunteer-section">
     <select ng-model="ctrl.selected_status" ng-options="status for status in ctrl.statuses" ng-change="ctrl.filterChanged()">
     </select>
+    Search: <input ng-model="$ctrl.query" />
     <h3>Volunteers</h3>
     <table class="volunteer_table table" style="width:100%;">
         <tr>
@@ -93,8 +94,11 @@
                         <td>{{course.Class.day}}</td>
                         <td>{{course.Class.startTime | date : shortTime}} - {{course.Class.endTime | date:shortTime}}</td>
                         <td>{{course.status}}</td>
-                        <td>
+                        <td ng-if="course.status == 'pending'">
                             <button ng-click="ctrl.approveCourse(course)" class="btn btn-primary">Approve</button>
+                        </td>
+                        <td ng-if="course.status == 'active'">
+                            <button ng-click="ctrl.removeCourse(course)" class="btn btn-primary">Remove</button>
                         </td>
                     </tr>
                 </table>

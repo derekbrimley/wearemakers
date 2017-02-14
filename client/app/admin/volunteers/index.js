@@ -121,6 +121,17 @@ export class AdminVolunteers {
         })
     }
 
+    removeCourse(course) {
+        var ctrl = this;
+        var body = {
+            status: 'pending'
+        };
+        this.$http.put('/api/classes/' + course._id + '/volunteers/' + this.selectedVolunteer._id, body)
+        .then(res => {
+            console.log("volunteerclass update",res)
+        })
+    }
+
     showApprove(course) {
         console.log("course",course);
         this.$http.get('/api/classes/' + course._id + '/volunteers/' + this.selectedVolunteer._id)

@@ -11,9 +11,8 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import {
-  ClassVolunteer
-} from '../../../sqldb';
+import {ClassVolunteer} from '../../../sqldb';
+import {Class} from '../../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -54,7 +53,10 @@ export function show(req, res) {
   return ClassVolunteer.find({
       where: {
         _id: req.params.id
-      }
+      },
+      include:[{
+        model:Class
+      }]
     })
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
@@ -73,7 +75,8 @@ export function register(req, res) {
   return ClassVolunteer.create({
       classID:req.class._id,
       userID:req.user._id,
-      active:false
+      active:true,
+      status:'pending'
   })
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
