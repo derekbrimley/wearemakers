@@ -35,10 +35,14 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
               Dates:
               {{class.days}}<br>
               Time:
-              {{class.startTime | date : format : shortTime }} to {{class.endTime | date : format : shortTime }}<br>
+              {{class.startTime | date:'MM/dd/yyyy' }} to {{class.endTime | date:'MM/dd/yyyy' }}<br>  
 
-              <div>
-                  <span type="button" class="btn btn-primary" ng-click="ctrl.registerStudent(class)">Request</span>
+              <div ng-if="ctrl.showRequest(class)">
+                   <button ng-click="ctrl.registerStudent(class)" class="btn btn-primary">Request</button>
+                   <span ng-if="class.added != True">Requested</span>
+              </div>
+              <div ng-if="!ctrl.showRequest(class)">
+                   Requested
               </div>
             </div>
 

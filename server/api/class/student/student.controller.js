@@ -70,9 +70,24 @@ export function create(req, res) {
 
 // Creates a new ClassStudent in the DB
 export function register(req, res) {
-  return ClassStudent.create({classID:req.class._id, userID:req.user._id})
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
+
+    ClassStudent.find({
+        where:{userID:req.user._id,
+            classID:req.class._id
+        }})
+    .then(function(entity){
+        if(entity){
+            res.status(403).json({message:'Already Registered'})
+            return;
+        }
+        else{
+          return ClassStudent.create({classID:req.class._id, userID:req.user._id,status:'pending'})
+            .then(respondWithResult(res, 201))
+            .catch(handleError(res));
+        }
+    })
+
+
 }
 
 export function update(req, res) {

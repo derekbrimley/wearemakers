@@ -34,18 +34,30 @@ export class StudentController {
 
     registerStudent(course){
         var ctrl = this;
+        console.log(course._id)
+
+
         this.$http.get('/api/classes/' + course._id +'/students/register' )
         .then(function(res){
             console.log("RES",res);
             // this.classes.push(res.data)
             course.added=true
-        })
 
-        // this.newClass = {
-        //     startTime: new Date(1970,1,1,8,0,0,0),
-        //     endTime: new Date(1970,1,1,9,0,0,0)
-        // }
+        })
     }
+
+    showRequest(course) {
+       var ctrl = this;
+       var students = [];
+       course.ClassStudents.forEach(function(res) {
+           students.push(res.userID);
+       })
+       if(students.indexOf(ctrl.myUser._id) > -1) {
+           return false;
+       }
+       return true;
+   }
+
 }
 
 export default angular.module('refugeeApp.student', [uiRouter])

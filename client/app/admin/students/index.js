@@ -19,6 +19,9 @@ export class AdminStudents {
         .then(function(res){
             ctrl.students = _.filter(res.data,{type:'student'});
         })
+
+        ctrl.statuses = ['active','pending','inactive'];
+        ctrl.selected_status = ctrl.statuses[0];
     }
 
     addStudent(){
@@ -60,7 +63,7 @@ export class AdminStudents {
         var ctrl = this;
 
         if(ClassStudent.status == "Active"){
-            ClassStudent.status = "Removed" 
+            ClassStudent.status = "Inactive" 
         }else{
             ClassStudent.status = "Active"    
         }  
