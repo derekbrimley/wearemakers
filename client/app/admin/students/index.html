@@ -1,19 +1,24 @@
 <div class="admin-volunteer-section">
+    <form>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" ng-model="$ctrl.query">
+      </div>
+    </form>
     <div class="pane">
         <table class="volunteer_table table" style="width:100%;">
             <tr>
                 <td>Name</td>
                 <td>Email</td>
-                <td>Role</td>
+                <td>Language</td>
                 <td>Date Added</td>
                 <td>Classes</td>
                 <td>Edit</td>
             </tr>
-            <tr class="volunteer_row" ng-repeat="stud in ctrl.students">
+            <tr class="volunteer_row" ng-repeat="stud in ctrl.students | filter:$ctrl.query">
                 <td>{{stud.name}}</td>
                 <td>{{stud.email}}</td>
-                <td>{{stud.role}}</td>
-                <td></td>
+                <td>{{stud.primaryLanguage}}</td>
+                <td>{{stud.createdAt | date:'MM/dd/yyyy'}}</td>
                 <td><button class="btn btn-primary" ng-click="ctrl.showStudents(stud)">Show</button></td>
                 <td><button class="btn btn-primary" ng-click="ctrl.select(stud)">Edit</button></td>
             </tr>
