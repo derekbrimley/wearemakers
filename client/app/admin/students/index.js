@@ -6,6 +6,7 @@ export class AdminStudents {
         role: 'user',
         type: 'student',
         status: '',
+        primaryLanguage: '',
         password: ''
     }
     /*@ngInject*/
@@ -54,6 +55,7 @@ export class AdminStudents {
         var ctrl = this;
         student.name = student.name;
         student.email = student.email;
+        student.primaryLanguage = student.primaryLanguage;
         ctrl.showStudentsEdit = student;
         
     }

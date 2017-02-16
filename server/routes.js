@@ -15,6 +15,7 @@ export default function(app) {
     app.use('/api/classes/:class/volunteers', require('./api/class/volunteer'));
     app.use('/api/classes/:class/sessions', require('./api/class/session'));
         app.use('/api/classes/:class/sessions/:session/volunteers', require('./api/class/session/sessionVolunteer'));
+        app.use('/api/classes/:class/sessions/:session/students', require('./api/class/session/sessionStudent'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/volunteers', require('./api/volunteer'));
   app.use('/api/preSignup', require('./api/pre_signup'));
