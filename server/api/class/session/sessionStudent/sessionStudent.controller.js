@@ -1,19 +1,10 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /api/sessions              ->  index
- * POST    /api/sessions              ->  create
- * GET     /api/sessions/:id          ->  show
- * PUT     /api/sessions/:id          ->  upsert
- * PATCH   /api/sessions/:id          ->  patch
- * DELETE  /api/sessions/:id          ->  destroy
- */
-
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
+import _ from 'lodash';
 import {
-  ClassSession,SessionVolunteer,SessionStudent,User
-} from '../../../sqldb';
+  SessionStudent,User
+} from '../../../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -42,16 +33,16 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of ClassSessions
+// Gets a list of SessionStudent
 export function index(req, res) {
-  return ClassSession.findAll()
+  return SessionStudent.findAll()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single ClassSession from the DB
+// Gets a single SessionStudent from the DB
 export function show(req, res) {
-  return ClassSession.find({
+  return SessionStudent.find({
       where: {
         _id: req.params.id
       }
@@ -61,33 +52,25 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
-// Creates a new ClassSession in the DB
+// Creates a new SessionStudent in the DB
 export function create(req, res) {
-    if(!req.body.date){
-        res.status(400).json({message:"A date is required"})
+    req.body.sessionID = req.classSession._id;
+    if(_.find(req.classSession.SessionStudent,{userID:req.body.userID})){
+        res.status(403).json({message:'Student is already registered for this course'})
         return;
     }
-    ClassSession.find({
-        where:{date:req.body.date,
-            classID:req.body.classID
-        },
-        include:[{
-            model:SessionVolunteer,
-            include:[User]
-        }]})
-    .then(function(entity){
-        if(entity){
-            res.status(403).json({message:'Session already exists for given date',session:entity})
-            return;
-        }
-        else{
-            return ClassSession.create(req.body)
-            .then(respondWithResult(res, 201))
-            .catch(handleError(res));
-        }
-    })
+
+  return SessionStudent.create(req.body,{include:[User]})
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
 }
 
+// Creates a new SessionStudent in the DB
+export function register(req, res) {
+  return SessionStudent.create({sessionID:req.session._id, userID:req.user._id})
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
+}
 
 export function update(req, res) {
   //TODO:ADD SECURITY CHECK HERE TO MAKE SURE REQUEST IS ADMIN OR CURRENT USER
@@ -96,7 +79,7 @@ export function update(req, res) {
     delete req.body._id;
   }
 
-  return ClassSession.update(req.body, {
+  return SessionStudent.update(req.body, {
       where: {
         _id: req.params.id
       }
@@ -105,11 +88,9 @@ export function update(req, res) {
     .catch(handleError(res));
 }
 
-// Deletes a ClassSession from the DB
+// Deletes a SessionStudent from the DB
 export function destroy(req, res) {
-  return ClassSession.update({
-      active: false
-    }, {
+  return SessionStudent.destroy({
       where: {
         _id: req.params.id
       }

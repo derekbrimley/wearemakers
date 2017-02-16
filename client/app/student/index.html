@@ -38,14 +38,13 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
               {{class.startTime | date:'MM/dd/yyyy' }} to {{class.endTime | date:'MM/dd/yyyy' }}<br>  
 
               <div ng-if="ctrl.showRequest(class)">
-                   <button ng-click="ctrl.registerStudent(class)" class="btn btn-primary">Request</button>
+                   <button ng-if="class.added == True" ng-click="ctrl.registerStudent(class)" class="btn btn-primary">Request</button>
                    <span ng-if="class.added != True">Requested</span>
               </div>
               <div ng-if="!ctrl.showRequest(class)">
                    Requested
               </div>
             </div>
-
     </uib-tab>
 
     <uib-tab index="2" heading="Profile">
