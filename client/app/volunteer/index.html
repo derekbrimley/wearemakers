@@ -13,14 +13,14 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
             <tr>
                 <th>Name</th>
                 <th>Location</th>
-                <th>Days</th>
+                <th>Day</th>
                 <th>Time</th>
                 <th>Status</th>
             </tr>
             <tr ng-repeat="course in ctrl.my_classes">
                 <td>{{course.Class.name}}</td>
                 <td>{{course.Class.location}}</td>
-                <td>{{course.Class.days}}</td>
+                <td>{{course.Class.day}}</td>
                 <td>{{course.Class.startTime | date:'MM/dd/yyyy' }} to {{course.Class.endTime | date:'MM/dd/yyyy' }}</td>
                 <td>{{course.status}}</td>
             </tr>
@@ -32,18 +32,22 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
             <tr>
                 <th>Name</th>
                 <th>Location</th>
-                <th>Dates</th>
+                <th>Day</th>
                 <th>Time</th>
                 <th>Action</th>
             </tr>
             <tr ng-repeat="course in ctrl.classes">
                 <td>{{course.name}}</td>
                 <td>{{course.location}}</td>
-                <td>{{course.days}}</td>
+                <td>{{course.day}}</td>
                 <td>{{course.startTime | date:mediumTime }} to {{course.endTime | date:mediumTime }}</td>
                 <td>
-                    <button ng-if="ctrl.showRequest(course)" ng-click="ctrl.request_course(course)" class="btn btn-primary">Request</button>
-                    <div ng-if="!ctrl.showRequest(course)">Requested</div>
+                    <div ng-if="!ctrl.showRequest(course)">
+                        <button ng-if="course.added == True" ng-click="ctrl.request_course(course)" class="btn btn-primary">Request</button>
+                        <span ng-if="course.added != True">Requested</span>
+                    </div>
+                    <div ng-if="ctrl.showRequest(course)">Requested</div>
+                    
                 </td>
             </tr>
             
@@ -51,20 +55,24 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
     </uib-tab>
 
     <uib-tab index="2" heading="Profile">
-        <div class="test-class">
-            Name:
-            {{ctrl.myUser.name}}<br>
-            Email:
-            {{ctrl.myUser.email}}<br>
-            Role:
-            {{ctrl.myUser.role}}<br>
-            Organization:
-            {{ctrl.myUser.organization}}<br>
-            Primary Language:
-            {{ctrl.myUser.primaryLanguage}}<br>
-            Added on:
-            {{ctrl.myUser.createdAt | date }}<br>
-            <button>Edit</button>
+        <div ng-if="ctrl.myUser" class="edit-volunteer-section">
+            <h3>Edit {{ctrl.myUser.name}}</h3>
+            <div class="form-group">
+                <label>Name</label>
+                <input ng-blur="ctrl.updateProfile()" type="text" class="form-control" ng-model="ctrl.myUser.name"/>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input ng-blur="ctrl.updateProfile()" type="text" class="form-control" ng-model="ctrl.myUser.email"/>
+            </div>
+
+            <div class="form-group">
+                <label>Organization</label>
+                <input ng-blur="ctrl.updateProfile()" type="text" class="form-control" ng-model="ctrl.myUser.organization"/>
+            </div>
+
+            <button class="btn btn-primary" ng-click="ctrl.updateProfile()">Save</button>
         </div>
     </uib-tab>
 

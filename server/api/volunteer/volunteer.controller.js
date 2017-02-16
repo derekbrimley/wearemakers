@@ -118,9 +118,9 @@ export function update(req, res) {
           req.body,
           {
               where: {
-              _id: req.params.id
-          }
-      })
+                  _id: req.params.id
+              }
+          })
       .then(handleEntityNotFound(res))
       .then(respondWithResult(res))
       .catch(handleError(res));

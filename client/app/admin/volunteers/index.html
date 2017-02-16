@@ -1,7 +1,26 @@
 <div class="admin-volunteer-section">
-    <select ng-model="ctrl.selected_status" ng-options="status for status in ctrl.statuses" ng-change="ctrl.filterChanged()">
-    </select>
-    Search: <input ng-model="$ctrl.query" />
+    <div class="form-group row">
+        <label for="search" class="col-2 col-form-label">Search</label>
+        <div class="col-10">
+            <input type="text" class="form-control" placeholder="Search" id="search" ng-model="$ctrl.query" ng-change="ctrl.filterChanged()"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="status" class="col-2 col-form-label">Status</label>
+        <div class="col-10">
+            <select class="form-control" ng-model="ctrl.selected_status" ng-options="status for status in ctrl.statuses" ng-change="ctrl.filterChanged()" id="status">
+            </select>
+        </div>
+    </div>
+<!--
+    <div class="form-group row">
+        <label for="order_by" class="col-2 col-form-label">Order By</label>
+        <div class="col-10">
+            <select class="form-control" ng-model="ctrl.selected_order" ng-options="order for order in ctrl.orders" ng-change="ctrl.filterChanged()" id="order_by">
+            </select>
+        </div>
+    </div>
+-->
     <h3>Volunteers</h3>
     <table class="volunteer_table table" style="width:100%;">
         <tr>
@@ -12,7 +31,7 @@
             <td>Status</td>
             <td>Date Added</td>
         </tr>
-        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected_status}: true" ng-click="ctrl.select(vol)" style="cursor:pointer;">
+        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query" ng-click="ctrl.select(vol)" style="cursor:pointer;">
             <td>{{vol.User.name}}</td>
             <td>{{vol.User.email}}</td>
             <td>{{vol.User.role}}</td>
@@ -92,13 +111,13 @@
                         <td>{{course.Class.info}}</td>
                         <td>{{course.Class.location}}</td>
                         <td>{{course.Class.day}}</td>
-                        <td>{{course.Class.startTime | date : shortTime}} - {{course.Class.endTime | date:shortTime}}</td>
+                        <td>{{course.Class.startTime | date : format:shortTime}} - {{course.Class.startTime | date : format:shortTime}}</td>
                         <td>{{course.status}}</td>
                         <td ng-if="course.status == 'pending'">
                             <button ng-click="ctrl.approveCourse(course)" class="btn btn-primary">Approve</button>
                         </td>
                         <td ng-if="course.status == 'active'">
-                            <button ng-click="ctrl.removeCourse(course)" class="btn btn-primary">Remove</button>
+                            <button ng-click="ctrl.removeCourse(course)" class="btn btn-warning">Remove</button>
                         </td>
                     </tr>
                 </table>

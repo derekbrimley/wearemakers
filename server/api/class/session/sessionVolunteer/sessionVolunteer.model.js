@@ -12,6 +12,9 @@ export default function(sequelize, DataTypes) {
 			type: DataTypes.BOOLEAN,
 			defaultValue: true
 		},
+        attendance: {
+            type: DataTypes.STRING
+        },
 		sessionID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

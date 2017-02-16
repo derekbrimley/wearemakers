@@ -1,8 +1,6 @@
 'use strict';
 const angular = require('angular');
-
 const uiRouter = require('angular-ui-router');
-
 import routes from './routes';
 
 export class StudentController {
@@ -35,7 +33,6 @@ export class StudentController {
     registerStudent(course){
         var ctrl = this;
         console.log(course._id)
-
 
         this.$http.get('/api/classes/' + course._id +'/students/register' )
         .then(function(res){

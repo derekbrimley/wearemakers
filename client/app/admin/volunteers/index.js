@@ -44,6 +44,9 @@ export class AdminVolunteers {
         ctrl.statuses = ['active','pending','inactive'];
         ctrl.selected_status = ctrl.statuses[0];
         
+        ctrl.orders = ['User.name','User.date','User.organization'];
+        ctrl.selected_order = ctrl.orders[0];
+        
     }
 //
 //    addVolunteer(){
@@ -66,7 +69,7 @@ export class AdminVolunteers {
     filterChanged() {
         var ctrl = this;
         ctrl.selectedVolunteer = null;
-        console.log("selectedVolunteer", ctrl.selectedVolunteer);
+        console.log(ctrl.selectedOrder);
     }
 
     select(volunteer){
@@ -114,7 +117,7 @@ export class AdminVolunteers {
         var body = {
             status: 'active' 
         };
-        
+        course.status = 'active'
         this.$http.put('/api/classes/' + course._id + '/volunteers/' + this.selectedVolunteer._id, body)
         .then(res => {
             console.log("volunteerclass update",res)
@@ -126,6 +129,7 @@ export class AdminVolunteers {
         var body = {
             status: 'pending'
         };
+        course.status = 'pending'
         this.$http.put('/api/classes/' + course._id + '/volunteers/' + this.selectedVolunteer._id, body)
         .then(res => {
             console.log("volunteerclass update",res)

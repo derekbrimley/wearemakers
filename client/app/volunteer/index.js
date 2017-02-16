@@ -1,16 +1,10 @@
 'use strict';
-
 const angular = require('angular');
 const uiRouter = require('angular-ui-router');
 import routes from './routes';
 import _ from 'lodash';
 
 export class VolunteerController {
-    
-    newVolunteerClass = {
-        classID: 0,
-        userID: 0
-    }
     
     constructor(Auth, $state, $http) {
         'ngInject';
@@ -47,14 +41,14 @@ export class VolunteerController {
         var ctrl = this;
         var volunteers = [];
         course.ClassVolunteers.forEach(function(res) {
-            volunteers.push(res._id);
+            volunteers.push(res.userID);
         })
         console.log("user id",ctrl.myUser._id);
         console.log("volunteers",volunteers);
         if(volunteers.indexOf(ctrl.myUser._id) > -1) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
 //        if(course.ClassVolunteers.)
     }
     
@@ -64,11 +58,28 @@ export class VolunteerController {
             classID: course._id,
             userID: this.myUser._id
         }
-
+        
         this.$http.get('/api/classes/'+course._id+'/volunteers/register', body)
         .then(function(res) {
             console.log("RES Request", res)
+            course.added=true
         })
+    }
+
+    updateProfile() {
+        var ctrl = this;
+        console.log("myUser",ctrl.myUser);
+        
+        this.$http.put('/api/users/' + ctrl.myUser._id + '/upsert',ctrl.myUser)
+        .then(res => {
+            console.log("RES User update", res);
+        })
+        
+        this.$http.put('/api/volunteers/' + ctrl.myUser._id, ctrl.myUser)
+        .then(function(res) {
+            console.log("UPDATE",res)
+        })
+                        
     }
     
 }
