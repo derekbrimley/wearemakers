@@ -15,11 +15,11 @@ export default function(sequelize, DataTypes) {
     info: DataTypes.STRING,
     location: DataTypes.STRING,
     startTime: {
-      type: DataTypes.STRING,
+      type: DataTypes.TIME,
       allowNull: false
     },
     endTime: {
-      type: DataTypes.STRING,
+      type: DataTypes.TIME,
       allowNull: false
     },
     day: {

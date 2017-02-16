@@ -28,6 +28,8 @@ export class AdminScheduling {
             ctrl.classes = res.data;
 
         })
+        
+        ctrl.attendance_options = ['Attended','Absent','Excused'];
     }
 
     previousWeek(){
@@ -121,6 +123,57 @@ export class AdminScheduling {
             err.data.session.Class = selectedCourse;
             ctrl.selectedDate = date;
             ctrl.selectedSession = err.data.session;
+        })
+    }
+    
+    getAttendance(volunteer) {
+        var ctrl = this;
+        var sessionVolunteer = _.find(ctrl.selectedSession.SessionVolunteers,{userID: volunteer.User._id})
+        console.log(sessionVolunteer.attendance);
+    }
+    
+    markAttendance(volunteer) {
+        var ctrl = this;
+        var body = {
+            attendance: ctrl.selected_attendance
+        }
+        console.log("MARK ATTENDANCE",body);
+        ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + volunteer._id, body)
+        .then(function(res) {
+            console.log("RES", res);
+            volunteer.showSave = true;
+        })
+    }
+    
+    saveAttendance(volunteer) {
+        volunteer.showSave = false;
+        volunteer.saved = true;
+        console.log(volunteer.showSave);
+    }
+    
+    editAttendance(volunteer) {
+        volunteer.showSave = true;
+        volunteer.saved = false;
+    }
+//    
+//    attendanceMarked(volunteer) {
+//        var sessionvolunteer = _.find(this.selectedSession.SessionVolunteers, {userID: volunteer.User._id})
+//        console.log('here',sessionvolunteer);
+//        return true;
+//    }
+    
+    attendanceMarked(volunteer) {
+        var ctrl = this;
+        
+        ctrl.$http.get('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + volunteer._id)
+        .then(function(res) {
+            console.log("RES", res);
+            return true;
+//            if(res.data.attendance) {
+//                return true;
+//            } else {
+//                return false;
+//            }
         })
     }
 }

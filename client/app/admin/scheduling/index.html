@@ -72,4 +72,27 @@
             </div>
         </div>
     </div>
+    <div ng-show="ctrl.selectedSession" class="session-attendance-section">
+        <div class="session-header">
+            <h3>{{ctrl.selectedSession.Class.name}} Attendance</h3>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Attended</th>
+                    <th>Action</th>
+                </tr>
+                <tr ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
+                    <td>{{volunteer.User.name}}</td>
+                    <td>
+                        <select class="form-control" ng-init="ctrl.getAttendance(volunteer)" ng-if="!volunteer.saved" ng-model="ctrl.selected_attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>
+                        <p>{{ctrl.selected_attendance}}</p>
+                    </td>
+                    <td>
+                        <button ng-if="volunteer.showSave" ng-click="ctrl.saveAttendance(volunteer)" class="btn btn-primary">Save</button>
+                        <button ng-if="volunteer.saved" ng-click="ctrl.editAttendance(volunteer)" class="btn btn-warning">Edit</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
