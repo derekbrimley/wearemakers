@@ -15,12 +15,24 @@
                 <td>Edit</td>
             </tr>
             <tr class="volunteer_row" ng-repeat="stud in ctrl.students | filter:$ctrl.query">
-                <td>{{stud.name}}</td>
-                <td>{{stud.email}}</td>
-                <td>{{stud.primaryLanguage}}</td>
+
+                <!-- editable form -->
+                <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.name}}</td>
+                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.name"/></td>
+                
+                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.email}}</td>
+                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.email"/></td>
+
+                <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.primaryLanguage}}</td>
+                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.primaryLanguage"/></td>
+                <!--End editable form -->
+
                 <td>{{stud.createdAt | date:'MM/dd/yyyy'}}</td>
                 <td><button class="btn btn-primary" ng-click="ctrl.showStudents(stud)">Show</button></td>
-                <td><button class="btn btn-primary" ng-click="ctrl.select(stud)">Edit</button></td>
+                <td> 
+                    <button ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id" class="btn btn-primary" ng-click="ctrl.select(stud,false)">Edit</button>
+                    <button ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id" class="btn btn-primary" ng-click="ctrl.select(stud,true)">Save</button>
+                </td>
             </tr>
         </table>
 
@@ -43,24 +55,6 @@
                     </td>
                 </tr>
             </table>
-        </div>
-
-        <div ng-if="!ctrl.showAdd && ctrl.showStudentsEdit" class="edit-student-section">
-            <h3>Edit {{ctrl.showStudentsEdit.name}}</h3>
-            <div class="form-group">
-                <label>Name</label>
-                <input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.name"/>
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.email"/>
-            </div>
-            <div class="form-group">
-                <label>Primary Language</label>
-                <input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.primaryLanguage"/>
-            </div>
-            <button class="btn btn-primary" ng-click="ctrl.updateStudent()">Save</button>
         </div>
     </div>
     

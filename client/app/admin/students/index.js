@@ -46,18 +46,16 @@ export class AdminStudents {
             .then(function(res){
                 console.log("RES",res.data);
                 ctrl.selectedStudent = res.data
-                // this.classes.push(res.data)
-                //course.added=true
         })
     }
 
-    select(student){
+    select(student,saved){
         var ctrl = this;
         student.name = student.name;
         student.email = student.email;
         student.primaryLanguage = student.primaryLanguage;
         ctrl.showStudentsEdit = student;
-        
+        student.saved=saved  
     }
 
 
