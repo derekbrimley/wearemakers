@@ -20,17 +20,7 @@ export class AdminVolunteers {
         .then(function(res){
             console.log("users:",res);
             ctrl.volunteers = res.data;
-        })
-        
-        $http.get('/api/volunteers')
-        .then(function(res){
-            console.log("users:",res);
             ctrl.pending_volunteers = _.filter(res.data,{status:'pending'});
-        })
-        
-        $http.get('/api/volunteers')
-        .then(function(res){
-            console.log("users:",res);
             ctrl.inactive_volunteers = _.filter(res.data,{status:'inactive'});
         })
         
@@ -72,12 +62,15 @@ export class AdminVolunteers {
         console.log(ctrl.selectedOrder);
     }
 
-    select(volunteer){
+    select(volunteer,saved){
         var ctrl = this;
         volunteer.name = volunteer.User.name;
         volunteer.email = volunteer.User.email;
         volunteer.organization = volunteer.User.organization;
         ctrl.selectedVolunteer = volunteer;
+        console.log("vol",ctrl.selectedVolunteer);
+        
+        volunteer.saved=saved
         
         this.$http.get('/api/classes/showVolunteers/' + this.selectedVolunteer._id)
         .then(function(res) {
@@ -101,6 +94,7 @@ export class AdminVolunteers {
         .then(res => {
             console.log("RES Updates", res);
         })
+        console.log("VOL",this.selectedVolunteer);
     }
 
     removeVolunteer(volunteer){
