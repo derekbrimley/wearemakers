@@ -146,13 +146,11 @@ export class AdminScheduling {
     }
     
     saveAttendance(volunteer) {
-        volunteer.showSave = false;
         volunteer.saved = true;
         console.log(volunteer.showSave);
     }
     
     editAttendance(volunteer) {
-        volunteer.showSave = true;
         volunteer.saved = false;
     }
 //    

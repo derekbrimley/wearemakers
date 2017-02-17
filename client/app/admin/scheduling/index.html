@@ -84,12 +84,15 @@
                 <tr ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
                     <td>{{volunteer.User.name}}</td>
                     <td>
-                        <select class="form-control" ng-init="ctrl.getAttendance(volunteer)" ng-if="!volunteer.saved" ng-model="ctrl.selected_attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>
-                        <p>{{ctrl.selected_attendance}}</p>
+                        <select class="form-control" ng-if="volunteer.saved == false" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>
+                        <p ng-if="volunteer.saved != false">{{volunteer.attendance}}</p><br>
+                        Saved: {{volunteer.saved}}<br>
+                        Attendance: {{volunteer.attendance}}<br>
+                        ShowEdit: {{volunteer.showEdit}}
                     </td>
                     <td>
-                        <button ng-if="volunteer.showSave" ng-click="ctrl.saveAttendance(volunteer)" class="btn btn-primary">Save</button>
-                        <button ng-if="volunteer.saved" ng-click="ctrl.editAttendance(volunteer)" class="btn btn-warning">Edit</button>
+                        <button ng-if="volunteer.saved == false" ng-click="ctrl.saveAttendance(volunteer)" class="btn btn-primary">Save</button>
+                        <button ng-if="volunteer.saved == true" ng-click="ctrl.editAttendance(volunteer)" class="btn btn-warning">Edit</button>
                     </td>
                 </tr>
             </table>
