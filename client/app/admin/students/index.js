@@ -25,8 +25,9 @@ export class AdminStudents {
             ctrl.students = _.filter(res.data,{type:'student'});
         })
 
-        ctrl.statuses = ['active','pending','inactive'];
-        ctrl.selected_status = ctrl.statuses[0];
+        ctrl.grades = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+
+        // ctrl.grades = ctrl.grades[0];
     }
 
     addStudent(){
