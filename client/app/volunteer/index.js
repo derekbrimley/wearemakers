@@ -15,7 +15,7 @@ export class VolunteerController {
         $http.get('/api/classes/mine')
         .then(function(res){
             console.log("my classes",res);
-            ctrl.my_classes = res.data;
+            ctrl.my_sessions = res.data;
         })
         
         $http.get('/api/classes/')

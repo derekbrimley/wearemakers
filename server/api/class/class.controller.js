@@ -80,54 +80,6 @@ export function showMine(req, res) {
     .catch(handleError(res));
 }
 
-//// Gets a list of classes I have not requested or registered
-//export function showNotMine(req, res) {
-//    var type = req.user.type
-//    if(type == 'student') {
-//        return Class.findAll({
-//            include:[{
-//                model: ClassVolunteer,
-//                as: 'ClassVolunteers'
-//            }],
-//            where: {
-//                $or: [
-//                    {
-//                        active: false
-//                    },
-//                    {
-//                        $notin: [
-//                            sequelize.literal('SELECT userID from ClassVolunteers GROUP BY userID')
-//                        ]
-//                    }
-//                ]
-//            }
-//        })
-//        .then(respondWithResult(res))
-//        .catch(handleError(res));
-//    }
-//    
-//    return Class.findAll({
-//        include:[{
-//            model: ClassVolunteer,
-//            as: 'ClassVolunteers'
-//        }],
-//        where: {
-//            $or: [
-//                {
-//                    active: false
-//                },
-//                {
-//                    $notin: [
-//                        sequelize.literal('SELECT userID from ClassVolunteers GROUP BY userID')
-//                    ]
-//                }
-//            ]
-//        }
-//    })
-//    .then(respondWithResult(res))
-//    .catch(handleError(res));
-//    
-//}
 
 // Gets a single Class from the DB
 export function show(req, res) {
