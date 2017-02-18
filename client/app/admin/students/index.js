@@ -6,6 +6,10 @@ export class AdminStudents {
         role: 'user',
         type: 'student',
         status: '',
+        grade: '',
+        community: '',
+        phone: '',
+        gender: '',
         primaryLanguage: '',
         password: ''
     }
@@ -53,8 +57,13 @@ export class AdminStudents {
         var ctrl = this;
         student.name = student.name;
         student.email = student.email;
+        student.community = student.community;
+        student.grade = student.grade;
+        student.phone = student.phone;
+        student.gender = student.gender;
         student.primaryLanguage = student.primaryLanguage;
         ctrl.showStudentsEdit = student;
+        console.log(student)
         student.saved=saved  
     }
 

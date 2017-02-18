@@ -79,27 +79,43 @@ import {Thing, User,Class,ClassStudent,Volunteer,ClassVolunteer,sequelize,Sequel
 				email: 'student1@gmail.com',
 				password: 'test',
 				type: 'student',
-                primaryLanguage: 'French'
+                phone: '555-555-5555',
+                community:'Pakistan',
+                gender:'Female',
+                grade:10,
+                primaryLanguage: 'Urdu'
 			}, {
 				provider: 'local',
 				name: 'Lazarus Smith2',
 				email: 'student2@gmail.com',
 				password: 'test',
 				type: 'student',
+                phone: '555-555-5555',
+                community:'France',
+                gender:'Male',
+                grade:10,
                 primaryLanguage: 'French'
 			}, {
 				provider: 'local',
-				name: 'Afaf Smith3',
-				email: 'student3@gmail.com',
+				name: 'Olaf',
+				email: 'olaf@gmail.com',
 				password: 'test',
 				type: 'student',
-                primaryLanguage: 'French'
+                phone: '555-555-5555',
+                community:'Ice',
+                gender:'Male',
+                grade:11,
+                primaryLanguage: 'English'
 			}, {
 				provider: 'local',
 				name: 'Jerome George4',
 				email: 'student4@gmail.com',
 				password: 'test',
 				type: 'student',
+                phone: '555-555-5555',
+                community:'Pakistan',
+                gender:'Male',
+                grade:11,
                 primaryLanguage: 'French'
 			},{
 				provider: 'local',
@@ -107,7 +123,11 @@ import {Thing, User,Class,ClassStudent,Volunteer,ClassVolunteer,sequelize,Sequel
 				email: 'student5@gmail.com',
 				password: 'test',
 				type: 'student',
-                primaryLanguage: 'English'
+                phone: '555-555-5555',
+                community:'India',
+                gender:'Female',
+                grade:9,
+                primaryLanguage: 'Hindi'
             }],{returning: true})
 			.then(newUsers => users = newUsers)
 			.then(initClasses)
