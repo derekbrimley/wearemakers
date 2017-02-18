@@ -67,16 +67,12 @@ export class AdminVolunteers {
         volunteer.name = volunteer.User.name;
         volunteer.email = volunteer.User.email;
         volunteer.organization = volunteer.User.organization;
-        ctrl.selectedVolunteer = volunteer;
-        console.log("vol",ctrl.selectedVolunteer);
+        
         
         volunteer.saved=saved
+        ctrl.selectedVolunteerEdit = volunteer;
         
-        this.$http.get('/api/classes/showVolunteers/' + this.selectedVolunteer._id)
-        .then(function(res) {
-            console.log("volunteerclasses",res);
-            ctrl.volunteerclasses = res.data;
-        })
+        console.log("vol",ctrl.selectedVolunteerEdit);
         
 //        this.$http.get('/api/class/volunteer/' + this.selectedVolunteer._id + '/getClasses')
 //        .then(function(res) {
@@ -84,17 +80,28 @@ export class AdminVolunteers {
 //        })
     }
 
+    showClasses(volunteer) {
+        var ctrl = this;
+        ctrl.selectedVolunteer = volunteer;
+        console.log("VOLUNTEER",volunteer);
+        ctrl.$http.get('/api/classes/showVolunteers/' + ctrl.selectedVolunteer._id)
+        .then(function(res) {
+            console.log("volunteerclasses",res);
+            ctrl.volunteerclasses = res.data;
+        })
+    }
+
     updateVolunteer() {
-        this.$http.put('/api/users/' + this.selectedVolunteer.userID + '/upsert',this.selectedVolunteer)
+        this.$http.put('/api/users/' + this.selectedVolunteerEdit.userID + '/upsert',this.selectedVolunteerEdit)
         .then(res => {
             console.log("RES User update", res);
         })
         
-        this.$http.put('/api/volunteers/'+this.selectedVolunteer._id, this.selectedVolunteer)
+        this.$http.put('/api/volunteers/'+this.selectedVolunteerEdit._id, this.selectedVolunteerEdit)
         .then(res => {
             console.log("RES Updates", res);
         })
-        console.log("VOL",this.selectedVolunteer);
+        console.log("VOL",this.selectedVolunteerEdit);
     }
 
     removeVolunteer(volunteer){

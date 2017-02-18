@@ -30,37 +30,74 @@
             <td>Role</td>
             <td>Status</td>
             <td>Date Added</td>
+            <td>Classes</td>
             <td>Action</td>
         </tr>
         <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
 <!--            Editable form-->
-            <td ng-if="vol.saved || ctrl.selectedVolunteer._id!=vol._id">{{vol.User.name}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteer._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.name">
+            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.name}}</td>
+            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
+                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteerEdit.name">
             </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteer._id!=vol._id">{{vol.User.email}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteer._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.email">
+            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.email}}</td>
+            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
+                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteerEdit.email">
             </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteer._id!=vol._id">{{vol.User.organization}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteer._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteer.organization">
+            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.organization}}</td>
+            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
+                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteerEdit.organization">
+            </td>
+            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.role}}</td>
+            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
+                <select ng-blur="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteerEdit.status" ng-options="status for status in ctrl.statuses"></select>
             </td>
 <!--            End editable form-->
             
             <td>{{vol.status}}</td>
-            <td>{{vol.User.role}}</td>
             <td>{{vol.createdAt | date}}</td>
             <td>
-                <button ng-if="vol.saved || ctrl.selectedVolunteer._id!=vol._id" class="btn btn-primary" ng-click="ctrl.select(vol,false)">Edit</button>
-                <button ng-if="!vol.saved && ctrl.selectedVolunteer._id==vol._id" class="btn btn-warning" ng-click="ctrl.select(vol,true)">Save</button>
+                <button ng-click="ctrl.showClasses(vol)" class="btn btn-primary">Show</button>
+            </td>
+            <td>
+                <button ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id" class="btn btn-primary" ng-click="ctrl.select(vol,false)">Edit</button>
+                <button ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id" class="btn btn-warning" ng-click="ctrl.select(vol,true)">Save</button>
             </td>
         </tr>
     </table>
     <div class="admin-volunteers-section">
         <div class="pane">
+            <div ng-if="ctrl.volunteerclasses" class="edit-volunteer-section">
+                <h3>{{ctrl.selectedVolunteer.User.name}}'s classes</h3>
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Day</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-repeat="course in ctrl.volunteerclasses">
+                        <td>{{course.Class.name}}</td>
+                        <td>{{course.Class.info}}</td>
+                        <td>{{course.Class.location}}</td>
+                        <td>{{course.Class.day}}</td>
+                        <td>{{course.Class.startTime | date : format:shortTime}} - {{course.Class.startTime | date : format:shortTime}}</td>
+                        <td>{{course.status}}</td>
+                        <td ng-if="course.status == 'pending'">
+                            <button ng-click="ctrl.approveCourse(course)" class="btn btn-primary">Approve</button>
+                        </td>
+                        <td ng-if="course.status == 'active'">
+                            <button ng-click="ctrl.removeCourse(course)" class="btn btn-warning">Remove</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+<!--
             <div class="volunteers-section">
                 <div class="volunteer_container">
+-->
     <!--
                     <div class="test-class">
                         Name: <span class="class-name" ng-click="ctrl.selectedVolunteer = class"> {{vol.name}} </span><br>
@@ -70,8 +107,11 @@
                         <span class="glyphicon glyphicon-remove" ng-click="ctrl.removeVolunteer(vol)"></span>
                     </div>
     -->
+<!--
                 </div>
             </div>
+-->
+<!--
             <div ng-if="ctrl.selectedVolunteer" class="edit-volunteer-section">
                 <h3>Edit {{ctrl.selectedVolunteer.name}}</h3>
                 <div class="form-group">
@@ -99,6 +139,7 @@
                 
                 <button class="btn btn-primary" ng-click="ctrl.updateVolunteer()">Save</button>
             </div>
+-->
             
 <!--
             <div ng-if="!ctrl.showAdd && ctrl.selectedVolunteer" class="edit-volunteer-section">
@@ -111,35 +152,8 @@
             </div>
 -->
             
-            <div ng-if="!ctrl.showAdd && ctrl.selectedVolunteer" class="edit-volunteer-section">
-                <h3>{{ctrl.selectedVolunteer.name}}'s classes</h3>
-                <table class="table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Location</th>
-                        <th>Day</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                    <tr ng-repeat="course in ctrl.volunteerclasses">
-                        <td>{{course.Class.name}}</td>
-                        <td>{{course.Class.info}}</td>
-                        <td>{{course.Class.location}}</td>
-                        <td>{{course.Class.day}}</td>
-                        <td>{{course.Class.startTime | date : format:shortTime}} - {{course.Class.startTime | date : format:shortTime}}</td>
-                        <td>{{course.status}}</td>
-                        <td ng-if="course.status == 'pending'">
-                            <button ng-click="ctrl.approveCourse(course)" class="btn btn-primary">Approve</button>
-                        </td>
-                        <td ng-if="course.status == 'active'">
-                            <button ng-click="ctrl.removeCourse(course)" class="btn btn-warning">Remove</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
             
+<!--
             <div ng-if="ctrl.selectedVolunteer">
                 <form novalidate class="simple-form">
                     <div class="form-group">
@@ -149,6 +163,7 @@
                     <input type="submit" class="btn btn-primary" ng-click="ctrl.addVolunteerToClass()" value="Add to Class"/>
                 </form>
             </div>
+-->
 <!--        
             <div class="btn btn-primary" ng-click="ctrl.showAdd = true" ng-hide="ctrl.showAdd" >Add</div>
             <div ng-show="ctrl.showAdd" class="new-volunteer-section">
