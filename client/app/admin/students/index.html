@@ -9,6 +9,10 @@
             <tr>
                 <td>Name</td>
                 <td>Email</td>
+                <td>Phone</td>
+                <td>Gender</td>
+                <td>Grade</td>
+                <td>Community</td>
                 <td>Language</td>
                 <td>Date Added</td>
                 <td>Classes</td>
@@ -23,8 +27,21 @@
                 <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.email}}</td>
                 <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.email"/></td>
 
+                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.phone}}</td>
+                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.phone"/></td>
+
+                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.gender}}</td>
+                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.gender"/></td>
+
+                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.grade}}</td>
+                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.grade"/></td>
+
+                <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.community}}</td>
+                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.community"/></td>
+
                 <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.primaryLanguage}}</td>
                 <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.primaryLanguage"/></td>
+
                 <!--End editable form -->
 
                 <td>{{stud.createdAt | date:'MM/dd/yyyy'}}</td>

@@ -45,6 +45,10 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.STRING
     },
     organization: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    gender: DataTypes.STRING,
+    community: DataTypes.STRING,
+    grade: DataTypes.INTEGER,
     primaryLanguage: DataTypes.STRING,
 
 
