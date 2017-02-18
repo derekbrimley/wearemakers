@@ -33,8 +33,11 @@
                 <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.gender}}</td>
                 <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.gender"/></td>
 
-                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.grade}}</td>
-                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.grade"/></td>
+                <td ng-if="stud.saved || ctrl.showStudentsEdit._id!=stud._id">{{stud.grade}}</td>
+                <td ng-if="!stud.saved && ctrl.showStudentsEdit._id==stud._id">
+                    <select ng-blur="ctrl.updateStudent()" class="form-control" ng-model="ctrl.showStudentsEdit.grade" ng-options="grade for grade in ctrl.grades"></select>
+                </td>
+
 
                 <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.community}}</td>
                 <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.community"/></td>
