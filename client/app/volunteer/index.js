@@ -22,6 +22,10 @@ export class VolunteerController {
         .then(function(res) {
             console.log('not my classes',res);
             ctrl.classes = res.data;
+            _.forEach(ctrl.classes, course => {
+                course.startTime = new Date(course.startTime);
+                course.endTime = new Date(course.endTime);
+            })
         })
 
         Auth.getCurrentUser()

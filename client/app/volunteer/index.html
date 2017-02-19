@@ -21,7 +21,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <td>{{course.Class.name}}</td>
                 <td>{{course.Class.location}}</td>
                 <td>{{course.Class.day}}</td>
-                <td>{{course.Class.startTime | date:'MM/dd/yyyy' }} to {{course.Class.endTime | date:'MM/dd/yyyy' }}</td>
+                <td>{{course.Class.startTime | date: 'HH:mm a' }} to {{course.Class.endTime | date: 'HH:mm a' }}</td>
                 <td>{{course.status}}</td>
             </tr>
         </table>
@@ -40,17 +40,17 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <td>{{course.name}}</td>
                 <td>{{course.location}}</td>
                 <td>{{course.day}}</td>
-                <td>{{course.startTime | date:mediumTime }} to {{course.endTime | date:mediumTime }}</td>
+                <td>{{course.startTime | date: 'HH:mm a' }} to {{course.endTime | date: 'HH:mm a'}}</td>
                 <td>
                     <div ng-if="!ctrl.showRequest(course)">
                         <button ng-if="course.added == True" ng-click="ctrl.request_course(course)" class="btn btn-primary">Request</button>
                         <span ng-if="course.added != True">Requested</span>
                     </div>
                     <div ng-if="ctrl.showRequest(course)">Requested</div>
-                    
+
                 </td>
             </tr>
-            
+
         </table>
     </uib-tab>
 

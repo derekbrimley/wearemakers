@@ -71,7 +71,7 @@ export function create(req, res) {
       res.json({ token });
 
       if(newUser.type == 'volunteer'){
-          Volunteer.build({userID:user._id,status:'pending'})
+          Volunteer.build({userID:user._id,status:'pending'}).save();
       }
 
     })
