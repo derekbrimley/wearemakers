@@ -104,11 +104,14 @@ export function upsert(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-
+  var opts = {
+    _id: req.user._id
+  };
+  if(req.user.role == 'admin'){
+      opts._id = req.params.userID
+  }
   return User.update(req.body, {
-    where: {
-      _id: req.params.userID,
-    }
+    where:opts
   })
     .then(respondWithResult(res))
     .catch(handleError(res));

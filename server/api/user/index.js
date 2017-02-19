@@ -12,6 +12,7 @@ router.get('/me', auth.isAuthenticated(), controller.me);
 router.get('/:id/promote', auth.hasRole('admin'), controller.promote);
 router.get('/:id/revoke', auth.hasRole('admin'), controller.revoke);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+router.put('/me', auth.isAuthenticated(), controller.upsert);
 router.put('/:userID/upsert', auth.hasRole('admin'), controller.upsert);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
