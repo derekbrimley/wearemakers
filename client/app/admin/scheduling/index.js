@@ -123,6 +123,7 @@ export class AdminScheduling {
             err.data.session.Class = selectedCourse;
             ctrl.selectedDate = date;
             ctrl.selectedSession = err.data.session;
+            ctrl.selectedVolunteer = null;
         })
     }
     
@@ -135,8 +136,9 @@ export class AdminScheduling {
     markAttendance(volunteer) {
         var ctrl = this;
         var body = {
-            attendance: ctrl.selected_attendance
+            attendance: volunteer.attendance
         }
+        ctrl.selectedVolunteer = volunteer._id;
         console.log("MARK ATTENDANCE",body);
         ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + volunteer._id, body)
         .then(function(res) {
@@ -151,7 +153,9 @@ export class AdminScheduling {
     }
     
     editAttendance(volunteer) {
+        var ctrl = this;
         volunteer.saved = false;
+        ctrl.selectedVolunteer = volunteer._id;
     }
 //    
 //    attendanceMarked(volunteer) {

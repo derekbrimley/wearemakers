@@ -34,4 +34,10 @@ export default function routes($stateProvider) {
     authenticate: 'admin',
     parent:'admin'
   })
+  .state('admin.reports', {
+    url: '/reports',
+    template: '<admin-reports></admin-reports>',
+    authenticate: 'admin',
+    parent:'admin'
+  })
 }
