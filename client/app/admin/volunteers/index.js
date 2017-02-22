@@ -66,13 +66,14 @@ export class AdminVolunteers {
         var ctrl = this;
         volunteer.name = volunteer.User.name;
         volunteer.email = volunteer.User.email;
+        volunteer.phone = volunteer.User.phone;
+        volunteer.role = volunteer.User.role;
         volunteer.organization = volunteer.User.organization;
         
-        
-        volunteer.saved=saved
         ctrl.selectedVolunteerEdit = volunteer;
         
         console.log("vol",ctrl.selectedVolunteerEdit);
+        volunteer.saved=saved
         
 //        this.$http.get('/api/class/volunteer/' + this.selectedVolunteer._id + '/getClasses')
 //        .then(function(res) {
@@ -92,7 +93,7 @@ export class AdminVolunteers {
     }
 
     updateVolunteer() {
-        this.$http.put('/api/users/' + this.selectedVolunteerEdit.userID + '/upsert',this.selectedVolunteerEdit)
+        this.$http.put('/api/users/' + this.selectedVolunteerEdit.userID + '/upsert',this.selectedVolunteerEdit.User)
         .then(res => {
             console.log("RES User update", res);
         })

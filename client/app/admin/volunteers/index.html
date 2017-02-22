@@ -26,6 +26,7 @@
         <tr>
             <td>Name</td>
             <td>Email</td>
+            <td>Phone</td>
             <td>Organization</td>
             <td>Role</td>
             <td>Status</td>
@@ -37,19 +38,23 @@
 <!--            Editable form-->
             <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.name}}</td>
             <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteerEdit.name">
+                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.name">
             </td>
             <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.email}}</td>
             <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteerEdit.email">
+                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.email">
+            </td>
+            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.phone}}</td>
+            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
+                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.phone">
             </td>
             <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.organization}}</td>
             <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="ctrl.selectedVolunteerEdit.organization">
+                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.organization">
             </td>
             <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.role}}</td>
             <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <select ng-blur="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteerEdit.status" ng-options="status for status in ctrl.statuses"></select>
+                <select ng-change="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteerEdit.status" ng-options="status for status in ctrl.statuses"></select>
             </td>
 <!--            End editable form-->
             

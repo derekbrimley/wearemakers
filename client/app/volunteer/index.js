@@ -36,6 +36,12 @@ export class VolunteerController {
 
     }
 
+    showDetails(course) {
+        var ctrl = this;
+        ctrl.selectedCourse = course;
+        console.log("course",ctrl.selectedCourse);
+    }
+    
     showRequest(course) {
         var ctrl = this;
         var volunteers = [];
