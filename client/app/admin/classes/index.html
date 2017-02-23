@@ -131,6 +131,14 @@
                 <label>End Time</label>
                 <input type="time" class="form-control" ng-model="ctrl.newClass.endTime" placeholder="HH:mm" required />
             </div>
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" class="form-control" ng-model="ctrl.newClass.startDate" required />
+            </div>
+            <div class="form-group">
+                <label>End Date</label>
+                <input type="date" class="form-control" ng-model="ctrl.newClass.endDate" required />
+            </div>
             <button class="btn btn-primary" ng-click="ctrl.addClass()">Add</button>
         </div>
     </div>
