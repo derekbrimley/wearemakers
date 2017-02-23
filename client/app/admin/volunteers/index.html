@@ -22,15 +22,14 @@
     </div>
 -->
     <h3>Volunteers</h3>
-    <table class="volunteer_table table" style="width:100%;">
+    <table class="volunteer_table table " style="width:100%;">
         <tr>
             <td>Name</td>
             <td>Email</td>
             <td>Phone</td>
             <td>Organization</td>
-            <td>Role</td>
             <td>Status</td>
-            <td>Date Added</td>
+            <td>Role</td>
             <td>Classes</td>
             <td>Action</td>
         </tr>
@@ -52,14 +51,13 @@
             <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
                 <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.organization">
             </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.role}}</td>
+            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.status}}</td>
             <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
                 <select ng-change="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteerEdit.status" ng-options="status for status in ctrl.statuses"></select>
             </td>
 <!--            End editable form-->
             
-            <td>{{vol.status}}</td>
-            <td>{{vol.createdAt | date}}</td>
+            <td>{{vol.User.role}}</td>
             <td>
                 <button ng-click="ctrl.showClasses(vol)" class="btn btn-primary">Show</button>
             </td>
@@ -71,6 +69,7 @@
     </table>
     <div class="admin-volunteers-section">
         <div class="pane">
+<!--
             <div ng-if="ctrl.volunteerclasses" class="edit-volunteer-section">
                 <h3>{{ctrl.selectedVolunteer.User.name}}'s classes</h3>
                 <table class="table">
@@ -99,6 +98,10 @@
                     </tr>
                 </table>
             </div>
+-->
+        </div>
+    </div>
+</div>
 <!--
             <div class="volunteers-section">
                 <div class="volunteer_container">
@@ -193,6 +196,3 @@
                 <button class="btn btn-primary" ng-click="ctrl.addVolunteer()">Add</button>
             </div>
 -->
-        </div>
-    </div>
-</div>

@@ -12,7 +12,7 @@
 
 import jsonpatch from 'fast-json-patch';
 import {
-  ClassSession,SessionVolunteer,SessionStudent,User
+  ClassSession,SessionVolunteer,SessionStudent,User,Class
 } from '../../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -44,7 +44,9 @@ function handleError(res, statusCode) {
 
 // Gets a list of ClassSessions
 export function index(req, res) {
-  return ClassSession.findAll()
+  return ClassSession.findAll({
+      include: [Class]
+  })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

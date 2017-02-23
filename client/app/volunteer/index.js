@@ -33,6 +33,13 @@ export class VolunteerController {
             console.log("user",res);
             ctrl.myUser = res;
         });
+        
+        $http.get('/api/sessions/')
+        .then(function(res) {
+            console.log("SESSIONS",res);
+            ctrl.sessions = res.data;
+        })
+        
 
     }
 
@@ -48,8 +55,8 @@ export class VolunteerController {
         course.ClassVolunteers.forEach(function(res) {
             volunteers.push(res.userID);
         })
-        console.log("user id",ctrl.myUser._id);
-        console.log("volunteers",volunteers);
+//        console.log("user id",ctrl.myUser._id);
+//        console.log("volunteers",volunteers);
         if(volunteers.indexOf(ctrl.myUser._id) > -1) {
             return true;
         }

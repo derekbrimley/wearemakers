@@ -6,6 +6,8 @@ export default class SignupController {
   user = {
     name: '',
     email: '',
+    organization: '',
+    phone: '',
     password: '',
     type:'student'
   };
@@ -27,6 +29,8 @@ export default class SignupController {
       return this.Auth.createUser({
         name: this.user.name,
         email: this.user.email,
+        organization: this.user.organization,
+        phone: this.user.phone,
         password: this.user.password,
         type: this.user.type
       })
