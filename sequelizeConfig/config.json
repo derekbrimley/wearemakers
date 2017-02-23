@@ -14,10 +14,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": "",
-    "database": "refugee",
-    "host": "",
+    "username": "ebroot",
+    "password": "RefugeesWelcome",
+    "database": "wearemakers",
+    "host": "wearemakers.cbjotvroofex.us-west-2.rds.amazonaws.com",
     "dialect": "postgres"
   }
 }

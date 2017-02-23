@@ -15,7 +15,7 @@ module.exports = {
     || 8080,
 
     sequelize: {
-      dbName: 'refugee',
+      dbName: 'wearemakers',
       user: process.env.DB_USER,
       pass: process.env.DB_PASS,
       host: process.env.DB_URL
