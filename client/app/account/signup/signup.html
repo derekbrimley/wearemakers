@@ -10,7 +10,7 @@
               <label>I am a ...</label>
 
                 <div class="radio">
-                  <label><input type="radio" name="type" value="student" ng-model="type" selected>Student</label>
+                  <label><input type="radio" name="type" value="student" ng-model="vm.user.type" selected>Student</label>
                 </div>
                 <div class="radio">
                   <label><input type="radio" value="volunteer" name="type" ng-model="vm.user.type">Volunteer</label>
@@ -41,6 +41,43 @@
             {{ vm.errors.email }}
           </p>
         </div>
+        <div class="form-group" ng-if="vm.user.type=='student'">
+            <label>Gender</label>
+
+            <select ng-model="vm.user.gender" class="form-control">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+        </div>
+        <div class="form-group" ng-if="vm.user.type=='student'">
+            <label>Grade</label>
+            <select ng-model="vm.user.grade" class="form-control">
+                <option value="1">1st</option>
+                <option value="2">2nd</option>
+                <option value="3">3rd</option>
+                <option value="4">4th</option>
+                <option value="5">5th</option>
+                <option value="6">6th</option>
+                <option value="7">7th</option>
+                <option value="8">8th</option>
+                <option value="9">9th</option>
+                <option value="10">10th</option>
+                <option value="11">11th</option>
+                <option value="12">12th</option>
+            </select>
+
+        </div>
+        <div class="form-group" ng-if="vm.user.type=='student'">
+            <label>Community</label>
+            <input type="text" class="form-control" ng-model="vm.user.community"/>
+
+        </div>
+        <div class="form-group" ng-if="vm.user.type=='student'">
+            <label>Primary Language</label>
+            <input type="text" class="form-control" ng-model="vm.user.primaryLanguage"/>
+
+        </div>
         <div class="form-group" ng-if="vm.user.type=='volunteer'">
           <label>Organization</label>
 
@@ -53,7 +90,6 @@
           <input type="text" name="phone" class="form-control" ng-model="vm.user.phone"/>
 
         </div>
-
         <div class="form-group" ng-class="{ 'has-success': form.password.$valid && vm.submitted,
                                             'has-error': form.password.$invalid && vm.submitted }">
           <label>Password</label>
