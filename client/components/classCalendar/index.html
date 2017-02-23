@@ -1,0 +1,26 @@
+<div class="class-calendar">
+    <div class="calendar">
+        <div class="nav-buttons">
+            <button class="btn btn-primary" ng-click="ctrl.previousWeek()">Previous</button>
+            <button class="btn btn-primary" ng-click="ctrl.currentWeek()">Current</button>
+            <button class="btn btn-primary" ng-click="ctrl.nextWeek()">Next</button>
+        </div>
+        <div class="day-section">
+            <div class="day" ng-repeat="day in ctrl.days">
+                <div class="day-header">
+                    <div class="day-name">
+                        {{day.format("ddd")}}
+                    </div>
+                    <div class="day-number">
+                        {{day.format("M/D")}}
+                    </div>
+                </div>
+                <div class="day-body">
+                    <div class="session" ng-click="ctrl.createSession(class,day)" ng-repeat="class in ctrl.classes | filter:{day: day.format('dddd')} | orderBy: 'startTime'">
+                        {{class.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

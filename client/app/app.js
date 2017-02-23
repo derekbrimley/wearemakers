@@ -26,11 +26,12 @@ import main from './main/main.component';
 import front from './front/front.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
+import calendar from '../components/classCalendar';
 
 import './app.scss';
 
 angular.module('refugeeApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, _Auth,
-    account, admin, navbar, footer, main, front, constants, util, student, volunteer
+    account, admin, navbar, footer, main, front, constants, util, student, volunteer,calendar
   ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth, $state) {
