@@ -9,7 +9,7 @@ import students from './students';
 import volunteers from './volunteers';
 import reports from './reports';
 import classEditor from '../../components/classEditor';
-export default angular.module('refugeeApp.admin', ['refugeeApp.auth', 'ui.router',classes, classEditor, volunteers, students, scheduling, reports])
+export default angular.module('refugeeApp.admin', ['refugeeApp.auth', 'ui.router', classes, classEditor, volunteers, students, scheduling, reports])
   .config(routes)
   .controller('AdminController', AdminController)
   .name;
