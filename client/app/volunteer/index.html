@@ -27,24 +27,27 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
         </table>
     </uib-tab>
 
-    <uib-tab index="1" heading="All Classes">
+    <uib-tab index="1" heading="Class Info">
         <table class="table">
             <tr>
                 <th>Name</th>
                 <th>Location</th>
                 <th>Day</th>
                 <th>Time</th>
-                <th>Details</th>
-                <th>Action</th>
+<!--                <th>Details</th>-->
+<!--                <th>Action</th>-->
             </tr>
-            <tr ng-repeat="course in ctrl.classes">
+            <tr ng-repeat="course in ctrl.classes"  ng-click="ctrl.showDetails(course)" style="cursor:pointer">
                 <td>{{course.name}}</td>
                 <td>{{course.location}}</td>
                 <td>{{course.day}}</td>
                 <td>{{course.startTime | date: 'HH:mm a' }} to {{course.endTime | date: 'HH:mm a'}}</td>
+<!--
                 <td>
                     <button ng-click="ctrl.showDetails(course)" class="btn btn-primary">Show</button>
                 </td>
+-->
+<!--
                 <td>
                     <div ng-if="!ctrl.showRequest(course)">
                         <button ng-if="course.added == True" ng-click="ctrl.request_course(course)" class="btn btn-primary">Request</button>
@@ -53,6 +56,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                     <div ng-if="ctrl.showRequest(course)">Requested</div>
 
                 </td>
+-->
             </tr>
 
         </table>

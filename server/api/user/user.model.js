@@ -44,6 +44,7 @@ export default function(sequelize, DataTypes) {
     type: {
       type: DataTypes.STRING
     },
+    notes: DataTypes.TEXT,
     organization: DataTypes.STRING,
     phone: DataTypes.STRING,
     gender: DataTypes.STRING,
