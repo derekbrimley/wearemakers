@@ -7,6 +7,7 @@ export class AdminScheduling {
     constructor($http){
         'ngInject'
         var ctrl = this;
+        this.$http = $http;
         ctrl.attendance_options = ['Attended','Absent','Excused'];
     }
 
