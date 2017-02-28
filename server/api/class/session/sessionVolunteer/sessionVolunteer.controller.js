@@ -52,13 +52,29 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+export function findSession(req, res) {
+    console.log("RES",res);
+    return SessionVolunteer.find({
+        where: {
+            $and: {
+                sessionID: req.body.sessionID,
+                userID: req.body.userID
+            }
+            
+        }
+    })
+    .then(handlEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res))
+}
+
 // Creates a new SessionVolunteer in the DB
 export function create(req, res) {
     req.body.sessionID = req.classSession._id;
-    if(_.find(req.classSession.SessionVolunteers,{userID:req.body.userID})){
-        res.status(403).json({message:'Volunteer is already registered for this course'})
-        return;
-    }
+//    if(_.find(req.classSession.SessionVolunteers,{userID:req.body.userID,sessionID:req.body.sessionID})){
+//        res.status(403).json({message:'Volunteer is already registered for this course'})
+//        return;
+//    }
 
   return SessionVolunteer.create(req.body,{include:[User]})
     .then(respondWithResult(res, 201))
