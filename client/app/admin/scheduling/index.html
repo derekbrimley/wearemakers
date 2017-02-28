@@ -17,59 +17,90 @@
                 <strong>Location:</strong> {{ctrl.selectedSession.Class.location}}
             </div>
         </div>
-        <div class="volunteers-section">
-            <h3>Volunteers</h3>
-            <div class="assigned-volunteers">
-                <h4>Assigned</h4>
-                <div class="assigned volunteer" ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
-                    <div>
-                        {{volunteer.User.name}}
+
+        <!-- session volunteer and student section -->
+        <uib-tabset active="active">
+
+            <uib-tab index="0" heading="Volunteers">
+
+                <div class="volunteers-section">
+                    <div class="assigned-volunteers">
+                        <h4>Assigned</h4>
+                        <div class="assigned volunteer" ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
+                            <div>
+                                {{volunteer.User.name}}
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" ng-click="ctrl.removeFromSession(volunteer)">Remove</button>
+                            </div>
+                        </div>
+                        <div ng-show="ctrl.selectedSession.SessionVolunteers.length == 0" class="">
+                            No volunteers are assigned to this session.
+                        </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary" ng-click="ctrl.removeFromSession(volunteer)">Remove</button>
+                    <div class="interested-volunteers">
+                        <h4>Interested</h4>
+                        <div ng-if="ctrl.notInSession(volunteer)" class="interested volunteer" ng-repeat="volunteer in ctrl.selectedSession.Class.ClassVolunteers">
+                            <div>
+                                {{volunteer.User.name}}
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" ng-click="ctrl.assignToSession(volunteer)">Assign</button>
+                            </div>
+                        </div>
+                        <div ng-show="ctrl.selectedSession.Class.ClassVolunteers.length == 0" class="">
+                            No volunteers have shown interest in this course.
+                        </div>
                     </div>
                 </div>
-                <div ng-show="ctrl.selectedSession.SessionVolunteers.length == 0" class="">
-                    No volunteers are assigned to this session.
-                </div>
-            </div>
-            <div class="interested-volunteers">
-                <h4>Interested</h4>
-                <div ng-if="ctrl.notInSession(volunteer)" class="interested volunteer" ng-repeat="volunteer in ctrl.selectedSession.Class.ClassVolunteers">
-                    <div>
-                        {{volunteer.User.name}}
+
+                <div ng-show="ctrl.selectedSession" class="session-attendance-section">
+                    <div class="session-header">
+                        <h3>{{ctrl.selectedSession.Class.name}} Attendance</h3>
+                        <table class="table">
+                            <tr>
+                                <th>Name</th>
+                                <th>Attended</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
+                                <td>{{volunteer.User.name}}</td>
+                                <td>
+                                    <select class="form-control" ng-if="volunteer.saved == false" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>
+                                    <p ng-if="volunteer.saved != false">{{volunteer.attendance}}</p><br>
+                                </td>
+                                <td>
+                                    <button ng-if="volunteer.saved == false" ng-click="ctrl.saveAttendance(volunteer)" class="btn btn-primary">Save</button>
+                                    <button ng-if="volunteer.saved == true || ctrl.selectedVolunteer != volunteer._id" ng-click="ctrl.editAttendance(volunteer)" class="btn btn-warning">Edit</button>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div>
-                        <button class="btn btn-primary" ng-click="ctrl.assignToSession(volunteer)">Assign</button>
+                </div>
+
+            </uib-tab>
+
+            <uib-tab index="1" heading="Students" ng-click="ctrl.createStudentSession()">
+                <h3>Attendance</h3>
+
+                
+
+                    <div class="students-section">
+                        <h4>Registered Students</h4>
+                        <table class="table">
+                            <tr>
+                                <th>ID</th>
+                                <th>Attendance</th>
+                            </tr>
+                            <tr class="student" ng-repeat="student in ctrl.selectedSession.SessionStudents">
+                                <td>{{student.userID}}</td>
+                                <td>{{student.attendance}}</td>
+                            </tr>
+                        </table>
                     </div>
-                </div>
-                <div ng-show="ctrl.selectedSession.Class.ClassVolunteers.length == 0" class="">
-                    No volunteers have shown interest in this course.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div ng-show="ctrl.selectedSession" class="session-attendance-section">
-        <div class="session-header">
-            <h3>{{ctrl.selectedSession.Class.name}} Attendance</h3>
-            <table class="table">
-                <tr>
-                    <th>Name</th>
-                    <th>Attended</th>
-                    <th>Action</th>
-                </tr>
-                <tr ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
-                    <td>{{volunteer.User.name}}</td>
-                    <td>
-                        <select class="form-control" ng-if="volunteer.saved == false" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>
-                        <p ng-if="volunteer.saved != false">{{volunteer.attendance}}</p><br>
-                    </td>
-                    <td>
-                        <button ng-if="volunteer.saved == false" ng-click="ctrl.saveAttendance(volunteer)" class="btn btn-primary">Save</button>
-                        <button ng-if="volunteer.saved == true || ctrl.selectedVolunteer != volunteer._id" ng-click="ctrl.editAttendance(volunteer)" class="btn btn-warning">Edit</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                    <div ng-show="ctrl.class.ClassStudents.length == 0">No students registered</div>
+            </uib-tab>
+        </uib-tabset>
+
     </div>
 </div>

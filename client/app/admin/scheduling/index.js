@@ -79,6 +79,28 @@ export class AdminScheduling {
             return true;
         })
     }
+
+    createStudentSession(){
+        var ctrl = this;
+
+        // console.log('student '+ ctrl.selectedSession.Class.ClassStudents[0]._id)
+        // console.log('classID '+ classID)
+        // console.log('sessionid ' + ctrl.selectedSession._id);
+
+        var length = ctrl.selectedSession.Class.ClassStudents.length
+
+        angular.forEach(ctrl.selectedSession.Class.ClassStudents, function(value, key) {
+              ctrl.$http.post('/api/classes/'+ctrl.selectedSession.Class._id+'/sessions/'+ctrl.selectedSession._id+'/students/register' ,{userID:value.userID})
+            .then(function(res){
+                console.log("RES",res);
+
+            },function(err){
+                console.log("ERR",err);
+
+            })
+        });
+
+    }
 }
 
 export default angular.module('refugeeApp.adminScheduling', ['refugeeApp.auth', 'ui.router'])
