@@ -9,8 +9,9 @@ var router = express.Router();
 router.get('/',auth.hasRole('admin'), controller.index);
 router.get('/register', auth.isType('sessionVolunteer'), controller.register);
 router.get('/:id',auth.hasRole('admin'), controller.show);
+router.get('/find', auth.hasRole('admin'), controller.findSession);
 //router.get('/:id',auth.hasRole('admin'), controller.show);
-router.post('/', auth.hasRole('admin'), controller.create);
+router.post('/', auth.hasRole('user'), controller.create);
 router.put('/:id', auth.hasRole('admin'), controller.update);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 

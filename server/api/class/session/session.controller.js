@@ -45,7 +45,7 @@ function handleError(res, statusCode) {
 // Gets a list of ClassSessions
 export function index(req, res) {
   return ClassSession.findAll({
-      include: [Class]
+      include: [Class, SessionVolunteer, SessionStudent]
   })
     .then(respondWithResult(res))
     .catch(handleError(res));

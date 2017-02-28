@@ -34,15 +34,88 @@ export class VolunteerController {
             ctrl.myUser = res;
         });
         
+        ctrl.userSessions = {};
+        
         $http.get('/api/sessions/')
         .then(function(res) {
             console.log("SESSIONS",res);
+            
             ctrl.sessions = res.data;
+            
+            res.data.forEach(function(session) {
+
+                session.SessionVolunteers.forEach(function(sessionVolunteer) {
+                    if(sessionVolunteer.userID == ctrl.myUser._id) {
+                        ctrl.userSessions[sessionVolunteer.sessionID] = {
+                            id: sessionVolunteer._id,
+                            attendance: sessionVolunteer.attendance,
+                            
+                        }
+                    }
+                })
+            });
+            console.log("User sessions",ctrl.userSessions);
         })
         
-
+//        this.$http.get('/api/classes/' + ctrl.session.Class._id + '/sessions/' + ctrl.session._id + '/volunteers/')
+//        .then(function(res) {
+//            console.log("SESSION Volunteers", res);
+//            ctrl.sessionVolunteers = res;
+//        })
+        
+        ctrl.attendanceOptions = ['Yes','No','On Call'];
     }
 
+//    checkSession(session) {
+//        this.$http.get('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/')
+//        .then(function(res) {
+//            console.log("SESSION Volunteers", res);
+//        })
+//        return true;
+//    }
+//    
+    checkSession(id) {
+        var ctrl = this;
+        return id in ctrl.userSessions;
+    }
+    
+    updateAttendance(session) {
+        var ctrl = this;
+        
+        var body = {
+            userID: ctrl.myUser._id,
+            sessionID: session._id,
+            attendance: ctrl.userSessions[session._id].attendance
+        }
+        
+        this.$http.put('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/' + ctrl.userSessions[session._id].id, body)
+        .then(function(res) {
+            console.log("UPDATE sessionvolunteer RES", res);
+        })
+        
+//        this.$http.post('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/', body)
+//        .then(function(res) {
+//            console.log("RES", res);
+//            ctrl.attendanceMarked = true;
+//        })
+        
+//        this.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/')
+    }
+    
+    createAttendance(session) {
+        var ctrl = this;
+        var body = {
+            userID: ctrl.myUser._id,
+            sessionID: session._id,
+            attendance: ctrl.userSessions[session._id].attendance
+        }
+        
+        this.$http.post('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/', body)
+        .then(function(res) {
+            console.log("CREATE sessionvolunteer RES", res);
+        })
+    }
+    
     showDetails(course) {
         var ctrl = this;
         ctrl.selectedCourse = course;

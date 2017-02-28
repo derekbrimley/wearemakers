@@ -26,8 +26,65 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
             </tr>
         </table>
     </uib-tab>
-
-    <uib-tab index="1" heading="Class Info">
+    <uib-tab index="1" heading="Classes">
+        <h3>Upcoming Classes</h3>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Attending</th>
+                </tr>
+                <tr ng-repeat="session in ctrl.sessions">
+                    <td>{{session.Class.name}}</td>
+                    <td>{{session.date | date}}</td>
+                    <td>{{session.Class.startTime | date: 'HH:mm a'}}</td>
+                    <td ng-if="ctrl.checkSession(session._id)">
+                        <select class="form-control" ng-model="ctrl.userSessions[session._id].attendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-change="ctrl.updateAttendance(session)"></select>
+<!--                        <select class="form-control" ng-model="ctrl.volunteerSession.attendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-blur="ctrl.updateAttendance(session)"></select>-->
+                    </td>
+                    <td ng-if="!ctrl.checkSession(session._id)">
+                        <select class="form-control" ng-model="ctrl.userSessions[session._id].attendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-change="ctrl.createAttendance(session)"></select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+<!--        <class-calendar on-select="ctrl.sessionSelected" selected-session="ctrl.selectedSession"></class-calendar>-->
+<!--
+        <div ng-if="ctrl.selectedSession">
+            <div class="session-header">
+                <div class="class-name">
+                    {{ctrl.selectedSession.Class.name}}
+                </div>
+                <div class="">
+                    {{ctrl.selectedDate.format("M/D")}}
+                </div>
+            </div>
+            <div class="session-info">
+                <div class="date">
+                    <strong>Date:</strong>
+                    {{ctrl.selectedSession.date | date}}
+                </div>
+                <div class="time">
+                    <strong>Start Time:</strong> {{ctrl.selectedSession.Class.startTime | date: 'HH:mm a'}}
+                </div>
+                <div class="location">
+                    <strong>Location:</strong> {{ctrl.selectedSession.Class.location}}
+                </div>
+            </div>
+            <div>
+                <div class="attending">
+                    <strong>Will you attend this session?</strong>
+                    <select class="form-control" ng-model="ctrl.selectedSession.attendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-blur="ctrl.updateAttendance()"></select>
+                    <select class="form-control" ng-model="ctrl.selected_status" ng-options="status for status in ctrl.statuses" ng-change="ctrl.filterChanged()" id="status">
+            </select>
+                </div>
+            </div>
+        </div>
+-->
+    </uib-tab>
+    <uib-tab index="2" heading="Class Info">
         <table class="table">
             <tr>
                 <th>Name</th>
@@ -68,7 +125,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
         </div>
     </uib-tab>
 
-    <uib-tab index="2" heading="Profile">
+    <uib-tab index="3" heading="Profile">
         <div ng-if="ctrl.myUser" class="edit-volunteer-section">
             <h3>Edit {{ctrl.myUser.name}}</h3>
             <div class="form-group">
