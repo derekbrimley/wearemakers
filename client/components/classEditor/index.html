@@ -1,18 +1,24 @@
 <div ng-show="ctrl.class" class="class-editor">
-    <div class="section student-section">
+    <div ng-if="(ctrl.class.ClassStudents | filter:{status:'pending'}).length > 0" class="section student-section">
+        <h4>Pending Students</h4>
+        <div class="student"  ng-repeat="student in ctrl.class.ClassStudents | filter:{status:'pending'}">
+            {{student.User.name}} <button class="btn btn-primary" ng-click="ctrl.approve(student)">Approve</button>
+        </div>
+    </div>
+    <div class="section student-section" ng-if="(ctrl.class.ClassStudents | filter:{status:'Active'}).length > 0" >
         <h4>Registered Students</h4>
-        <div class="student" ng-repeat="student in ctrl.class.ClassStudents">
-            <strong>Name:</strong> &nbsp{{student.User.name}}
+        <div class="student" ng-repeat="student in ctrl.class.ClassStudents | filter:{status:'Active'}">
+            {{student.User.name}}
         </div>
     </div>
     <div ng-show="ctrl.class.ClassStudents.length == 0">No students registered</div>
-    <div class=" section volunteer-section">
+    <!-- <div class=" section volunteer-section">
         <h4>Registered Volunteers</h4>
         <div class="volunteer" ng-repeat="volunteer in ctrl.class.ClassVolunteers">
             {{volunteer.User.name}}
         </div>
 
         <div ng-show="ctrl.class.ClassVolunteers.length == 0">No volunteers registered</div>
-    </div>
+    </div> -->
 </div>
-<h3 ng-hide="ctrl.class">Select a class to view its students/volunteers</h3>
+<h3 ng-hide="ctrl.class">Select a class</h3>

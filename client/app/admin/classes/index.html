@@ -2,9 +2,9 @@
     <div class="pane">
         <div class="classes-section">
             <h3>Classes</h3>
-            <div class="class" ng-repeat="class in ctrl.classes">
+            <div class="class" ng-repeat="course in ctrl.classes">
                 <div>
-                    Name: <span class="class-name" ng-click="ctrl.select(class)"> {{class.name}} </span>
+                    <span class="class-name" ng-click="ctrl.select(course)"> {{course.name}} <span ng-if="(course.ClassStudents | filter:{status:'pending'}).length" class="badge" ng-bind="(course.ClassStudents | filter:{status:'pending'}).length"></span></span>
                 </div>
                 <div>
                     <span class="glyphicon glyphicon-remove" ng-click="ctrl.removeClass(class)"></span>
