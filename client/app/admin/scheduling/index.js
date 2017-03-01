@@ -80,6 +80,31 @@ export class AdminScheduling {
         })
     }
 
+    saveStudentAttendance(student) {
+        student.saved = true;
+        console.log(student.showSave);
+    }
+
+    markStudentAttendance(student) {
+        var ctrl = this;
+        var body = {
+            attendance: student.attendance
+        }
+        ctrl.selectedStudent = student._id;
+        console.log("MARK ATTENDANCE",body);
+        ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/students/' + student._id, body)
+        .then(function(res) {
+            console.log("RES", res);
+            student.showSave = true;
+        })
+    }
+
+    editStudentAttendance(student) {
+        var ctrl = this;
+        student.saved = false;
+        ctrl.selectedStudent = student._id;
+    }
+
     createStudentSession(){
         var ctrl = this;
 

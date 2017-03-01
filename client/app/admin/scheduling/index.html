@@ -66,11 +66,11 @@
                             <tr ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
                                 <td>{{volunteer.User.name}}</td>
                                 <td>
-                                    <select class="form-control" ng-if="volunteer.saved == false" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>
-                                    <p ng-if="volunteer.saved != false">{{volunteer.attendance}}</p><br>
+                                    <select class="form-control" ng-if="volunteer.saved == false && ctrl.selectedVolunteer==volunteer._id" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>
+                                    <p ng-if="volunteer.saved != false || ctrl.selectedVolunteer!=volunteer._id">{{volunteer.attendance}}</p><br>
                                 </td>
                                 <td>
-                                    <button ng-if="volunteer.saved == false" ng-click="ctrl.saveAttendance(volunteer)" class="btn btn-primary">Save</button>
+                                    <button ng-if="volunteer.saved == false && ctrl.selectedVolunteer==volunteer._id" ng-click="ctrl.saveAttendance(volunteer)" class="btn btn-primary">Save</button>
                                     <button ng-if="volunteer.saved == true || ctrl.selectedVolunteer != volunteer._id" ng-click="ctrl.editAttendance(volunteer)" class="btn btn-warning">Edit</button>
                                 </td>
                             </tr>
@@ -89,12 +89,20 @@
                         <h4>Registered Students</h4>
                         <table class="table">
                             <tr>
-                                <th>ID</th>
-                                <th>Attendance</th>
+                                <th>Name</th>
+                                <th>Attended</th>
+                                <th>Action</th>
                             </tr>
                             <tr class="student" ng-repeat="student in ctrl.selectedSession.SessionStudents">
                                 <td>{{student.User.name}}</td>
-                                <td>{{student.attendance}}</td>
+                                <td>
+                                    <select class="form-control" ng-if="student.saved == false && ctrl.selectedStudent==student._id" ng-model="student.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markStudentAttendance(student)"></select>
+                                    <p ng-if="student.saved != false || ctrl.selectedStudent!=student._id">{{student.attendance}}</p><br>
+                                </td>
+                                <td>
+                                    <button ng-if="student.saved == false && ctrl.selectedStudent==student._id" ng-click="ctrl.saveStudentAttendance(student)" class="btn btn-primary">Save</button>
+                                    <button ng-if="student.saved == true || ctrl.selectedStudent != student._id" ng-click="ctrl.editStudentAttendance(student)" class="btn btn-warning">Edit</button>
+                                </td>
                             </tr>
                         </table>
                     </div>
