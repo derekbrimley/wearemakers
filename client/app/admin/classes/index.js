@@ -42,17 +42,31 @@ export class AdminClasses {
         })
     }
 
-    select(course){
+    select(course,saved){
         var ctrl = this;
         course.startTime = new Date(course.startTime);
         course.endTime = new Date(course.endTime);
-        ctrl.selectedClass = course;
+        ctrl.selectedClassEdit = course;
+        
+        course.saved = saved;
     }
 
     updateClass(){
-        this.$http.put('/api/classes/'+this.selectedClass._id,this.selectedClass)
+        this.$http.put('/api/classes/'+this.selectedClassEdit._id,this.selectedClassEdit)
         .then(res =>{
             console.log("RES Updates",res);
+        })
+    }
+
+    showStudents(course) {
+        var ctrl = this;
+//        course.showStudents = true;
+        
+        this.$http.get('/api/classes/showStudents/' + course._id)
+        .then(function(res) {
+            console.log("STUDENTS", res);
+            ctrl.students = res.data;
+            ctrl.selectedClass = true;
         })
     }
 }

@@ -1,6 +1,77 @@
 <div class="admin-classes-section">
     <div class="pane">
         <div class="classes-section">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Info</th>
+                    <th>Volunteer Info</th>
+                    <th>Students</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                </tr>
+                <tr ng-repeat="class in ctrl.classes">
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.name}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.name" class="form-control">
+                    </td>
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.location}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.location" class="form-control">
+                    </td>
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.day}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.day" class="form-control">
+                    </td>
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startTime | date}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.startTime" class="form-control">
+                    </td>
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startDate | date}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.startDate" class="form-control">
+                    </td>
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.endDate | date}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.endDate" class="form-control">
+                    </td>
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.info}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.info" class="form-control">
+                    </td>
+                    <td style="max-width:50px; overflow:hidden;" ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.volunteerInfo}}</td>
+                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
+                        <input ng-blur="ctrl.updateClass()" ng-model="class.volunteerInfo" class="form-control">
+                    </td>
+                    
+                    <td>
+                        <button ng-click="ctrl.showStudents(class)" class="btn btn-primary">Show</button>
+                    </td>
+                    <td>
+                        <button ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id" ng-click="ctrl.select(class,false)" class="btn btn-primary">Edit</button>
+                        <button ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id" ng-click="ctrl.select(class,true)" class="btn btn-warning">Save</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" ng-click="ctrl.removeClass(class)">Remove</button>
+                    </td>
+                </tr>
+            </table>
+            <div ng-if="ctrl.selectedClass">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                    <tr ng-repeat="stud in ctrl.students">
+                        <td>{{stud.User.name}}</td>
+                    </tr>
+                </table>
+            </div>
+<!--
             <h3>Classes</h3>
             <div class="class" ng-repeat="class in ctrl.classes">
                 <div>
@@ -142,7 +213,10 @@
             <button class="btn btn-primary" ng-click="ctrl.addClass()">Add</button>
         </div>
     </div>
-    <div class="right-pane">
+-->
+<!--
+    <div>
         <class-editor class="ctrl.selectedClass"></class-editor>
     </div>
+-->
 </div>
