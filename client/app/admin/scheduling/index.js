@@ -85,7 +85,7 @@ export class AdminScheduling {
 
         // console.log('student '+ ctrl.selectedSession.Class.ClassStudents[0]._id)
         // console.log('classID '+ classID)
-        // console.log('sessionid ' + ctrl.selectedSession._id);
+        console.log(ctrl.selectedSession);
 
         var length = ctrl.selectedSession.Class.ClassStudents.length
 

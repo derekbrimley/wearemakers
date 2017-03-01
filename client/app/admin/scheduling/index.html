@@ -93,7 +93,7 @@
                                 <th>Attendance</th>
                             </tr>
                             <tr class="student" ng-repeat="student in ctrl.selectedSession.SessionStudents">
-                                <td>{{student.userID}}</td>
+                                <td>{{student.User.name}}</td>
                                 <td>{{student.attendance}}</td>
                             </tr>
                         </table>
