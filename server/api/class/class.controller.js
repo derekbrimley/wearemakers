@@ -112,11 +112,10 @@ export function show(req, res) {
 export function showStudents(req, res) {
   return ClassStudent.findAll({
       where: {
-        userID: req.params.id 
+        classID: req.params.id 
       },
       include:[{
-        model:Class,
-        attributes:['name']
+        model:User
       }]
     })
     .then(handleEntityNotFound(res))
