@@ -45,13 +45,29 @@ export class AdminStudents {
     }
 
     showStudents(stud){
-            var ctrl = this;
-            //this.$http.get('/api/classes/' + course._id +'/students/showStudents' )
-            this.$http.get('/api/classes/showStudents/' + stud._id)
-            .then(function(res){
-                console.log("RES",res.data);
-                ctrl.selectedStudent = res.data
-        })
+        var ctrl = this;
+        var isStud;
+        var addedStudents = {}
+        var notAddedStudents = {}
+
+        this.$http.get('/api/classes/')
+        .then(function(res){
+            ctrl.selectedStudent = res.data   
+            angular.forEach(ctrl.selectedStudent, function(classStud, key) {
+                isStud = 0;
+                angular.forEach(classStud.ClassStudents,function(student,key2){
+                    if(stud._id ==student.userID){
+                        addedStudents[classStud.name]=student
+                        isStud = 1;
+                    }
+                });
+                if(isStud == 0){
+                    notAddedStudents[classStud.name]=classStud
+                }
+            });
+        })  
+        ctrl.addedStudents = addedStudents
+        ctrl.notAddedStudents = notAddedStudents
     }
 
     select(student,saved){
