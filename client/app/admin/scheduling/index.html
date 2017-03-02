@@ -1,6 +1,7 @@
 <div class="admin-scheduling-section">
     <class-calendar on-select="ctrl.sessionSelected" selected-session="ctrl.selectedSession"></class-calendar>
     <div ng-show="ctrl.selectedSession" class="session-section">
+<!--
         <div class="session-header">
             <div class="class-name">
                 {{ctrl.selectedSession.Class.name}}
@@ -9,6 +10,8 @@
                 {{ctrl.selectedDate.format("M/D")}}
             </div>
         </div>
+-->
+<!--
         <div class="session-info">
             <div class="time">
                 <strong>Start Time:</strong> {{ctrl.selectedSession.Class.startTime | date: 'HH:mm a'}}
@@ -17,6 +20,7 @@
                 <strong>Location:</strong> {{ctrl.selectedSession.Class.location}}
             </div>
         </div>
+-->
 
         <!-- session volunteer and student section -->
         <uib-tabset active="active">
@@ -24,8 +28,39 @@
             <uib-tab index="0" heading="Volunteers">
 
                 <div class="volunteers-section">
+                    <h3>Promised Attendance</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Attendance</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr ng-repeat="vol in ctrl.selectedSession.SessionVolunteers | filter:{plannedAttendance:'!'+'No'}">
+                            <td>{{vol.User.name}}</td>
+                            <td>{{vol.User.email}}</td>
+                            <td>{{vol.User.phone}}</td>
+                            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.plannedAttendance}}</td>
+                            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
+                                <select class="form-control" ng-model="vol.plannedAttendance" ng-options="attendance for attendance in ctrl.planned_attendance_options" ng-change="ctrl.changePlannedAttendance(vol)"></select>
+                                
+<!--                                <select class="form-control" ng-if="volunteer.saved == false && ctrl.selectedVolunteer==volunteer._id" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>-->
+                            </td>
+                            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">
+                                <button ng-click="ctrl.select(vol,false)" class="btn btn-primary">Edit</button>
+                            </td>
+                            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
+                                <button ng-click="ctrl.select(vol,true)" class="btn btn-warning">Save</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div ng-show="ctrl.selectedSession.SessionVolunteers.length == 0" class="">
+                        No volunteers are assigned to this session.
+                    </div>
+<!--
                     <div class="assigned-volunteers">
-                        <h4>Assigned</h4>
+                        <h4>Attending</h4>
                         <div class="assigned volunteer" ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
                             <div>
                                 {{volunteer.User.name}}
@@ -34,9 +69,7 @@
                                 <button class="btn btn-primary" ng-click="ctrl.removeFromSession(volunteer)">Remove</button>
                             </div>
                         </div>
-                        <div ng-show="ctrl.selectedSession.SessionVolunteers.length == 0" class="">
-                            No volunteers are assigned to this session.
-                        </div>
+                        
                     </div>
                     <div class="interested-volunteers">
                         <h4>Interested</h4>
@@ -52,18 +85,19 @@
                             No volunteers have shown interest in this course.
                         </div>
                     </div>
+-->
                 </div>
 
                 <div ng-show="ctrl.selectedSession" class="session-attendance-section">
                     <div class="session-header">
-                        <h3>{{ctrl.selectedSession.Class.name}} Attendance</h3>
+                        <h3>Attendance</h3>
                         <table class="table">
                             <tr>
                                 <th>Name</th>
                                 <th>Attended</th>
                                 <th>Action</th>
                             </tr>
-                            <tr ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers">
+                            <tr ng-repeat="volunteer in ctrl.selectedSession.SessionVolunteers | filter:{plannedAttendance:'!'+'No'}">
                                 <td>{{volunteer.User.name}}</td>
                                 <td>
                                     <select class="form-control" ng-if="volunteer.saved == false && ctrl.selectedVolunteer==volunteer._id" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>

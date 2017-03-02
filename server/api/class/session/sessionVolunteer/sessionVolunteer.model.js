@@ -15,6 +15,9 @@ export default function(sequelize, DataTypes) {
         attendance: {
             type: DataTypes.STRING
         },
+        plannedAttendance: {
+            type: DataTypes.STRING
+        },
 		sessionID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

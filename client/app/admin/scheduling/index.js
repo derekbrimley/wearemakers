@@ -8,9 +8,35 @@ export class AdminScheduling {
         'ngInject'
         var ctrl = this;
         this.$http = $http;
+        
         ctrl.attendance_options = ['Attended','Absent','Excused'];
+        
+        ctrl.planned_attendance_options = ['Yes','On Call'];
     }
 
+    select(vol,saved) {
+        var ctrl = this;
+        
+        ctrl.selectedVolunteerEdit = vol;
+//        vol.plannedAttendance = ctrl.selectedVolunteerEdit.plannedAttendance;
+        vol.saved = saved;
+    }
+    
+    changePlannedAttendance(vol) {
+        var ctrl = this;
+        
+        var body = {
+            userID: vol.User._id,
+            sessionID: ctrl.selectedSession._id,
+            plannedAttendance: vol.plannedAttendance
+        }
+        
+        this.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + vol._id, body)
+        .then(function(res) {
+            console.log("UPDATE sessionvolunteer RES", res);
+        })
+    }
+    
     assignToSession(volunteer){
         var ctrl = this;
         console.log(ctrl.selectedSession);

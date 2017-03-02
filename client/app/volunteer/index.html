@@ -41,11 +41,11 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                     <td>{{session.date | date}}</td>
                     <td>{{session.Class.startTime | date: 'HH:mm a'}}</td>
                     <td ng-if="ctrl.checkSession(session._id)">
-                        <select class="form-control" ng-model="ctrl.userSessions[session._id].attendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-change="ctrl.updateAttendance(session)"></select>
+                        <select class="form-control" ng-model="ctrl.userSessions[session._id].plannedAttendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-change="ctrl.updateAttendance(session)"></select>
 <!--                        <select class="form-control" ng-model="ctrl.volunteerSession.attendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-blur="ctrl.updateAttendance(session)"></select>-->
                     </td>
                     <td ng-if="!ctrl.checkSession(session._id)">
-                        <select class="form-control" ng-model="ctrl.userSessions[session._id].attendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-change="ctrl.createAttendance(session)"></select>
+                        <select class="form-control" ng-model="ctrl.userSessions[session._id].plannedAttendance" ng-options="attendance for attendance in ctrl.attendanceOptions" ng-change="ctrl.createAttendance(session)"></select>
                     </td>
                 </tr>
             </table>
