@@ -62,7 +62,7 @@ export class AdminClasses {
         var ctrl = this;
 //        course.showStudents = true;
         
-        this.$http.get('/api/classes/showStudents/' + course._id)
+        this.$http.get('/api/classes/getStudentsFromClass/' + course._id)
         .then(function(res) {
             console.log("STUDENTS", res);
             ctrl.students = res.data;
