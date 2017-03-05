@@ -1,16 +1,17 @@
 'use strict'
+import modal from './modal.controller.js';
 export class AdminClasses {
     newClass = {
         startTime: new Date(1970,1,1,8,0,0,0),
         endTime: new Date(1970,1,1,9,0,0,0)
     }
     /*@ngInject*/
-    constructor($http){
+    constructor($http, $uibModal){
         'ngInject'
 
         var ctrl = this;
         this.$http = $http;
-
+        this.$uibModal = $uibModal;
         $http.get('/api/classes')
         .then(function(res){
             console.log("classes",res);
@@ -47,7 +48,7 @@ export class AdminClasses {
         course.startTime = new Date(course.startTime);
         course.endTime = new Date(course.endTime);
         ctrl.selectedClassEdit = course;
-        
+
         course.saved = saved;
     }
 
@@ -61,7 +62,7 @@ export class AdminClasses {
     showStudents(course) {
         var ctrl = this;
 //        course.showStudents = true;
-        
+
         this.$http.get('/api/classes/getStudentsFromClass/' + course._id)
         .then(function(res) {
             console.log("STUDENTS", res);
@@ -69,9 +70,24 @@ export class AdminClasses {
             ctrl.selectedClass = true;
         })
     }
+
+    openModal(course){
+        this.selectedCourse = course;
+        var modalInstance = this.$uibModal.open({
+          template: require('./modal.html'),
+          controller: 'classModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             class: () => {
+                  return this.selectedCourse;
+              }
+          }
+        });
+    }
 }
 
-export default angular.module('refugeeApp.adminClasses', ['refugeeApp.auth', 'ui.router'])
+export default angular.module('refugeeApp.adminClasses', ['refugeeApp.auth', 'ui.router', modal])
   .component('adminClasses', {
       template: require('./index.html'),
       controller: AdminClasses,

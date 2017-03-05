@@ -48,12 +48,13 @@
                     <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
                         <input ng-blur="ctrl.updateClass()" ng-model="class.volunteerInfo" class="form-control">
                     </td>
-                    
+
                     <td>
                         <button ng-click="ctrl.showStudents(class)" class="btn btn-primary">Show</button>
                     </td>
                     <td>
-                        <button ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id" ng-click="ctrl.select(class,false)" class="btn btn-primary">Edit</button>
+                        <button ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id" ng-click="ctrl.openModal(class)" class="btn btn-primary">Edit</button>
+                        <!-- <button ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id" ng-click="ctrl.select(class,false)" class="btn btn-primary">Edit</button> -->
                         <button ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id" ng-click="ctrl.select(class,true)" class="btn btn-warning">Save</button>
                     </td>
                     <td>

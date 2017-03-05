@@ -59,8 +59,13 @@ var all = {
 
   google: {
     clientID: '1057186204133-qkm0ufj79rdebd958ckbk5htkeje95gn.apps.googleusercontent.com',
-    clientSecret: 'o20YecelyL_Ny40X8eiGCB7C',
+    clientSecret: 'o20YecelyL_Nsy40X8eiGCB7C',
     callbackURL: `${process.env.DOMAIN || ''}/auth/google/callback`
+  },
+
+  aws: {
+      accessKeyId: "AKIAJKGEFSBSAG6NV5UQ",
+      secretAccessKey: "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"
   }
 };
 

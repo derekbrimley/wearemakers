@@ -9,6 +9,7 @@ import sqldb from './sqldb';
 import config from './config/environment';
 import http from 'http';
 import Umzug from 'umzug';
+import bb from 'express-busboy';
 // Populate databases with sample data
 if(config.seedDB) {
   require('./config/seed');
@@ -35,6 +36,7 @@ umzug.up().then(function (migrations) {
 var app = express();
 var server = http.createServer(app);
 require('./config/express').default(app);
+bb.extend(app, {upload: true});
 require('./routes').default(app);
 require('./params').default(app);
 
