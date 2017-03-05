@@ -48,8 +48,7 @@ export class VolunteerController {
                     if(sessionVolunteer.userID == ctrl.myUser._id) {
                         ctrl.userSessions[sessionVolunteer.sessionID] = {
                             id: sessionVolunteer._id,
-                            attendance: sessionVolunteer.attendance,
-                            
+                            plannedAttendance: sessionVolunteer.plannedAttendance,
                         }
                     }
                 })
@@ -85,7 +84,7 @@ export class VolunteerController {
         var body = {
             userID: ctrl.myUser._id,
             sessionID: session._id,
-            attendance: ctrl.userSessions[session._id].attendance
+            plannedAttendance: ctrl.userSessions[session._id].plannedAttendance
         }
         
         this.$http.put('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/' + ctrl.userSessions[session._id].id, body)
@@ -104,16 +103,18 @@ export class VolunteerController {
     
     createAttendance(session) {
         var ctrl = this;
+        
         var body = {
             userID: ctrl.myUser._id,
             sessionID: session._id,
-            attendance: ctrl.userSessions[session._id].attendance
+            plannedAttendance: ctrl.userSessions[session._id].plannedAttendance
         }
         
         this.$http.post('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/', body)
         .then(function(res) {
             console.log("CREATE sessionvolunteer RES", res);
         })
+        
     }
     
     showDetails(course) {

@@ -146,6 +146,7 @@ function initClasses(){
     return Class.bulkCreate([{
         name: 'Intro to programming',
         info: 'This course is designed to help students learn how to better program. It is designed for beginners',
+        volunteerInfo: '',
         location: 'W221',
         startTime: new Date('1970-02-01T15:00:00.000Z'),
         endTime: new Date('1970-02-01T16:00:00.000Z'),
@@ -155,6 +156,7 @@ function initClasses(){
     }, {
         name: 'Professional Development',
         info: 'Students in this course will learn professional skills including: making a resume, interviewing, and business communication.',
+        volunteerInfo: '',
         location: 'Upper Meeting Room',
         startTime: new Date('1970-02-01T16:00:00.000Z'),
         endTime: new Date('1970-02-01T17:00:00.000Z'),
@@ -164,6 +166,7 @@ function initClasses(){
     }, {
         name: 'Game Development',
         info: 'Students will learn to develop simple video games with the Unity Game Engine',
+        volunteerInfo: '',
         location: 'A25',
         startTime: new Date('1970-02-01T15:00:00.000Z'),
         endTime: new Date('1970-02-01T17:00:00.000Z'),
@@ -173,6 +176,7 @@ function initClasses(){
     }, {
         name: 'ESL',
         info: 'The primary focus of this course is to help students have a better command of the English language.',
+        volunteerInfo: '',
         location: 'A25',
         startTime: new Date('1970-02-01T18:00:00.000Z'),
         endTime: new Date('1970-02-01T19:00:00.000Z'),

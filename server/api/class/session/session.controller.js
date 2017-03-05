@@ -76,6 +76,9 @@ export function create(req, res) {
         include:[{
             model:SessionVolunteer,
             include:[User]
+        },{
+            model:SessionStudent,
+            include:[User]
         }]})
     .then(function(entity){
         if(entity){

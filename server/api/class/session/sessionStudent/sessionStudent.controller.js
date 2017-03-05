@@ -3,7 +3,7 @@
 import jsonpatch from 'fast-json-patch';
 import _ from 'lodash';
 import {
-  SessionStudent,User
+  SessionStudent,User,ClassStudent
 } from '../../../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -65,11 +65,24 @@ export function create(req, res) {
     .catch(handleError(res));
 }
 
-// Creates a new SessionStudent in the DB
+
 export function register(req, res) {
-  return SessionStudent.create({sessionID:req.session._id, userID:req.user._id})
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
+
+  SessionStudent.find({
+    where:{sessionID:req.classSession._id,
+          userID:req.body.userID      
+  }})
+  .then(function(entity){
+    if(entity){
+            res.status(403).json({message:'Student Session Already exists'})
+            return;
+        }
+        else{
+            return SessionStudent.create({sessionID:req.classSession._id, userID:req.body.userID,attendance:''})
+            .then(respondWithResult(res, 201))
+            .catch(handleError(res));
+        }
+  })
 }
 
 export function update(req, res) {

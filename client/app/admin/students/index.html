@@ -64,14 +64,28 @@
                     <th>Student Status</th>
                     <th>Action</th>
                 </tr>
-                <tr ng-repeat="studClass in ctrl.selectedStudent">
-                    <td>{{studClass.Class.name}}</td>
+                <tr ng-repeat="(key, studClass) in ctrl.addedStudents">
+                    <td>{{key}}</td>
                     <td>{{studClass.status}}</td>
                     <td ng-if="studClass.status == 'Active'">
                         <button class="btn btn-warning" ng-click="ctrl.approveStudent(studClass)">Remove</button>
                     </td>
                     <td ng-if="studClass.status != 'Active'">
                         <button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass)">Approve</button>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-sm">
+                <tr>
+                    <th>Class Name</th>
+                    <th>Student Status</th>
+                    <th>Action</th>
+                </tr>
+                <tr ng-repeat="(key, studClass) in ctrl.notAddedStudents">
+                    <td>{{key}}</td>
+                    <td>Not Registered</td>
+                    <td>
+                        <button class="btn btn-primary">Register</button>
                     </td>
                 </tr>
             </table>

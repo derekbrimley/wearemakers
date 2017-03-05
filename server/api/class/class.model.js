@@ -13,6 +13,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false
     },
     info: DataTypes.STRING,
+    volunteerInfo: DataTypes.STRING,
     location: DataTypes.STRING,
     startTime: {
       type: DataTypes.STRING,

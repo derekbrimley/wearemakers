@@ -8,9 +8,35 @@ export class AdminScheduling {
         'ngInject'
         var ctrl = this;
         this.$http = $http;
+        
         ctrl.attendance_options = ['Attended','Absent','Excused'];
+        
+        ctrl.planned_attendance_options = ['Yes','On Call'];
     }
 
+    select(vol,saved) {
+        var ctrl = this;
+        
+        ctrl.selectedVolunteerEdit = vol;
+//        vol.plannedAttendance = ctrl.selectedVolunteerEdit.plannedAttendance;
+        vol.saved = saved;
+    }
+    
+    changePlannedAttendance(vol) {
+        var ctrl = this;
+        
+        var body = {
+            userID: vol.User._id,
+            sessionID: ctrl.selectedSession._id,
+            plannedAttendance: vol.plannedAttendance
+        }
+        
+        this.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + vol._id, body)
+        .then(function(res) {
+            console.log("UPDATE sessionvolunteer RES", res);
+        })
+    }
+    
     assignToSession(volunteer){
         var ctrl = this;
         console.log(ctrl.selectedSession);
@@ -78,6 +104,53 @@ export class AdminScheduling {
             console.log("RES", res);
             return true;
         })
+    }
+
+    saveStudentAttendance(student) {
+        student.saved = true;
+        console.log(student.showSave);
+    }
+
+    markStudentAttendance(student) {
+        var ctrl = this;
+        var body = {
+            attendance: student.attendance
+        }
+        ctrl.selectedStudent = student._id;
+        console.log("MARK ATTENDANCE",body);
+        ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/students/' + student._id, body)
+        .then(function(res) {
+            console.log("RES", res);
+            student.showSave = true;
+        })
+    }
+
+    editStudentAttendance(student) {
+        var ctrl = this;
+        student.saved = false;
+        ctrl.selectedStudent = student._id;
+    }
+
+    createStudentSession(){
+        var ctrl = this;
+
+        // console.log('student '+ ctrl.selectedSession.Class.ClassStudents[0]._id)
+        // console.log('classID '+ classID)
+        console.log(ctrl.selectedSession);
+
+        var length = ctrl.selectedSession.Class.ClassStudents.length
+
+        angular.forEach(ctrl.selectedSession.Class.ClassStudents, function(value, key) {
+              ctrl.$http.post('/api/classes/'+ctrl.selectedSession.Class._id+'/sessions/'+ctrl.selectedSession._id+'/students/register' ,{userID:value.userID})
+            .then(function(res){
+                console.log("RES",res);
+
+            },function(err){
+                console.log("ERR",err);
+
+            })
+        });
+
     }
 }
 

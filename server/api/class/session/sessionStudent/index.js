@@ -7,7 +7,7 @@ import * as auth from '../../../../auth/auth.service';
 var router = express.Router();
 
 router.get('/',auth.hasRole('admin'), controller.index);
-router.get('/register', auth.isType('sessionStudent'), controller.register);
+router.post('/register', auth.hasRole('admin'), controller.register);
 router.get('/:id',auth.hasRole('admin'), controller.show);
 //router.get('/:id',auth.hasRole('admin'), controller.show);
 router.post('/', auth.hasRole('admin'), controller.create);
