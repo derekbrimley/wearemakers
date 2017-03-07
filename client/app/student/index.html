@@ -8,7 +8,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
 
   <uib-tabset active="active">
      
-       <uib-tab index="0" heading="My Classes">
+       <uib-tab index="0" heading="My Classes" ng-click="ctrl.myclasses()">
             <table class="table">
                 <tr>
                     <th>Name</th>
@@ -23,17 +23,41 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                     <td>{{class.Class.location}}</td>
                     <td>{{class.Class.startDate | date : format : shortDate }}</td>
                     <td>{{class.Class.endDate | date : format : shortDate }}</td>
-                    <td>{{class.Class.startTime | date: 'HH:mm a' }} to {{class.Class.endTime | date : format : shortTime }}</td>
+                    <td>{{class.Class.startTime | date: 'HH:mm a' }} to {{class.Class.endTime | date: 'HH:mm a' }}</td>
                     <td>{{class.status}}</td>
                 </tr>
-          
             </table>
-
     </uib-tab>
 
         <uib-tab index="1" heading="All Classes">
-          <div class="test-class" ng-repeat="class in ctrl.classes">
-              Name:
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>                    
+                    <th>Start Date</th>                    
+                    <th>End Date</th>                    
+                    <th>Time</th>                    
+                    <th>Request</th>                    
+                </tr>
+                <tr ng-repeat="class in ctrl.classes">
+                    <td>{{class.name}}</td>
+                    <td>{{class.location}}</td>
+                    <td>{{class.startDate | date : format : shortDate }}</td>
+                    <td>{{class.endDate | date : format : shortDate }}</td>
+                    <td>{{class.startTime | date: 'HH:mm a' }} to {{class.endTime | date: 'HH:mm a' }}</td>
+                    <td ng-if="ctrl.showRequest(class)"> 
+                        <button ng-if="class.added == True" ng-click="ctrl.registerStudent(class)" class="btn btn-primary">Request</button>
+                        <span ng-if="class.added != True">Requested</span>
+                    </td>
+                    <td ng-if="!ctrl.showRequest(class)">
+                        Requested
+                    </td>
+                </tr>
+            </table>
+
+
+          <!--<div class="test-class" ng-repeat="class in ctrl.classes">
+              <Name:></Name:>
               {{class.name}}<br>
               Location:
               {{class.location}}<br>
@@ -49,7 +73,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
               <div ng-if="!ctrl.showRequest(class)">
                    Requested
               </div>
-            </div>
+            </div>-->
     </uib-tab>
 
     <uib-tab index="2" heading="Profile">
