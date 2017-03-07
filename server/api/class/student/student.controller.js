@@ -86,8 +86,26 @@ export function register(req, res) {
             .catch(handleError(res));
         }
     })
+}
 
+// Creates a new ClassStudent in the DB, to be used by admin
+export function registerforadmin(req, res) {
 
+    ClassStudent.find({
+        where:{userID:req.body.userID,
+            classID:req.class._id
+        }})
+    .then(function(entity){
+        if(entity){
+            res.status(403).json({message:'Already Registered'})
+            return;
+        }
+        else{
+          return ClassStudent.create({classID:req.class._id, userID:req.body.userID,status:'Active'})
+            .then(respondWithResult(res, 201))
+            .catch(handleError(res));
+        }
+    })
 }
 
 export function update(req, res) {

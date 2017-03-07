@@ -133,11 +133,6 @@ export class AdminScheduling {
 
     createStudentSession(){
         var ctrl = this;
-
-        // console.log('student '+ ctrl.selectedSession.Class.ClassStudents[0]._id)
-        // console.log('classID '+ classID)
-        console.log(ctrl.selectedSession);
-
         var length = ctrl.selectedSession.Class.ClassStudents.length
 
         angular.forEach(ctrl.selectedSession.Class.ClassStudents, function(value, key) {
