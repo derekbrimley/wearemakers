@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/',auth.hasRole('admin'), controller.index);
 router.get('/register', auth.isType('student'), controller.register);
+router.post('/registerforadmin', auth.hasRole('admin'), controller.registerforadmin);
 router.get('/:id',auth.hasRole('admin'), controller.show);
 //router.get('/:id',auth.hasRole('admin'), controller.show);
 router.post('/', auth.hasRole('admin'), controller.create);

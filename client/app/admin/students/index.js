@@ -1,6 +1,6 @@
 'use strict'
 export class AdminStudents {
-    newSudent = {
+    user = {
         name: '',
         email: '',
         role: 'user',
@@ -13,12 +13,17 @@ export class AdminStudents {
         primaryLanguage: '',
         password: ''
     }
+    submitted = false;
     /*@ngInject*/
-    constructor($http){
+    constructor($http,Auth, $state){
         'ngInject'
 
         var ctrl = this;
         this.$http = $http;
+
+        this.errors = [];
+        this.Auth = Auth;
+        this.$state = $state;
 
         $http.get('/api/users')
         .then(function(res){
@@ -30,25 +35,64 @@ export class AdminStudents {
         // ctrl.grades = ctrl.grades[0];
     }
 
-    addStudent(){
+    register(form) {
         var ctrl = this;
-        this.$http.post('/api/students',this.newStudent)
-        .then(function(res){
-            console.log("RES",res);
-            this.students.push(res.data)
-        })
+        this.submitted = true;
 
-        this.newStudent = {
-            startTime: new Date(1970,1,1,8,0,0,0),
-            endTime: new Date(1970,1,1,9,0,0,0)
+        if(form.$valid) {
+          return this.Auth.createUser({
+            name: this.user.name,
+            email: this.user.email,
+            gender: this.user.gender,
+            grade: this.user.grade,
+            community: this.user.community,
+            primaryLanguage: this.user.primaryLanguage,
+            organization: this.user.organization,
+            phone: this.user.phone,
+            password: this.user.password,
+            type: this.user.type
+          })
+            .then(() => {
+              // Account created, redirect to home
+              this.$state.go('main');
+            })
+            .catch(err => {
+              err = err.data;
+              this.errors = [];
+
+              // Update validity of form fields that match the sequelize errors
+              if(err.name) {
+                angular.forEach(err.fields, field => {
+                    console.log(field,ctrl.errors);
+                    ctrl.errors.push(err)
+                //   this.errors[field] = err.message;
+                });
+              }
+            });
         }
     }
+
+    // addStudent(){
+    //     var ctrl = this;
+    //     this.$http.post('/api/users',this.newStudent)
+    //     .then(function(res){
+    //         console.log("RES",res);
+    //         this.students.push(res.data)
+    //     })
+
+    //     this.newStudent = {
+    //         startTime: new Date(1970,1,1,8,0,0,0),
+    //         endTime: new Date(1970,1,1,9,0,0,0)
+    //     }
+    // }
 
     showStudents(stud){
         var ctrl = this;
         var isStud;
         var addedStudents = {}
         var notAddedStudents = {}
+
+        ctrl.thisStudent = stud
 
         this.$http.get('/api/classes/')
         .then(function(res){
@@ -106,6 +150,17 @@ export class AdminStudents {
         .then(function(res){
             console.log("RES",res);
             ctrl.students.splice(ctrl.students.indexOf(course),1);
+        })
+    }
+
+    registerStudent(course){
+        var ctrl = this;
+        var body = {
+            userID:ctrl.thisStudent._id 
+        };
+        this.$http.post('/api/classes/' + course._id +'/students/registerforadmin/',body )
+        .then(function(res){
+            ctrl.showStudents(ctrl.thisStudent)
         })
     }
 
