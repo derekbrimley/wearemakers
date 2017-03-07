@@ -28,7 +28,7 @@
                     <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
                         <input ng-blur="ctrl.updateClass()" ng-model="class.day" class="form-control">
                     </td>
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startTime | date}}</td>
+                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startTime | date:'shortTime'}}</td>
                     <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
                         <input ng-blur="ctrl.updateClass()" ng-model="class.startTime" class="form-control">
                     </td>

@@ -11,6 +11,74 @@ export class ModalController {
         var ctrl = this;
         this.$http = $http;
         this.$uibModalInstance = $uibModalInstance;
+        
+        this.format = 'dd-MMMM-yyyy';
+        this.altInputFormats = ['M!/d!/yyyy'];
+
+        this.popup1 = {
+            opened: false
+        };
+        
+        this.hstep = 1;
+        this.mstep = 15;
+        this.ismeridian = true;
+        
+        this.$resolve.class.startTime = new Date(this.$resolve.class.startTime);
+        
+        this.$resolve.class.endTime = new Date(this.$resolve.class.endTime);
+        
+        this.$resolve.class.startDate = new Date(this.$resolve.class.startDate);
+        
+        this.$resolve.class.endDate = new Date(this.$resolve.class.endDate);
+        
+        this.inlineOptions = {
+            customClass: this.getDayClass,
+            minDate: new Date(),
+            showWeeks: true
+        };
+
+        this.dateOptions = {
+            formatYear: 'yy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(),
+            startingDay: 1
+        };
+        
+        this.today();
+    }
+
+    today() {
+        var ctrl = this;
+        ctrl.dt = new Date();
+    };
+//    
+
+    clear() {
+        var ctrl = this;
+        ctrl.dt = null;
+    };
+
+    open1 = function() {
+        var ctrl = this;
+        ctrl.popup1.opened = true;
+    };
+
+    getDayClass(data) {
+        var date = data.date,
+            mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+
+        return '';
     }
 
     close(){
@@ -26,19 +94,11 @@ export class ModalController {
         })
     }
 
-    select(course,saved){
-        var ctrl = this;
-        course.startTime = new Date(course.startTime);
-        course.endTime = new Date(course.endTime);
-        ctrl.selectedClassEdit = course;
-
-        course.saved = saved;
-    }
-
-    updateClass(){
-        this.$http.put('/api/classes/'+this.selectedClassEdit._id,this.selectedClassEdit)
+    updateClass(course){
+        this.$http.put('/api/classes/'+course._id,course)
         .then(res =>{
             console.log("RES Updates",res);
+            this.$uibModalInstance.close();
         })
     }
 
