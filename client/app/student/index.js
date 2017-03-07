@@ -13,30 +13,41 @@ export class StudentController {
 
         $http.get('/api/classes/mine')
         .then(function(res){
-            console.log("my classes",res);
+            // console.log("my classes",res);
             ctrl.my_classes = res.data;
+            // console.log(ctrl.my_classes)
         })
 
         $http.get('/api/classes')
         .then(function(res){
-            console.log("classes",res);
+            // console.log("classes",res);
             ctrl.classes = res.data;
         })
 
         Auth.getCurrentUser()
         .then(function(res){
-            console.log("user",res);
+            // console.log("user",res);
             ctrl.myUser = res;
         });
     }
 
+    myclasses(){
+        var ctrl = this;
+        this.$http.get('/api/classes/mine')
+        .then(function(res){
+            // console.log("my classes",res);
+            ctrl.my_classes = res.data;
+            console.log(ctrl.my_classes)
+        })
+    }
+
     registerStudent(course){
         var ctrl = this;
-        console.log(course._id)
+        console.log(course)
 
         this.$http.get('/api/classes/' + course._id +'/students/register' )
         .then(function(res){
-            console.log("RES",res);
+            // console.log("RES",res);
             // this.classes.push(res.data)
             course.added=true
 
