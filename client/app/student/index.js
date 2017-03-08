@@ -29,6 +29,7 @@ export class StudentController {
             // console.log("user",res);
             ctrl.myUser = res;
         });
+
     }
 
     myclasses(){
@@ -43,12 +44,11 @@ export class StudentController {
 
     registerStudent(course){
         var ctrl = this;
-        console.log(course)
+        // console.log(course)
 
         this.$http.get('/api/classes/' + course._id +'/students/register' )
         .then(function(res){
             // console.log("RES",res);
-            // this.classes.push(res.data)
             course.added=true
 
         })
@@ -65,6 +65,19 @@ export class StudentController {
        }
        return true;
    }
+
+    updateProfile() {
+        var ctrl = this;
+
+        this.$http.put('/api/users/me' ,ctrl.myUser)
+        .then(res => {
+        })
+
+        this.$http.put('/api/students/' + ctrl.myUser._id, ctrl.myUser)
+        .then(function(res) {
+        })
+
+    }
 
 }
 

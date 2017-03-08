@@ -7,6 +7,10 @@ class _User {
   role = '';
   type = '';
   organization = '';
+  phone = '';
+  gender = '';
+  community = '';
+  grade = '';
   primaryLanguage = '';
   $promise = undefined;
 }
