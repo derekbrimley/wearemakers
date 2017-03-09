@@ -11,25 +11,25 @@ export class AddModalController {
         var ctrl = this;
         this.$http = $http;
         this.$uibModalInstance = $uibModalInstance;
-        
+
         this.format = 'dd-MMMM-yyyy';
         this.altInputFormats = ['M!/d!/yyyy'];
 
         this.popup1 = {
             opened: false
         };
-        
+
         this.hstep = 1;
         this.mstep = 15;
         this.ismeridian = true;
-        
+
         this.$resolve.class = {
             startTime: new Date(),
             endTime: new Date(),
             startDate: new Date(),
             endDate: new Date()
         }
-        
+
         this.inlineOptions = {
             customClass: this.getDayClass,
             minDate: new Date(),
@@ -42,7 +42,7 @@ export class AddModalController {
             minDate: new Date(),
             startingDay: 1
         };
-        
+
         this.today();
     }
 
@@ -50,7 +50,7 @@ export class AddModalController {
         var ctrl = this;
         ctrl.dt = new Date();
     };
-//    
+//
 
     clear() {
         var ctrl = this;
@@ -114,7 +114,7 @@ export class AddModalController {
 //            }
 //            r.readAsBinaryString(f);
 //        }
-        
+
         this.$http.put('/api/classes/'+course._id,course)
         .then(res =>{
             console.log("RES Updates",res);
@@ -128,6 +128,6 @@ export class AddModalController {
 
 }
 
-export default angular.module('refugeeApp.classModal', ['refugeeApp.auth', 'ui.router'])
+export default angular.module('refugeeApp.addClassModal', ['refugeeApp.auth', 'ui.router'])
   .controller('classAddModalController', AddModalController)
   .name;

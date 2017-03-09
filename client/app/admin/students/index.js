@@ -1,4 +1,7 @@
 'use strict'
+
+import modal from './modal.controller'
+
 export class AdminStudents {
     user = {
         name: '',
@@ -15,12 +18,12 @@ export class AdminStudents {
     }
     submitted = false;
     /*@ngInject*/
-    constructor($http,Auth, $state){
+    constructor($http, Auth, $state, $uibModal){
         'ngInject'
 
         var ctrl = this;
         this.$http = $http;
-
+        this.$uibModal = $uibModal;
         this.errors = [];
         this.Auth = Auth;
         this.$state = $state;
@@ -101,7 +104,7 @@ export class AdminStudents {
 
         this.$http.get('/api/classes/')
         .then(function(res){
-            ctrl.selectedStudent = res.data   
+            ctrl.selectedStudent = res.data
             angular.forEach(ctrl.selectedStudent, function(classStud, key) {
                 isStud = 0;
                 angular.forEach(classStud.ClassStudents,function(student,key2){
@@ -114,7 +117,7 @@ export class AdminStudents {
                     notAddedStudents[classStud.name]=classStud
                 }
             });
-        })  
+        })
         ctrl.addedStudents = addedStudents
         ctrl.notAddedStudents = notAddedStudents
     }
@@ -130,7 +133,7 @@ export class AdminStudents {
         student.primaryLanguage = student.primaryLanguage;
         ctrl.showStudentsEdit = student;
         console.log(student)
-        student.saved=saved  
+        student.saved=saved
     }
 
 
@@ -138,15 +141,15 @@ export class AdminStudents {
         var ctrl = this;
 
         if(ClassStudent.status == "Active"){
-            ClassStudent.status = "Inactive" 
+            ClassStudent.status = "Inactive"
         }else{
-            ClassStudent.status = "Active"    
-        }  
+            ClassStudent.status = "Active"
+        }
         this.$http.put('/api/classes/' + ClassStudent.classID + '/students/' + ClassStudent._id,ClassStudent)
         .then(res => {
             console.log("RES User update", res);
         })
-        
+
     }
 
     removeStudent(course){
@@ -161,7 +164,7 @@ export class AdminStudents {
     registerStudent(course){
         var ctrl = this;
         var body = {
-            userID:ctrl.thisStudent._id 
+            userID:ctrl.thisStudent._id
         };
         this.$http.post('/api/classes/' + course._id +'/students/registerforadmin/',body )
         .then(function(res){
@@ -176,9 +179,24 @@ export class AdminStudents {
             console.log("RES User update", res);
         })
     }
+
+    openModal(student){
+        this.selectedStudent = student;
+        var modalInstance = this.$uibModal.open({
+          template: require('./modal.html'),
+          controller: 'studentModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             student: () => {
+                  return this.selectedStudent;
+              }
+          }
+        });
+    }
 }
 
-export default angular.module('refugeeApp.adminStudents', ['refugeeApp.auth', 'ui.router'])
+export default angular.module('refugeeApp.adminStudents', ['refugeeApp.auth', 'ui.router', modal])
   .component('adminStudents', {
       template: require('./index.html'),
       controller: AdminStudents,

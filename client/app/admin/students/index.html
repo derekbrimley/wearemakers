@@ -32,7 +32,7 @@
                 <!-- editable form -->
                 <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.name}}</td>
                 <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.name"/></td>
-                
+
                 <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.email}}</td>
                 <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.email"/></td>
 
@@ -58,8 +58,8 @@
 
                 <td>{{stud.createdAt | date:'MM/dd/yyyy'}}</td>
                 <td><button class="btn btn-primary" ng-click="ctrl.showStudents(stud)">Show</button></td>
-                <td> 
-                    <button ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id" class="btn btn-primary" ng-click="ctrl.select(stud,false)">Edit</button>
+                <td>
+                    <button ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id" class="btn btn-primary" ng-click="ctrl.openModal(stud)">Edit</button>
                     <button ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id" class="btn btn-warning" ng-click="ctrl.select(stud,true)">Save</button>
                 </td>
             </tr>
@@ -209,9 +209,9 @@
         </div>
 
         <hr/>
-        <div ng-if="ctrl.studentAdded">{{ctrl.studentAdded}} Added</div>    
+        <div ng-if="ctrl.studentAdded">{{ctrl.studentAdded}} Added</div>
       </form>
     </div>
     </div>
-    
+
 </div>
