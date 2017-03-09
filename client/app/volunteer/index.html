@@ -9,25 +9,26 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
   <uib-tabset active="active">
 
     <uib-tab index="0" heading="My Classes">
+        <h3>Upcoming Class Sessions</h3>
         <table class="table">
             <tr>
                 <th>Name</th>
+                <th>Date</th>
                 <th>Location</th>
-                <th>Day</th>
                 <th>Time</th>
-                <th>Status</th>
+                <th>Planned Attendance</th>
             </tr>
-            <tr ng-repeat="course in ctrl.my_classes">
-                <td>{{course.Class.name}}</td>
-                <td>{{course.Class.location}}</td>
-                <td>{{course.Class.day}}</td>
-                <td>{{course.Class.startTime | date: 'HH:mm a' }} to {{course.Class.endTime | date: 'HH:mm a' }}</td>
-                <td>{{course.status}}</td>
+            <tr ng-repeat="session in ctrl.mySessions | filter:{plannedAttendance:'!'+'No'}"}>
+                <td>{{session.ClassSession.Class.name}}</td>
+                <td>{{session.ClassSession.date | date}}</td>
+                <td>{{session.ClassSession.Class.location}}</td>
+                <td>{{session.ClassSession.Class.startTime | date: 'HH:mm a' }}</td>
+                <td>{{session.plannedAttendance}}</td>
             </tr>
         </table>
     </uib-tab>
     <uib-tab index="1" heading="Classes">
-        <h3>Upcoming Classes</h3>
+        <h3>Session Sign-Up</h3>
         <div>
             <table class="table">
                 <tr>

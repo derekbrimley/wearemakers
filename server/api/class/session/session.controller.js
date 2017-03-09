@@ -93,6 +93,21 @@ export function create(req, res) {
     })
 }
 
+export function getMine(req, res) {
+    return SessionVolunteer.findAll({
+        where: {
+            userID: req.params.user
+        },
+        include: [
+            {
+                model:ClassSession,
+                include: Class
+            }
+        ]
+    })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
 
 export function update(req, res) {
   //TODO:ADD SECURITY CHECK HERE TO MAKE SURE REQUEST IS ADMIN OR CURRENT USER
