@@ -16,7 +16,14 @@ export class VolunteerController {
         .then(function(res){
             console.log("user",res);
             ctrl.myUser = res;
+            
+            $http.get('/api/sessions/'+ctrl.myUser._id+'/mine')
+            .then(function(res){
+                console.log("my sessions",res);
+                ctrl.mySessions = res.data;
+            })
         });
+        
         
         
         
@@ -26,7 +33,7 @@ export class VolunteerController {
 //            ctrl.my_sessions = res.data;
 //        });
 //        /api/classes/:class/sessions/:session/volunteers
-//        $http.get('/api/sessions/mine')
+        
 
         $http.get('/api/classes/')
         .then(function(res) {
@@ -61,7 +68,7 @@ export class VolunteerController {
             });
             console.log("User sessions",ctrl.userSessions);
         });
-        console.log(ctrl.myUser);
+//        console.log(ctrl.myUser);
 //        this.$http.get('/api/classes/' + ctrl.session.Class._id + '/sessions/' + ctrl.session._id + '/volunteers/')
 //        .then(function(res) {
 //            console.log("SESSION Volunteers", res);
