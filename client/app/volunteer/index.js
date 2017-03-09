@@ -25,8 +25,8 @@ export class VolunteerController {
 //            console.log("my sessions",res);
 //            ctrl.my_sessions = res.data;
 //        });
-        /api/classes/:class/sessions/:session/volunteers
-        $http.get('/api/sessions/mine')
+//        /api/classes/:class/sessions/:session/volunteers
+//        $http.get('/api/sessions/mine')
 
         $http.get('/api/classes/')
         .then(function(res) {
