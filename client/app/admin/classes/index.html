@@ -66,9 +66,11 @@
                 <table class="table">
                     <tr>
                         <th>Name</th>
+                        <th>Status</th>
                     </tr>
                     <tr ng-repeat="stud in ctrl.students">
                         <td>{{stud.User.name}}</td>
+                        <td>{{stud.status}}</td>
                     </tr>
                 </table>
             </div>
