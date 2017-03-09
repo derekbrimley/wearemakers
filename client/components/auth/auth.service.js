@@ -93,6 +93,21 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
         .$promise;
     },
 
+    /** 
+     * For admin to create a user.
+    */
+    createStudentUser(user, callback) {
+      return User.save(user, function(data) {
+        // $cookies.put('token', data.token);
+        // currentUser = User.get();
+        return safeCb(callback)(null, user);
+      }, function(err) {
+        // Auth.logout();
+        return safeCb(callback)(err);
+      })
+        .$promise;
+    },
+
     /**
      * Change password
      *
