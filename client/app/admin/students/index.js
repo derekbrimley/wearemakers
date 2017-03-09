@@ -35,12 +35,12 @@ export class AdminStudents {
         // ctrl.grades = ctrl.grades[0];
     }
 
-    register(form) {
+    register(form,$http) {
         var ctrl = this;
         this.submitted = true;
 
         if(form.$valid) {
-          return this.Auth.createUser({
+          return this.Auth.createStudentUser({
             name: this.user.name,
             email: this.user.email,
             gender: this.user.gender,
@@ -54,7 +54,12 @@ export class AdminStudents {
           })
             .then(() => {
               // Account created, redirect to home
-              this.$state.go('main');
+            //   this.$state.go('main');
+                ctrl.studentAdded = this.user.name
+                this.$http.get('/api/users')
+                .then(function(res){
+                    ctrl.students = _.filter(res.data,{type:'student'});
+                })
             })
             .catch(err => {
               err = err.data;
