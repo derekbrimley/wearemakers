@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/',auth.hasRole('admin'), controller.index);
 router.get('/register', auth.isType('sessionVolunteer'), controller.register);
+router.get('/mine', auth.isAuthenticated(), controller.showMine);
 router.get('/:id',auth.hasRole('admin'), controller.show);
 router.get('/find', auth.hasRole('admin'), controller.findSession);
 //router.get('/:id',auth.hasRole('admin'), controller.show);

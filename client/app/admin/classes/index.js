@@ -1,5 +1,6 @@
 'use strict'
-import modal from './modal.controller.js';
+import editModal from './modal.controller.js';
+import addModal from './addModal.controller.js';
 export class AdminClasses {
     newClass = {
         startTime: new Date(1970,1,1,8,0,0,0),
@@ -59,6 +60,10 @@ export class AdminClasses {
         })
     }
 
+    addVolunteerDescription(){
+        
+    }
+
     showStudents(course) {
         var ctrl = this;
 //        course.showStudents = true;
@@ -85,9 +90,23 @@ export class AdminClasses {
           }
         });
     }
+
+//    openAddModal(){
+//        var modalInstance = this.$uibModal.open({
+//          template: require('./addModal.html'),
+//          controller: 'classAddModalController',
+//          bindToController: true,
+//          controllerAs: 'ctrl',
+//          resolve: {
+//             class: () => {
+//                  return this.selectedCourse;
+//              }
+//          }
+//        });
+//    }
 }
 
-export default angular.module('refugeeApp.adminClasses', ['refugeeApp.auth', 'ui.router', modal])
+export default angular.module('refugeeApp.adminClasses', ['refugeeApp.auth', 'ui.router', editModal, addModal])
   .component('adminClasses', {
       template: require('./index.html'),
       controller: AdminClasses,

@@ -9,7 +9,7 @@ var router = express.Router();
 
 require('../../params').default(router)
 router.get('/', controller.index);
-router.get('/mine', auth.isAuthenticated(), controller.showMine);
+router.get('/:user/mine', auth.isAuthenticated(), controller.showMine);
 //router.get('/notmine', auth.isAuthenticated(), controller.showNotMine);
 router.get('/:id', controller.show);
 router.get('/getStudentsFromClass/:id', auth.hasRole('admin'),controller.getStudentsFromClass);

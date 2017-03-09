@@ -51,6 +51,32 @@ export function show(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
+//export function showMine(req, res) {
+//    var type = req.user.type
+//    if(type == 'student'){
+//        return ClassStudent.findAll({
+//            where:{active:true,userID:req.user._id},
+//            include:[Class]
+//        })
+//        .then(respondWithResult(res))
+//        .catch(handleError(res));
+//    }
+//
+//  return ClassVolunteer.findAll({
+//      where:{active:true,userID:req.user._id},
+//      include:[Class]
+//        })
+//    .then(respondWithResult(res))
+//    .catch(handleError(res));
+//}
+export function showMine(req, res) {
+    return SessionVolunteer.findAll({
+        where:{userID:req.user._id},
+        include:[Session,Student]
+    })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
 
 export function findSession(req, res) {
     console.log("RES",res);
