@@ -23,13 +23,12 @@ export class AddModalController {
         this.mstep = 15;
         this.ismeridian = true;
         
-        this.$resolve.class.startTime = new Date(this.$resolve.class.startTime);
-        
-        this.$resolve.class.endTime = new Date(this.$resolve.class.endTime);
-        
-        this.$resolve.class.startDate = new Date(this.$resolve.class.startDate);
-        
-        this.$resolve.class.endDate = new Date(this.$resolve.class.endDate);
+        this.$resolve.class = {
+            startTime: new Date(),
+            endTime: new Date(),
+            startDate: new Date(),
+            endDate: new Date()
+        }
         
         this.inlineOptions = {
             customClass: this.getDayClass,
@@ -130,5 +129,5 @@ export class AddModalController {
 }
 
 export default angular.module('refugeeApp.classModal', ['refugeeApp.auth', 'ui.router'])
-  .controller('classModalController', AddModalController)
+  .controller('classAddModalController', AddModalController)
   .name;

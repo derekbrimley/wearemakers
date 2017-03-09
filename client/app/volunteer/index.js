@@ -12,11 +12,21 @@ export class VolunteerController {
 
         this.$http = $http;
 
-        $http.get('/api/classes/mine')
+        Auth.getCurrentUser()
         .then(function(res){
-            console.log("my classes",res);
-            ctrl.my_sessions = res.data;
-        })
+            console.log("user",res);
+            ctrl.myUser = res;
+        });
+        
+        
+        
+//        $http.get('/api/classes/' + ctrl.myUser._id + '/mine')
+//        .then(function(res){
+//            console.log("my sessions",res);
+//            ctrl.my_sessions = res.data;
+//        });
+        /api/classes/:class/sessions/:session/volunteers
+        $http.get('/api/sessions/mine')
 
         $http.get('/api/classes/')
         .then(function(res) {
@@ -26,13 +36,9 @@ export class VolunteerController {
                 course.startTime = new Date(course.startTime);
                 course.endTime = new Date(course.endTime);
             })
-        })
-
-        Auth.getCurrentUser()
-        .then(function(res){
-            console.log("user",res);
-            ctrl.myUser = res;
         });
+
+        
         
         ctrl.userSessions = {};
         
@@ -54,8 +60,8 @@ export class VolunteerController {
                 })
             });
             console.log("User sessions",ctrl.userSessions);
-        })
-        
+        });
+        console.log(ctrl.myUser);
 //        this.$http.get('/api/classes/' + ctrl.session.Class._id + '/sessions/' + ctrl.session._id + '/volunteers/')
 //        .then(function(res) {
 //            console.log("SESSION Volunteers", res);

@@ -1,5 +1,6 @@
 <div class="admin-classes-section">
     <div class="pane">
+<!--        <button class="btn btn-primary" ng-click="ctrl.openAddModal()">Add</button>-->
         <div class="classes-section">
             <table class="table">
                 <tr>
@@ -17,37 +18,13 @@
                 </tr>
                 <tr ng-repeat="class in ctrl.classes">
                     <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.name}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.name" class="form-control">
-                    </td>
                     <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.location}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.location" class="form-control">
-                    </td>
                     <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.day}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.day" class="form-control">
-                    </td>
                     <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startTime | date:'shortTime'}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.startTime" class="form-control">
-                    </td>
                     <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startDate | date}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.startDate" class="form-control">
-                    </td>
                     <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.endDate | date}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.endDate" class="form-control">
-                    </td>
                     <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.info}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.info" class="form-control">
-                    </td>
                     <td style="max-width:50px; overflow:hidden;" ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.volunteerInfo}}</td>
-                    <td ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id">
-                        <input ng-blur="ctrl.updateClass()" ng-model="class.volunteerInfo" class="form-control">
-                    </td>
 
                     <td>
                         <button ng-click="ctrl.showStudents(class)" class="btn btn-primary">Show</button>
