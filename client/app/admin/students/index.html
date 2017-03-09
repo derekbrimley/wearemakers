@@ -1,9 +1,18 @@
 <div class="admin-volunteer-section">
-    <form>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" ng-model="$ctrl.query">
-      </div>
-    </form>
+    <div class="row">
+        <div class="col-sm-4">
+            <form>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="$ctrl.query">
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+             <button ng-click="ctrl.openModal()" class="btn btn-success">Add Student</button>
+        </div>
+
+    </div>
     <div class="pane">
         <table class="volunteer_table table" style="width:100%;">
             <tr>
@@ -91,11 +100,6 @@
                 </tr>
             </table>
         </div>
-
-
-        <!--workspace-->
-
-
     <h3>Create a Student User</h3>
     <div class="col-sm-12">
       <form class="form" name="form" ng-submit="ctrl.register(form)" novalidate>
@@ -200,7 +204,7 @@
         </div>
         <div>
           <button class="btn btn-default btn-register" type="submit">
-            Sign up
+            Add Student
           </button>
         </div>
 
@@ -208,13 +212,6 @@
         <div ng-if="ctrl.studentAdded">{{ctrl.studentAdded}} Added</div>    
       </form>
     </div>
-
-
-
-
-
-
-        <!--workspace-->
     </div>
     
 </div>
