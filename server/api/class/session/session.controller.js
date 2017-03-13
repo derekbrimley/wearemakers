@@ -75,8 +75,11 @@ function checkClass(course){
     var promises = [];
     for(var i=0; i <= weeksOut * 7; i++){
         var date = moment(0, "HH").add('days',i);
-        var p = checkSession(course,date);
-        // Check if there is a session, if not create it;
+        var endDate = moment(course.endDate);
+        if(date.isBefore(endDate)){
+            // Check if there is a session, if not create it;
+            var p = checkSession(course,date);
+        }
 
         promises.push(p);
     }
