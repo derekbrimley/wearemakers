@@ -11,9 +11,13 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
+import moment from 'moment';
 import {
   ClassSession,SessionVolunteer,SessionStudent,User,Class
 } from '../../../sqldb';
+
+// Constant that determines how many weeks out the createSession builder should build
+const weeksOut = 4;
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -42,13 +46,92 @@ function handleError(res, statusCode) {
   };
 }
 
+function getClasses(){
+        return Class.findAll({where:{active:true}});
+}
+
+function checkSessions(){
+    return getClasses()
+    .then(classes => {
+        var promises = [];
+        for(var i in classes){
+            var course = classes[i];
+            promises.push(checkClass(course));
+        }
+        // return Promise.all(promises)
+        // .then(() => {
+        //     console.log("ALL COURSES RESOLVED");
+        //
+        // })
+        // .catch((e) => {
+        //     console.log("ERR",e);
+        //     res.status(500).send(e);
+        // });
+    })
+}
+
+function checkClass(course){
+    // For every day in however many weeks are specified, verify there is a session;
+    var promises = [];
+    for(var i=0; i <= weeksOut * 7; i++){
+        var date = moment(0, "HH").add('days',i);
+        var p = checkSession(course,date);
+        // Check if there is a session, if not create it;
+
+        promises.push(p);
+    }
+    return Promise.all(promises).then(()=>{
+        console.log("All sessions created");
+    });
+}
+
+function checkSession(course,date){
+    return ClassSession.find({
+        where:{
+            date:{
+                $gte: date.toDate(),
+                $lt: date.add('days',1).toDate()
+            },
+            classID:course._id
+        }
+    }).then(entity => {
+        if(!entity){
+            console.log("CREATING");
+            var session = ClassSession.build({classID:course._id,date:date})
+            return session.save()
+        }
+    })
+    .catch(err => {
+        console.log("ERR",err);
+    })
+}
+
+
 // Gets a list of ClassSessions
 export function index(req, res) {
-  return ClassSession.findAll({
-      include: [Class, SessionVolunteer, SessionStudent]
-  })
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+    checkSessions()
+    .then(() => {
+        if(req.user.role =='admin'){
+            return ClassSession.findAll({
+                include: [Class, SessionVolunteer, SessionStudent]
+            })
+            .then(respondWithResult(res))
+            .catch(handleError(res));
+        }
+        else{
+            return ClassSession.findAll({
+                include: [Class],
+                where:{
+                    date:{
+                        $gte:new Date()
+                    }
+                }
+            })
+            .then(respondWithResult(res))
+            .catch(handleError(res));
+
+        }
+    })
 }
 
 // Gets a single ClassSession from the DB
