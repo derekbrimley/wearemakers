@@ -91,19 +91,19 @@ export class AdminClasses {
         });
     }
 
-//    openAddModal(){
-//        var modalInstance = this.$uibModal.open({
-//          template: require('./addModal.html'),
-//          controller: 'classAddModalController',
-//          bindToController: true,
-//          controllerAs: 'ctrl',
-//          resolve: {
-//             class: () => {
-//                  return this.selectedCourse;
-//              }
-//          }
-//        });
-//    }
+    openAddModal(){
+        var modalInstance = this.$uibModal.open({
+          template: require('./addModal.html'),
+          controller: 'classAddModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             class: () => {
+                  return this.selectedCourse;
+              }
+          }
+        });
+    }
 }
 
 export default angular.module('refugeeApp.adminClasses', ['refugeeApp.auth', 'ui.router', editModal, addModal])

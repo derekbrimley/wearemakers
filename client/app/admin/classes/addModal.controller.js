@@ -18,6 +18,10 @@ export class AddModalController {
         this.popup1 = {
             opened: false
         };
+        
+        this.popup2 = {
+            opened: false
+        };
 
         this.hstep = 1;
         this.mstep = 15;
@@ -43,7 +47,11 @@ export class AddModalController {
             startingDay: 1
         };
 
+        this.dayOptions = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        
         this.today();
+        
+        
     }
 
     today() {
@@ -60,6 +68,11 @@ export class AddModalController {
     open1 = function() {
         var ctrl = this;
         ctrl.popup1.opened = true;
+    };
+
+    open2 = function() {
+        var ctrl = this;
+        ctrl.popup2.opened = true;
     };
 
     getDayClass(data) {
@@ -124,6 +137,24 @@ export class AddModalController {
 
     addVolunteerDescription(course){
         
+    }
+
+    addClass(){
+        var ctrl = this;
+        this.$http.post('/api/classes',this.$resolve.class)
+        .then(function(res){
+            console.log("RES",res);
+            ctrl.$uibModalInstance.close();
+        })
+        ctrl.$resolve.selectedCourse = this.$resolve.class;
+        
+        
+//        this.$resolve.class = {
+//            startTime: new Date(),
+//            endTime: new Date(),
+//            startDate: new Date(),
+//            endDate: new Date()
+//        }
     }
 
 }
