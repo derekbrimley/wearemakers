@@ -18,6 +18,10 @@ export class AddModalController {
         this.popup1 = {
             opened: false
         };
+        
+        this.popup2 = {
+            opened: false
+        };
 
         this.hstep = 1;
         this.mstep = 15;
@@ -61,6 +65,11 @@ export class AddModalController {
     open1 = function() {
         var ctrl = this;
         ctrl.popup1.opened = true;
+    };
+
+    open2 = function() {
+        var ctrl = this;
+        ctrl.popup2.opened = true;
     };
 
     getDayClass(data) {
