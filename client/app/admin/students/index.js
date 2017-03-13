@@ -38,62 +38,6 @@ export class AdminStudents {
         // ctrl.grades = ctrl.grades[0];
     }
 
-    register(form,$http) {
-        var ctrl = this;
-        this.submitted = true;
-
-        if(form.$valid) {
-          return this.Auth.createStudentUser({
-            name: this.user.name,
-            email: this.user.email,
-            gender: this.user.gender,
-            grade: this.user.grade,
-            community: this.user.community,
-            primaryLanguage: this.user.primaryLanguage,
-            organization: this.user.organization,
-            phone: this.user.phone,
-            password: this.user.password,
-            type: this.user.type
-          })
-            .then(() => {
-              // Account created, redirect to home
-            //   this.$state.go('main');
-                ctrl.studentAdded = this.user.name
-                this.$http.get('/api/users')
-                .then(function(res){
-                    ctrl.students = _.filter(res.data,{type:'student'});
-                })
-            })
-            .catch(err => {
-              err = err.data;
-              this.errors = [];
-
-              // Update validity of form fields that match the sequelize errors
-              if(err.name) {
-                angular.forEach(err.fields, field => {
-                    console.log(field,ctrl.errors);
-                    ctrl.errors.push(err)
-                //   this.errors[field] = err.message;
-                });
-              }
-            });
-        }
-    }
-
-    // addStudent(){
-    //     var ctrl = this;
-    //     this.$http.post('/api/users',this.newStudent)
-    //     .then(function(res){
-    //         console.log("RES",res);
-    //         this.students.push(res.data)
-    //     })
-
-    //     this.newStudent = {
-    //         startTime: new Date(1970,1,1,8,0,0,0),
-    //         endTime: new Date(1970,1,1,9,0,0,0)
-    //     }
-    // }
-
     showStudents(stud){
         var ctrl = this;
         var isStud;
@@ -182,6 +126,7 @@ export class AdminStudents {
 
     openModal(student){
         this.selectedStudent = student;
+        var ctrl = this;
         var modalInstance = this.$uibModal.open({
           template: require('./modal.html'),
           controller: 'studentModalController',
@@ -189,11 +134,28 @@ export class AdminStudents {
           controllerAs: 'ctrl',
           resolve: {
              student: () => {
+                 
                   return this.selectedStudent;
               }
           }
+        })
+
+        modalInstance.result.then(function(data) {
+        // what you pass in $uibModalInstance.close(true) will be accessible here.
+            ctrl.refresh()
         });
     }
+
+    refresh(){
+        var ctrl = this;
+        this.$http.get('/api/users')
+        .then(function(res){
+            ctrl.students = _.filter(res.data,{type:'student'});
+        })
+    }
+    
+
+    
 }
 
 export default angular.module('refugeeApp.adminStudents', ['refugeeApp.auth', 'ui.router', modal])
