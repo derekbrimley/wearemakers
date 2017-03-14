@@ -59,7 +59,7 @@
                 <td>{{stud.createdAt | date:'MM/dd/yyyy'}}</td>
                 <td><button class="btn btn-primary" ng-click="ctrl.showStudents(stud)">Show</button></td>
                 <td>
-                    <button ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id" class="btn btn-primary" ng-click="ctrl.openModal(stud)">Edit</button>
+                    <button ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id" class="btn btn-primary" ng-click="ctrl.select(stud,false)">Edit</button>
                     <button ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id" class="btn btn-warning" ng-click="ctrl.select(stud,true)">Save</button>
                 </td>
             </tr>
