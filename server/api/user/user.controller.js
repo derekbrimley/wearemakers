@@ -78,6 +78,7 @@ export function create(req, res) {
     .catch(validationError(res));
 }
 
+
 /**
  * Get a single user
  */
@@ -226,4 +227,24 @@ export function revoke(req, res) {
         res.status(200).send();
     })
     .catch(handleError(res));
+}
+
+
+// gets a total count of how many users there are.
+export function countallusers(req, res, next) {
+
+ return User.count().then(function(c) {
+  console.log("There are " + c + " users!")
+    res.json(c);
+  })
+
+}
+
+// gets a count of userse by type
+export function countusersbytype(req, res, next) {
+
+ return User.count({ where: ["type = ?", req.params.type] }).then(function(c) {
+  console.log("There are " + c + " useres of type " + req.params.type)
+    res.json(c);
+  })
 }

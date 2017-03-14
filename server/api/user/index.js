@@ -7,6 +7,8 @@ import * as auth from '../../auth/auth.service';
 var router = new Router();
 
 router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/countallusers', auth.hasRole('admin'), controller.countallusers);
+router.get('/countusersbytype/:type', auth.hasRole('admin'), controller.countusersbytype);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.get('/:id/promote', auth.hasRole('admin'), controller.promote);
