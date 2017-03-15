@@ -1,5 +1,6 @@
 'use strict'
 import editModal from './editModal.controller.js';
+import notesModal from './notesModal.controller.js';
 export class AdminVolunteers {
     newVolunteer = {
         name: '',
@@ -88,11 +89,26 @@ export class AdminVolunteers {
         this.selectedVolunteer = volunteer;
         var modalInstance = this.$uibModal.open({
           template: require('./editModal.html'),
-          controller: 'volunteerModalController',
+          controller: 'volunteerEditModal',
           bindToController: true,
           controllerAs: 'ctrl',
           resolve: {
-             class: () => {
+             volunteer: () => {
+                  return this.selectedVolunteer;
+              }
+          }
+        });
+    }
+
+    openNotesModal(volunteer) {
+        this.selectedVolunteer = volunteer;
+        var modalInstance = this.$uibModal.open({
+          template: require('./notesModal.html'),
+          controller: 'volunteerNotesModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             volunteer: () => {
                   return this.selectedVolunteer;
               }
           }
@@ -183,7 +199,7 @@ export class AdminVolunteers {
     }
 }
 
-export default angular.module('refugeeApp.adminVolunteers', ['refugeeApp.auth', 'ui.router', editModal])
+export default angular.module('refugeeApp.adminVolunteers', ['refugeeApp.auth', 'ui.router', editModal,notesModal])
   .component('adminVolunteers', {
       template: require('./index.html'),
       controller: AdminVolunteers,

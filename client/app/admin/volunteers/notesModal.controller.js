@@ -1,5 +1,5 @@
 'use strict'
-export class EditVolunteerController {
+export class VolunteerNotesController {
     /*@ngInject*/
     constructor($http,$uibModalInstance){
         'ngInject'
@@ -38,7 +38,7 @@ export class EditVolunteerController {
 
 }
 
-export default angular.module('refugeeApp.volunteerEditModal', ['refugeeApp.auth', 'ui.router'])
-  .controller('volunteerEditModal', EditVolunteerController)
+export default angular.module('refugeeApp.volunteerNotesModal', ['refugeeApp.auth', 'ui.router'])
+  .controller('volunteerNotesModalController', VolunteerNotesController)
   .name;
 

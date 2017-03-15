@@ -33,10 +33,25 @@
                 <td>{{ctrl.$resolve.class.info}}</td>
             </tr>
             <tr>
-                <th>Volunteer Info</th>
-                <td>{{ctrl.$resolve.class.volunteerInfo}}</td>
+                <th>Class Document</th>
+                <td>
+                    <a download="{{ctrl.$resolve.class.documentName}}" ng-href="{{ctrl.$resolve.class.documentURL}}" target="_blank">{{ctrl.$resolve.class.documentName}}</a>
+                </td>
             </tr>
         </table>
+        <div>
+            <h3>Students Registered For {{ctrl.$resolve.class.name}}</h3>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+                <tr ng-repeat="stud in ctrl.students">
+                    <td>{{stud.User.name}}</td>
+                    <td>{{stud.status}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning" type="button" ng-click="ctrl.close()">Close</button>
