@@ -5,55 +5,21 @@
     <div class="modal-body" id="modal-body">
         <form>
             <label for="name">Name</label>
-            <input class="form-control" id="name" ng-model="ctrl.$resolve.class.name" />
-            <label for="location">Location</label>
-            <input class="form-control" id="location" ng-model="ctrl.$resolve.class.location" />
-            <label for="startTime">Start Time</label>
-            <div uib-timepicker ng-model="ctrl.$resolve.class.startTime" ng-change="changed()" hour-step="ctrl.hstep" minute-step="ctrl.mstep" show-meridian="ctrl.ismeridian"></div>
-            <label for="endTime">End Time</label>
-            <div uib-timepicker ng-model="ctrl.$resolve.class.endTime" ng-change="changed()" hour-step="ctrl.hstep" minute-step="ctrl.mstep" show-meridian="ctrl.ismeridian"></div>
-            <label for="startDate">Start Date</label>
-            <div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <p class="input-group">
-                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="ctrl.$resolve.class.startDate" is-open="ctrl.popup1.opened" datepicker-options="ctrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="ctrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                  </div>
-                </div>
-
-                <hr />
-            </div>
-            <label for="endDate">End Date</label>
-            <div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <p class="input-group">
-                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="ctrl.$resolve.class.endDate" is-open="ctrl.popup2.opened" datepicker-options="ctrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="ctrl.open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <hr />
-            </div>
-            
-<!--            <input class="form-control" id="endDate" ng-model="ctrl.$resolve.class.endDate" />-->
-            <label for="info">Info</label>
-            <textarea rows="5" class="form-control" id="info" ng-model="ctrl.$resolve.class.info" ></textarea>
-<!--
-            <label for="fileUpload">Volunteer Info</label>
-            <input type="file" id="file" name="file"/>
--->
-<!--            <button ng-click="ctrl.addVolunteerDescription(ctrl.$resolve.class)"></button>-->
+            <input class="form-control" id="name" ng-model="ctrl.$resolve.volunteer.User.name" />
+            <label for="location">Email</label>
+            <input class="form-control" id="location" ng-model="ctrl.$resolve.volunteer.User.email" />
+            <label for="startTime">Phone Number</label>
+            <input class="form-control" id="phone" ng-model="ctrl.$resolve.volunteer.User.phone" />
+            <label for="endTime">Organization</label>
+            <input class="form-control" id="organization" ng-model="ctrl.$resolve.volunteer.User.organization"/>
+            <label for="startDate">Status</label>
+            <select class="form-control" ng-model="ctrl.$resolve.volunteer.status" id="status" ng-options="status for status in ctrl.statuses"></select>
+            <label for="endDate">Notes</label>
+            <textarea rows="5" class="form-control" id="notes" ng-model="ctrl.$resolve.volunteer.User.notes"></textarea>
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="ctrl.updateClass(ctrl.$resolve.class)">Save</button>
+        <button class="btn btn-primary" type="button" ng-click="ctrl.updateVolunteer(ctrl.$resolve.volunteer)">Save</button>
         <button class="btn btn-warning" type="button" ng-click="ctrl.close()">Close</button>
     </div>
 </div>
