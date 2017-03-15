@@ -1,11 +1,12 @@
 'use strict'
+const fileUpload = require('angular-file-upload');
 export class AddModalController {
     newClass = {
         startTime: new Date(1970,1,1,8,0,0,0),
         endTime: new Date(1970,1,1,9,0,0,0)
     }
     /*@ngInject*/
-    constructor($http,$uibModalInstance){
+    constructor($http,$uibModalInstance,FileUploader){
         'ngInject'
 
         var ctrl = this;
@@ -18,7 +19,7 @@ export class AddModalController {
         this.popup1 = {
             opened: false
         };
-        
+
         this.popup2 = {
             opened: false
         };
@@ -48,10 +49,32 @@ export class AddModalController {
         };
 
         this.dayOptions = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        
+
         this.today();
-        
-        
+
+        // Init uploader
+        ctrl.uploader = new FileUploader();
+        ctrl.uploader.autoUpload = false;
+        ctrl.uploader.removeAfterUpload = true;
+        ctrl.uploader.method = "POST"
+        ctrl.uploader.url=`/api/classes/new/materials`;
+        ctrl.uploader.onAfterAddingFile = function(item){
+            ctrl.uploader.uploadItem(0);
+            ctrl.uploading = true;
+        }
+        ctrl.uploader.onSuccessItem = function(item,response,status,headers){
+            console.log("SUCCESS",response);
+            ctrl.uploading = false;
+            ctrl.$resolve.class.documentURL = response.documentURL;
+            ctrl.$resolve.class.documentName = response.documentName;
+        }
+        ctrl.uploader.onErrorItem = function(item,response,status,headers){
+            console.log("Err",response);
+        }
+
+        ctrl.upload = function(file){
+            ctrl.uploader.uploadItem(0);
+        }
     }
 
     today() {
@@ -136,7 +159,7 @@ export class AddModalController {
     }
 
     addVolunteerDescription(course){
-        
+
     }
 
     addClass(){
@@ -147,8 +170,8 @@ export class AddModalController {
             ctrl.$uibModalInstance.close();
         })
         ctrl.$resolve.selectedCourse = this.$resolve.class;
-        
-        
+
+
 //        this.$resolve.class = {
 //            startTime: new Date(),
 //            endTime: new Date(),
@@ -159,6 +182,6 @@ export class AddModalController {
 
 }
 
-export default angular.module('refugeeApp.addClassModal', ['refugeeApp.auth', 'ui.router'])
+export default angular.module('refugeeApp.addClassModal', ['refugeeApp.auth', 'ui.router','angularFileUpload'])
   .controller('classAddModalController', AddModalController)
   .name;

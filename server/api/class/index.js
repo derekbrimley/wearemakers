@@ -17,6 +17,7 @@ router.get('/showStudents/:id', auth.hasRole('admin'),controller.showStudents);
 router.get('/showVolunteers/:id', auth.hasRole('admin'),controller.showVolunteers);
 router.post('/', auth.hasRole('admin'), controller.create);
 router.get('/:class/materials', auth.isAuthenticated(), materials.list);
+router.post('/new/materials', auth.hasRole('admin'), materials.uploadMaterial);
 router.post('/:class/materials', auth.hasRole('admin'), materials.uploadMaterial);
 router.delete('/:class/materials', auth.hasRole('admin'), materials.remove);
 router.put('/:id', auth.hasRole('admin'), controller.upsert);
