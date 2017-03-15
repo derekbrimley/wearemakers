@@ -1,9 +1,5 @@
 'use strict'
-export class AddModalController {
-    newClass = {
-        startTime: new Date(1970,1,1,8,0,0,0),
-        endTime: new Date(1970,1,1,9,0,0,0)
-    }
+export class EditVolunteerController {
     /*@ngInject*/
     constructor($http,$uibModalInstance){
         'ngInject'
@@ -27,13 +23,12 @@ export class AddModalController {
         this.mstep = 15;
         this.ismeridian = true;
 
-        this.$resolve.class.startTime = new Date(this.$resolve.class.startTime);
-
-        this.$resolve.class.endTime = new Date(this.$resolve.class.endTime);
-
-        this.$resolve.class.startDate = new Date(this.$resolve.class.startDate);
-
-        this.$resolve.class.endDate = new Date(this.$resolve.class.endDate);
+        this.$resolve.class = {
+            startTime: new Date(),
+            endTime: new Date(),
+            startDate: new Date(),
+            endDate: new Date()
+        }
 
         this.inlineOptions = {
             customClass: this.getDayClass,
@@ -48,7 +43,11 @@ export class AddModalController {
             startingDay: 1
         };
 
+        this.dayOptions = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        
         this.today();
+        
+        
     }
 
     today() {
@@ -103,29 +102,10 @@ export class AddModalController {
         })
     }
 
-    updateClass(course){
+    updateVolunteer(volunteer){
         var ctrl = this;
-//        var f = document.getElementById('file').files[0],
-//            r = new FileReader();
-//        console.log(f);
-//        course.volunteerInfo = f.name;
-//        if(f instanceof Blob) {
-//            console.log("is blob");
-//            r.onloadend = function(e){
-//                console.log("onloadend");
-//                console.log(e.target);
-//                var data = e.target.result;
-//                //send your binary data via $http or $resource or do anything else with it
-////                console.log(data);
-//                ctrl.$http.post('/api/classes/'+course._id+'/materials',data)
-//                .then(function(res) {
-//                    console.log("FILE",res);
-//                })
-//            }
-//            r.readAsBinaryString(f);
-//        }
 
-        this.$http.put('/api/classes/'+course._id,course)
+        this.$http.put('/api/volunteer/'+volunteer._id,volunteer)
         .then(res =>{
             console.log("RES Updates",res);
             this.$uibModalInstance.close();
@@ -133,11 +113,30 @@ export class AddModalController {
     }
 
     addVolunteerDescription(course){
+        
+    }
 
+    addClass(){
+        var ctrl = this;
+        this.$http.post('/api/classes',this.$resolve.class)
+        .then(function(res){
+            console.log("RES",res);
+            ctrl.$uibModalInstance.close();
+        })
+        ctrl.$resolve.selectedCourse = this.$resolve.class;
+        
+        
+//        this.$resolve.class = {
+//            startTime: new Date(),
+//            endTime: new Date(),
+//            startDate: new Date(),
+//            endDate: new Date()
+//        }
     }
 
 }
 
-export default angular.module('refugeeApp.classEditModal', ['refugeeApp.auth', 'ui.router'])
-  .controller('classModalController', AddModalController)
+export default angular.module('refugeeApp.volunteerModal', ['refugeeApp.auth', 'ui.router'])
+  .controller('volunteerModalController', EditVolunteerController)
   .name;
+

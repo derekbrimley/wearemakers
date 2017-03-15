@@ -1,6 +1,7 @@
 'use strict'
 import editModal from './modal.controller.js';
 import addModal from './addModal.controller.js';
+import infoModal from './infoModal.controller.js';
 export class AdminClasses {
     newClass = {
         startTime: new Date(1970,1,1,8,0,0,0),
@@ -92,6 +93,7 @@ export class AdminClasses {
     }
 
     openAddModal(){
+        var ctrl = this;
         var modalInstance = this.$uibModal.open({
           template: require('./addModal.html'),
           controller: 'classAddModalController',
@@ -102,11 +104,45 @@ export class AdminClasses {
                   return this.selectedCourse;
               }
           }
+        })
+        
+        modalInstance.result.then(function(data) {
+        // what you pass in $uibModalInstance.close(true) will be accessible here.
+            ctrl.refresh()
         });
+    }
+
+    openInfoModal(course) {
+        this.selectedCourse = course;
+        var modalInstance = this.$uibModal.open({
+          template: require('./infoModal.html'),
+          controller: 'classInfoModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             class: () => {
+                  return this.selectedCourse;
+              }
+          }
+        })
+    }
+
+    refresh(){
+        var ctrl = this;
+//        this.$http.get('/api/users')
+//        .then(function(res){
+//            ctrl.students = _.filter(res.data,{type:'student'});
+//        })
+        
+        this.$http.get('/api/classes')
+        .then(function(res){
+            console.log("classes",res);
+            ctrl.classes = res.data;
+        })
     }
 }
 
-export default angular.module('refugeeApp.adminClasses', ['refugeeApp.auth', 'ui.router', editModal, addModal])
+export default angular.module('refugeeApp.adminClasses', ['refugeeApp.auth', 'ui.router', infoModal, editModal, addModal])
   .component('adminClasses', {
       template: require('./index.html'),
       controller: AdminClasses,

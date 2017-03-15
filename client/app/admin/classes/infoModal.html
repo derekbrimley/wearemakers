@@ -1,0 +1,44 @@
+<div class="class-modal">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">{{ctrl.$resolve.class.name}} Info</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <td>{{ctrl.$resolve.class.name}}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ctrl.$resolve.class.location}}</td>
+            </tr>
+            <tr>
+                <th>Start Time</th>
+                <td>{{ctrl.$resolve.class.startTime | date:'shortTime'}}</td>
+            </tr>
+            <tr>
+                <th>End Time</th>
+                <td>{{ctrl.$resolve.class.endTime | date:'shortTime'}}</td>
+            </tr>
+            <tr>
+                <th>Start Date</th>
+                <td>{{ctrl.$resolve.class.startDate | date}}</td>
+            </tr>
+            <tr>
+                <th>End Date</th>
+                <td>{{ctrl.$resolve.class.endDate | date}}</td>
+            </tr>
+            <tr>
+                <th>Info</th>
+                <td>{{ctrl.$resolve.class.info}}</td>
+            </tr>
+            <tr>
+                <th>Volunteer Info</th>
+                <td>{{ctrl.$resolve.class.volunteerInfo}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="ctrl.close()">Close</button>
+    </div>
+</div>
