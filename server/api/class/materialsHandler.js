@@ -34,8 +34,11 @@ function handleError(res, statusCode) {
 }
 
 export function uploadMaterial(req, result) {
+    if(!req.class){
+        req.class = {_id:'misc'}
+    }
     var key = `${req.class._id}/${req.files.file.filename}`;
-
+    var filename = req.files.file.filename;
     fs.readFile(req.files.file.file, function (err,data) {
       if (err) {
         return result.status(500).send(err);
@@ -51,7 +54,19 @@ export function uploadMaterial(req, result) {
             console.log("Error uploading data: ", err);
             result.status(500).send(err);
           } else {
-              result.status(200).send();
+              console.log("RES",res);
+              var url = `https://s3-us-west-2.amazonaws.com/${bucketName}/${key}`
+              var body = {documentName:filename,documentURL:url};
+              if(req.class._id == 'misc'){
+                  return result.status(200).json(body);
+              }
+              Class.update(body,{where:{_id:req.class._id}})
+              .then(entity => {
+                return result.status(200).json(body);
+              })
+              .catch( err => {
+                return result.status(500).send(err);
+              })
           }
         });
     });

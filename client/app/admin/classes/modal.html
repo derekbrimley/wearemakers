@@ -41,10 +41,21 @@
                 </div>
                 <hr />
             </div>
-            
+
 <!--            <input class="form-control" id="endDate" ng-model="ctrl.$resolve.class.endDate" />-->
             <label for="info">Info</label>
             <textarea rows="5" class="form-control" id="info" ng-model="ctrl.$resolve.class.info" ></textarea>
+            <hr />
+            <div class="form-group">
+                <label>
+                    Class Document
+                </label>
+                <div class="selector" ng-if="!ctrl.uploading">
+                    <input type="file" nv-file-select uploader="ctrl.uploader"/><br/>
+                    <a download="{{ctrl.$resolve.class.documentName}}" ng-href="{{ctrl.$resolve.class.documentURL}}" target="_blank">{{ctrl.$resolve.class.documentName}}</a>
+                </div>
+                <div class="waiting" ng-show="ctrl.uploading">Please Wait...</div><br/>
+            </div>
 <!--
             <label for="fileUpload">Volunteer Info</label>
             <input type="file" id="file" name="file"/>

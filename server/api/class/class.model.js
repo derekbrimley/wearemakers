@@ -38,6 +38,8 @@ export default function(sequelize, DataTypes) {
     active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
-    }
+    },
+    documentURL: DataTypes.STRING,
+    documentName: DataTypes.STRING
   });
 }

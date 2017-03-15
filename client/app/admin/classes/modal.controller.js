@@ -1,11 +1,12 @@
 'use strict'
+const fileUpload = require('angular-file-upload');
 export class AddModalController {
     newClass = {
         startTime: new Date(1970,1,1,8,0,0,0),
         endTime: new Date(1970,1,1,9,0,0,0)
     }
     /*@ngInject*/
-    constructor($http,$uibModalInstance){
+    constructor($http,$uibModalInstance,FileUploader){
         'ngInject'
 
         var ctrl = this;
@@ -18,7 +19,7 @@ export class AddModalController {
         this.popup1 = {
             opened: false
         };
-        
+
         this.popup2 = {
             opened: false
         };
@@ -49,6 +50,30 @@ export class AddModalController {
         };
 
         this.today();
+
+        // Init uploader
+        ctrl.uploader = new FileUploader();
+        ctrl.uploader.autoUpload = false;
+        ctrl.uploader.removeAfterUpload = true;
+        ctrl.uploader.method = "POST"
+        ctrl.uploader.url=`/api/classes/${this.$resolve.class._id}/materials`;
+        ctrl.uploader.onAfterAddingFile = function(item){
+            ctrl.uploader.uploadItem(0);
+            ctrl.uploading = true;
+        }
+        ctrl.uploader.onSuccessItem = function(item,response,status,headers){
+            console.log("SUCCESS",response);
+            ctrl.uploading = false;
+            ctrl.$resolve.class.documentURL = response.documentURL;
+            ctrl.$resolve.class.documentName = response.documentName;
+        }
+        ctrl.uploader.onErrorItem = function(item,response,status,headers){
+            console.log("Err",response);
+        }
+
+        ctrl.upload = function(file){
+            ctrl.uploader.uploadItem(0);
+        }
     }
 
     today() {
@@ -138,6 +163,6 @@ export class AddModalController {
 
 }
 
-export default angular.module('refugeeApp.classEditModal', ['refugeeApp.auth', 'ui.router'])
+export default angular.module('refugeeApp.classModal', ['refugeeApp.auth', 'ui.router','angularFileUpload'])
   .controller('classModalController', AddModalController)
   .name;
