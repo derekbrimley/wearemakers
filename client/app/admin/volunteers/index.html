@@ -69,7 +69,7 @@
             </td>
 -->
             <td>
-                <button ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id" class="btn btn-primary" ng-click="ctrl.select(vol,false)">Edit</button>
+                <button ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id" class="btn btn-primary" ng-click="ctrl.openEditModal(vol)">Edit</button>
                 <button ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id" class="btn btn-warning" ng-click="ctrl.select(vol,true)">Save</button>
             </td>
         </tr>

@@ -4,6 +4,9 @@
     justify-content: space-between;
     align-items:flex-start;
     align-content: space-between;
+    .pane {
+        width: 100%;
+    }
     .right-pane{
         margin-top:25px;
         display: flex;
