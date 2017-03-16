@@ -12,14 +12,29 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
         <p>Number of total Volunteers: {{ctrl.numOfVolunteers}}</p>
     </uib-tab>
 
-    <uib-tab index="1" heading="Students">
+    <uib-tab index="1" heading="Classes" ng-click="ctrl.aggregate()">
+        <table class="table" style="width:100%;">
+            <thead>
+                <tr >
+                    <th>Class</th>
+                    <th>Percent Attended</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="(name, attendance) in ctrl.attendance">
+                <td> {{name}}</td>
+                <td> {{attendance.attendancePercent}}%</td>
+            </tr>
+        </table>
+    </uib-tab>
+
+    <uib-tab index="2" heading="Students">
         
     </uib-tab>
 
-    <uib-tab index="2" heading="Volunteers">
+    <uib-tab index="3" heading="Volunteers">
 
     </uib-tab>
-    <uib-tab index="3" heading="Data Downloads">
+    <uib-tab index="4" heading="Data Downloads">
 
     </uib-tab>
   </uib-tabset>
