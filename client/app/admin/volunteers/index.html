@@ -1,4 +1,4 @@
-<div class="admin-volunteer-section">
+<div class="admin-volunteers-section">
     <div class="form-group row">
         <label for="search" class="col-2 col-form-label">Search</label>
         <div class="col-10">
@@ -32,21 +32,23 @@
             <td>Notes</td>
 <!--            <td>Role</td>-->
 <!--            <td>Classes</td>-->
-            <td>Action</td>
+<!--            <td>Action</td>-->
         </tr>
         <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
-            <td>{{vol.User.name}}</td>
-            <td>{{vol.User.email}}</td>
-            <td>{{vol.User.phone}}</td>
-            <td>{{vol.User.organization}}</td>
-            <td>{{vol.status}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.name}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.email}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.phone}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.organization}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.status}}</td>
             <td>
                 <button class="btn btn-primary" ng-click="ctrl.openNotesModal(vol)">View</button>
             </td>
             
+<!--
             <td>
                 <button class="btn btn-primary" ng-click="ctrl.openEditModal(vol)">Edit</button>
             </td>
+-->
         </tr>
     </table>
 <!--

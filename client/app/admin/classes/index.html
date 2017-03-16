@@ -1,6 +1,6 @@
 <div class="admin-classes-section">
     <div class="pane">
-        <button class="btn btn-primary" ng-click="ctrl.openAddModal()">Add</button>
+        <button class="btn btn-success" ng-click="ctrl.openAddModal()">Add Class</button>
       
         <div class="classes-section">
             <table class="table">
@@ -16,7 +16,7 @@
 <!--                    <th>Edit</th>-->
                     <th>Remove</th>
                 </tr>
-                <tr ng-repeat="class in ctrl.classes" style="cursor:pointer">
+                <tr class="class_row" ng-repeat="class in ctrl.classes">
                     <td ng-click="ctrl.openModal(class)">{{class.name}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.location}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.day}}</td>
