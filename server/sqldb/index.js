@@ -12,6 +12,7 @@ var db = {
   Sequelize,
   sequelize: new Sequelize(config.sequelize.dbName,config.sequelize.user,config.sequelize.pass,{
       host:config.sequelize.host,
+      logging:false,
       dialect: 'postgres',
       pool: {
           max:5,

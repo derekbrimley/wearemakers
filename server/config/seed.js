@@ -16,13 +16,16 @@ var classes;
 var volunteers;
 var classStudents;
 var classVolunteers;
-import {Thing, User,Class,ClassStudent,Volunteer,ClassVolunteer,sequelize,Sequelize} from '../sqldb'
+import {Thing, User,Class,ClassStudent,Volunteer,ClassVolunteer,ClassSession,SessionVolunteer,SessionStudent,sequelize,Sequelize} from '../sqldb'
 	sequelize.sync()
 	.then(() => User.sync({force:true}))
 	.then(() => Class.sync({force:true}))
 	.then(() => ClassStudent.sync({force:true}))
 	.then(() => Volunteer.sync({force:true}))
 	.then(() => ClassVolunteer.sync({force:true}))
+	.then(() => SessionVolunteer.sync({force:true}))
+	.then(() => SessionStudent.sync({force:true}))
+	.then(() => ClassSession.sync({force:true}))
 	.then(() => {
 		User.bulkCreate([{
 				provider: 'local',

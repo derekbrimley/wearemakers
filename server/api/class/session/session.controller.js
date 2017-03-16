@@ -58,15 +58,6 @@ function checkSessions(){
             var course = classes[i];
             promises.push(checkClass(course));
         }
-        // return Promise.all(promises)
-        // .then(() => {
-        //     console.log("ALL COURSES RESOLVED");
-        //
-        // })
-        // .catch((e) => {
-        //     console.log("ERR",e);
-        //     res.status(500).send(e);
-        // });
     })
 }
 
@@ -76,8 +67,9 @@ function checkClass(course){
     for(var i=0; i <= weeksOut * 7; i++){
         var date = moment(0, "HH").add('days',i);
         var endDate = moment(course.endDate);
-        if(date.isBefore(endDate)){
+        if(date.isBefore(endDate) && date.format('dddd') == course.day){
             // Check if there is a session, if not create it;
+            console.log(course._id,date);
             var p = checkSession(course,date);
         }
 
@@ -89,17 +81,14 @@ function checkClass(course){
 }
 
 function checkSession(course,date){
-    return ClassSession.find({
+    ClassSession.find({
         where:{
-            date:{
-                $gte: date.toDate(),
-                $lt: date.add('days',1).toDate()
-            },
+            date:date,
             classID:course._id
         }
     }).then(entity => {
         if(!entity){
-            console.log("CREATING");
+            console.log("CREATING", course._id);
             var session = ClassSession.build({classID:course._id,date:date})
             return session.save()
         }
