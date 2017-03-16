@@ -1,4 +1,6 @@
 'use strict'
+import editModal from './editModal.controller.js';
+import notesModal from './notesModal.controller.js';
 export class AdminVolunteers {
     newVolunteer = {
         name: '',
@@ -10,11 +12,12 @@ export class AdminVolunteers {
         password: ''
     }
     /*@ngInject*/
-    constructor($http){
+    constructor($http, $uibModal){
         'ngInject'
 
         var ctrl = this;
         this.$http = $http;
+        this.$uibModal = $uibModal;
 
         $http.get('/api/volunteers')
         .then(function(res){
@@ -56,6 +59,7 @@ export class AdminVolunteers {
 //        }
 //    }
 
+
     filterChanged() {
         var ctrl = this;
         ctrl.selectedVolunteer = null;
@@ -79,6 +83,36 @@ export class AdminVolunteers {
 //        .then(function(res) {
 //            console.log("v")  
 //        })
+    }
+
+    openEditModal(volunteer){
+        this.selectedVolunteer = volunteer;
+        var modalInstance = this.$uibModal.open({
+          template: require('./editModal.html'),
+          controller: 'volunteerEditModal',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             volunteer: () => {
+                  return this.selectedVolunteer;
+              }
+          }
+        });
+    }
+
+    openNotesModal(volunteer) {
+        this.selectedVolunteer = volunteer;
+        var modalInstance = this.$uibModal.open({
+          template: require('./notesModal.html'),
+          controller: 'volunteerNotesModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             volunteer: () => {
+                  return this.selectedVolunteer;
+              }
+          }
+        });
     }
 
     showClasses(volunteer) {
@@ -165,7 +199,7 @@ export class AdminVolunteers {
     }
 }
 
-export default angular.module('refugeeApp.adminVolunteers', ['refugeeApp.auth', 'ui.router'])
+export default angular.module('refugeeApp.adminVolunteers', ['refugeeApp.auth', 'ui.router', editModal,notesModal])
   .component('adminVolunteers', {
       template: require('./index.html'),
       controller: AdminVolunteers,

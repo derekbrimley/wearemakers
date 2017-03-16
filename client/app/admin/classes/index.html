@@ -1,6 +1,6 @@
 <div class="admin-classes-section">
     <div class="pane">
-        <button class="btn btn-primary" ng-click="ctrl.openAddModal()">Add</button>
+        <button class="btn btn-success" ng-click="ctrl.openAddModal()">Add Class</button>
       
         <div class="classes-section">
             <table class="table">
@@ -12,28 +12,33 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Info</th>
-                    <th>Volunteer Info</th>
-                    <th>Students</th>
-                    <th>Edit</th>
+<!--                    <th>Volunteer Info</th>-->
+<!--                    <th>Edit</th>-->
                     <th>Remove</th>
                 </tr>
-                <tr ng-repeat="class in ctrl.classes">
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.name}}</td>
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.location}}</td>
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.day}}</td>
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startTime | date:'shortTime'}}</td>
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.startDate | date}}</td>
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.endDate | date}}</td>
-                    <td ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.info}}</td>
-                    <td style="max-width:50px; overflow:hidden;" ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id">{{class.volunteerInfo}}</td>
-
+                <tr class="class_row" ng-repeat="class in ctrl.classes">
+                    <td ng-click="ctrl.openModal(class)">{{class.name}}</td>
+                    <td ng-click="ctrl.openModal(class)">{{class.location}}</td>
+                    <td ng-click="ctrl.openModal(class)">{{class.day}}</td>
+                    <td ng-click="ctrl.openModal(class)">{{class.startTime | date:'shortTime'}}</td>
+                    <td ng-click="ctrl.openModal(class)">{{class.startDate | date}}</td>
+                    <td ng-click="ctrl.openModal(class)">{{class.endDate | date}}</td>
+<!--                    <td>{{class.info}}</td>-->
+<!--                    <td style="max-width:50px; overflow:hidden;">{{class.volunteerInfo}}</td>-->
+<!--
+                    <td>
+                        <button ng-click="" class="btn btn-primary">Info</button>
+                    </td>
+-->
+<!--
                     <td>
                         <button ng-click="ctrl.showStudents(class)" class="btn btn-primary">Show</button>
                     </td>
-                    <td>
-                        <button ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id" ng-click="ctrl.openModal(class)" class="btn btn-primary">Edit</button>
+-->
+                    <td ng-click="ctrl.openInfoModal(class)">
+                        <button class="btn btn-primary">Info</button>
                         <!-- <button ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id" ng-click="ctrl.select(class,false)" class="btn btn-primary">Edit</button> -->
-                        <button ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id" ng-click="ctrl.select(class,true)" class="btn btn-warning">Save</button>
+<!--                        <button ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id" ng-click="ctrl.select(class,true)" class="btn btn-warning">Save</button>-->
                     </td>
                     <td>
                         <button class="btn btn-warning" ng-click="ctrl.removeClass(class)">Remove</button>

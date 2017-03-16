@@ -1,6 +1,9 @@
 'use strict'
 
 import modal from './modal.controller'
+import editModal from './editModal.controller'
+import notesModal from './notesModal.controller'
+import classesModal from './classesModal.controller'
 
 export class AdminStudents {
     user = {
@@ -124,6 +127,23 @@ export class AdminStudents {
         })
     }
 
+    openEditModal(student) {
+        this.selectedStudent = student;
+        var ctrl = this;
+        var modalInstance = this.$uibModal.open({
+          template: require('./editModal.html'),
+          controller: 'studentEditModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             student: () => {
+                 
+                  return this.selectedStudent;
+              }
+          }
+        })
+    }
+
     openModal(student){
         this.selectedStudent = student;
         var ctrl = this;
@@ -146,6 +166,40 @@ export class AdminStudents {
         });
     }
 
+    openNotesModal(student) {
+        this.selectedStudent = student;
+        var ctrl = this;
+        var modalInstance = this.$uibModal.open({
+          template: require('./notesModal.html'),
+          controller: 'studentNotesModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             student: () => {
+                 
+                  return this.selectedStudent;
+              }
+          }
+        })
+    }
+
+    openClassesModal(student) {
+        this.selectedStudent = student;
+        var ctrl = this;
+        var modalInstance = this.$uibModal.open({
+          template: require('./classesModal.html'),
+          controller: 'studentClassesModalController',
+          bindToController: true,
+          controllerAs: 'ctrl',
+          resolve: {
+             student: () => {
+                 
+                  return this.selectedStudent;
+              }
+          }
+        })
+    }
+
     refresh(){
         var ctrl = this;
         this.$http.get('/api/users')
@@ -158,7 +212,7 @@ export class AdminStudents {
     
 }
 
-export default angular.module('refugeeApp.adminStudents', ['refugeeApp.auth', 'ui.router', modal])
+export default angular.module('refugeeApp.adminStudents', ['refugeeApp.auth', 'ui.router', modal, editModal, notesModal, classesModal])
   .component('adminStudents', {
       template: require('./index.html'),
       controller: AdminStudents,

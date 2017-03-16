@@ -1,35 +1,39 @@
 .admin-students-section{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items:flex-start;
-    align-content: space-between;
-    .right-pane{
-        margin-top:25px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width:50%;
-    }
-    .left-pane{
-        width:50%;
-    }
-    .class{
-        display:flex;
-        flex-direction:row;
-        div{
-            margin:10px;
-        }
-        .class-name{
-            cursor:pointer;
-        }
-        .glyphicon-remove{
-            cursor:pointer;
-        }
-    }
-    .new-class-section{
-        label{
-            margin-right:10px;
-        }
+//    display: flex;
+//    flex-direction: row;
+//    justify-content: space-between;
+//    align-items:flex-start;
+//    align-content: space-between;
+//    .right-pane{
+//        margin-top:25px;
+//        display: flex;
+//        flex-direction: row;
+//        justify-content: center;
+//        width:50%;
+//    }
+//    .left-pane{
+//        width:50%;
+//    }
+//    .class{
+//        display:flex;
+//        flex-direction:row;
+//        div{
+//            margin:10px;
+//        }
+//        .class-name{
+//            cursor:pointer;
+//        }
+//        .glyphicon-remove{
+//            cursor:pointer;
+//        }
+//    }
+//    .new-class-section{
+//        label{
+//            margin-right:10px;
+//        }
+//    }
+    .student_row:hover {
+        cursor: pointer;
+        background: gainsboro;
     }
 }

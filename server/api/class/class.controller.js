@@ -16,6 +16,10 @@ import {ClassStudent} from '../../sqldb';
 import {ClassVolunteer} from '../../sqldb';
 import {User} from '../../sqldb';
 
+//for Reporting
+import {SessionStudent} from '../../sqldb';
+import {ClassSession} from '../../sqldb';
+
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -191,3 +195,48 @@ export function destroy(req, res) {
       })
       .catch(handleError(res));
 }
+
+//Reporting
+
+// get count of students by class
+export function classStudentCount(req, res) {
+ 
+ return ClassStudent.count({
+  //  attributes: ['Class.name','Class._id'],
+   where:{classID:req.params.classid},
+   include:[{
+          model:Class
+      }]
+ }).then(function(c) {
+    res.json(c);
+  })
+}
+
+// get count of students by class
+export function attendance(req, res) {
+ 
+ return SessionStudent.count({
+   attributes: ['ClassSession.classID','attendance'],
+   group: ['ClassSession.classID','attendance'],
+   include:[{
+          model:ClassSession,
+          attributes: ['classID'],
+          where:{classID:req.params.classid}
+      }]
+ }).then(function(c) {
+    res.json(c);
+  })
+}
+
+// export function test(req, res) {
+ 
+//  return SessionStudent.count({
+//    attributes: ['ClassSession.classID','attendance'],
+//    group: ['ClassSession.classID','attendance'],
+//    include:[{
+//           model:ClassSession
+//       }]
+//  }).then(function(c) {
+//     res.json(c);
+//   })
+// }

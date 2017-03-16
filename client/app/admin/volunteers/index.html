@@ -1,4 +1,4 @@
-<div class="admin-volunteer-section">
+<div class="admin-volunteers-section">
     <div class="form-group row">
         <label for="search" class="col-2 col-form-label">Search</label>
         <div class="col-10">
@@ -32,46 +32,23 @@
             <td>Notes</td>
 <!--            <td>Role</td>-->
 <!--            <td>Classes</td>-->
-            <td>Action</td>
+<!--            <td>Action</td>-->
         </tr>
         <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
-<!--            Editable form-->
-            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.name}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.name">
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.name}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.email}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.phone}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.organization}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.status}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="ctrl.openNotesModal(vol)">View</button>
             </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.email}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.email">
-            </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.phone}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.phone">
-            </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.User.organization}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input ng-blur="ctrl.updateVolunteer()" type="text" class="form-control" ng-model="vol.User.organization">
-            </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.status}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <select ng-change="ctrl.updateVolunteer()" class="form-control" ng-model="ctrl.selectedVolunteerEdit.status" ng-options="status for status in ctrl.statuses"></select>
-            </td>
-            <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.notes}}</td>
-            <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
-                <input type="text" class="form-control" ng-model="ctrl.selectedVolunteerEdit.notes" />
-            </td>
-<!--            End editable form-->
             
-<!--            <td>{{vol.User.role}}</td>-->
 <!--
             <td>
-                <button ng-click="ctrl.showClasses(vol)" class="btn btn-primary">Show</button>
+                <button class="btn btn-primary" ng-click="ctrl.openEditModal(vol)">Edit</button>
             </td>
 -->
-            <td>
-                <button ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id" class="btn btn-primary" ng-click="ctrl.select(vol,false)">Edit</button>
-                <button ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id" class="btn btn-warning" ng-click="ctrl.select(vol,true)">Save</button>
-            </td>
         </tr>
     </table>
 <!--

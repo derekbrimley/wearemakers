@@ -1,0 +1,25 @@
+<div class="class-modal">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Edit {{ctrl.$resolve.volunteer.User.name}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <form>
+            <label for="name">Name</label>
+            <input class="form-control" id="name" ng-model="ctrl.$resolve.volunteer.User.name" />
+            <label for="location">Email</label>
+            <input class="form-control" id="location" ng-model="ctrl.$resolve.volunteer.User.email" />
+            <label for="startTime">Phone Number</label>
+            <input class="form-control" id="phone" ng-model="ctrl.$resolve.volunteer.User.phone" />
+            <label for="endTime">Organization</label>
+            <input class="form-control" id="organization" ng-model="ctrl.$resolve.volunteer.User.organization"/>
+            <label for="startDate">Status</label>
+            <select class="form-control" ng-model="ctrl.$resolve.volunteer.status" id="status" ng-options="status for status in ctrl.statuses"></select>
+            <label for="endDate">Notes</label>
+            <textarea rows="5" class="form-control" id="notes" ng-model="ctrl.$resolve.volunteer.User.notes"></textarea>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ctrl.updateVolunteer(ctrl.$resolve.volunteer)">Save</button>
+        <button class="btn btn-warning" type="button" ng-click="ctrl.close()">Close</button>
+    </div>
+</div>

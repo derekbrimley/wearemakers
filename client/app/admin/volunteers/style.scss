@@ -1,39 +1,43 @@
 .admin-volunteers-section{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items:flex-start;
-    align-content: space-between;
-    .right-pane{
-        margin-top:25px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width:50%;
-    }
-    .left-pane{
-        width:50%;
-    }
-    .volunteer_table{
-//        display:flex;
-//        flex-direction:row;
-        width: 100%;
-//        .volunteer_row {
-//            cursor:pointer;
+//    display: flex;
+//    flex-direction: row;
+//    justify-content: space-between;
+//    align-items:flex-start;
+//    align-content: space-between;
+//    .right-pane{
+//        margin-top:25px;
+//        display: flex;
+//        flex-direction: row;
+//        justify-content: center;
+//        width:50%;
+//    }
+//    .left-pane{
+//        width:50%;
+//    }
+//    .volunteer_table{
+////        display:flex;
+////        flex-direction:row;
+//        width: 100%;
+////        .volunteer_row {
+////            cursor:pointer;
+////        }
+////        div{
+////            margin:10px;
+////        }
+////        .volunteer-name{
+////            cursor:pointer;
+////        }
+////        .glyphicon-remove{
+////            cursor:pointer;
+////        }
+//    }
+//    .new-class-section{
+//        label{
+//            margin-right:10px;
 //        }
-//        div{
-//            margin:10px;
-//        }
-//        .volunteer-name{
-//            cursor:pointer;
-//        }
-//        .glyphicon-remove{
-//            cursor:pointer;
-//        }
-    }
-    .new-class-section{
-        label{
-            margin-right:10px;
-        }
+//    }
+    .volunteer_row:hover {
+        cursor: pointer;
+        background: gainsboro;
     }
 }
