@@ -20,7 +20,11 @@ export class VolunteerController {
             $http.get('/api/sessions/'+ctrl.myUser._id+'/mine')
             .then(function(res){
                 console.log("my sessions",res);
-                ctrl.mySessions = res.data;
+//                ctrl.mySessions = res.data;
+                ctrl.mySessions = _.filter(res.data,function(value) {
+                    return value.ClassSession.date > new Date();
+                });
+//                _.filter(res.data,{type:'student'});
             })
         });
         
