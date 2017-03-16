@@ -1,0 +1,33 @@
+<div class="class-modal">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Edit {{ctrl.$resolve.student.name}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <form>
+            <label for="name">Name</label>
+            <input class="form-control" id="name" ng-model="ctrl.$resolve.student.name" />
+            <label for="email">Email</label>
+            <input class="form-control" id="location" ng-model="ctrl.$resolve.student.email" />
+            <label for="phone">Phone Number</label>
+            <input class="form-control" id="phone" ng-model="ctrl.$resolve.student.phone" />
+            <label for="gender">Gender</label>
+
+            <select ng-model="ctrl.$resolve.student.gender" class="form-control" id="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <label for="grade">Grade</label>
+            <select ng-model="ctrl.$resolve.student.grade" class="form-control" id="grade" ng-options="grade for grade in ctrl.grades"></select>
+            <label for="community">Community</label>
+            <input class="form-control" id="community" ng-model="ctrl.$resolve.student.community"/>
+            <label for="primaryLanguage">Primary Language</label>
+            <input class="form-control" ng-model="ctrl.$resolve.student.primaryLanguage" id="primaryLanguage" />
+            <label for="notes">Notes</label>
+            <textarea rows="5" class="form-control" id="notes" ng-model="ctrl.$resolve.student.notes"></textarea>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ctrl.updateStudent(ctrl.$resolve.student)">Save</button>
+        <button class="btn btn-warning" type="button" ng-click="ctrl.close()">Close</button>
+    </div>
+</div>

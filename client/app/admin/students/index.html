@@ -1,20 +1,19 @@
-<div class="admin-volunteer-section">
+<div class="admin-students-section">
     <div class="row">
-        <div class="col-sm-4">
+        <div>
             <form>
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" ng-model="$ctrl.query">
                 </div>
             </form>
         </div>
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
+        <div>
              <button ng-click="ctrl.openModal()" class="btn btn-success">Add Student</button>
         </div>
 
     </div>
     <div class="pane">
-        <table class="volunteer_table table" style="width:100%;">
+        <table class="student_table table" style="width:100%;">
             <tr>
                 <td>Name</td>
                 <td>Email</td>
@@ -25,46 +24,34 @@
                 <td>Language</td>
                 <td>Date Added</td>
                 <td>Classes</td>
-                <td>Edit</td>
+                <td>Notes</td>
+<!--                <td>Edit</td>-->
             </tr>
-            <tr class="volunteer_row" ng-repeat="stud in ctrl.students | filter:$ctrl.query">
+            <tr class="student_row" ng-repeat="stud in ctrl.students | filter:$ctrl.query">
 
-                <!-- editable form -->
-                <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.name}}</td>
-                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.name"/></td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.name}}</td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.email}}</td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.phone}}</td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.gender}}</td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.grade}}</td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.community}}</td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.primaryLanguage}}</td>
 
-                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.email}}</td>
-                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.email"/></td>
-
-                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.phone}}</td>
-                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.phone"/></td>
-
-                <td ng-if="stud.saved==true|| ctrl.showStudentsEdit._id!=stud._id">{{stud.gender}}</td>
-                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.gender"/></td>
-
-                <td ng-if="stud.saved || ctrl.showStudentsEdit._id!=stud._id">{{stud.grade}}</td>
-                <td ng-if="!stud.saved && ctrl.showStudentsEdit._id==stud._id">
-                    <select ng-blur="ctrl.updateStudent()" class="form-control" ng-model="ctrl.showStudentsEdit.grade" ng-options="grade for grade in ctrl.grades"></select>
-                </td>
-
-
-                <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.community}}</td>
-                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.community"/></td>
-
-                <td ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id">{{stud.primaryLanguage}}</td>
-                <td ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id"><input ng-blur="ctrl.updateStudent()" type="text" class="form-control" ng-model="ctrl.showStudentsEdit.primaryLanguage"/></td>
-
-                <!--End editable form -->
-
-                <td>{{stud.createdAt | date:'MM/dd/yyyy'}}</td>
-                <td><button class="btn btn-primary" ng-click="ctrl.showStudents(stud)">Show</button></td>
+                <td ng-click="ctrl.openEditModal(stud)">{{stud.createdAt | date:'MM/dd/yyyy'}}</td>
                 <td>
-                    <button ng-if="stud.saved==true || ctrl.showStudentsEdit._id!=stud._id" class="btn btn-primary" ng-click="ctrl.select(stud,false)">Edit</button>
-                    <button ng-if="stud.saved==false && ctrl.showStudentsEdit._id==stud._id" class="btn btn-warning" ng-click="ctrl.select(stud,true)">Save</button>
+                    <button class="btn btn-primary" ng-click="ctrl.openClassesModal(stud)">Show</button></td>
+                <td>
+                    <button class="btn btn-primary" ng-click="ctrl.openNotesModal(stud)">View</button>
                 </td>
+<!--
+                <td>
+                    <button class="btn btn-primary" ng-click="ctrl.openEditModal(stud)">Edit</button>
+                </td>
+-->
             </tr>
         </table>
 
+<!--
         <div ng-if="!ctrl.showAdd && ctrl.selectedStudent">
             <h3>Selected Students Classes</h3>
             <table class="table table-sm">
@@ -100,6 +87,7 @@
                 </tr>
             </table>
         </div>
+-->
     </div>
 
 </div>
