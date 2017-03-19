@@ -84,17 +84,18 @@ export class ClassCalendar {
         ctrl.selectedDate = date;
         ctrl.selectedSession = res.data;
         ctrl.selectedSession.SessionVolunteers = [];
+        ctrl.onSelect({session:ctrl.selectedSession});
       }, function(err) {
         var selectedCourse = _.cloneDeep(course);
         selectedCourse.startTime = new Date(course.startTime);
         err.data.session.Class = selectedCourse;
         ctrl.selectedDate = date;
         ctrl.selectedSession = err.data.session;
+        ctrl.onSelect({session:ctrl.selectedSession});
       })
   }
 
   checkDate(course,date){
-      console.log(course,date);
       var startDate = moment(course.startDate)
       var endDate = moment(course.endDate)
       return date.isSameOrBefore(endDate) && date.isSameOrAfter(startDate);
@@ -107,7 +108,8 @@ export default angular.module('components.classCalendar', [])
     controller: ClassCalendar,
     controllerAs: 'ctrl',
     bindings: {
-      selectedSession: '='
+      selectedSession: '=',
+      onSelect: '&'
     }
   })
   .name;

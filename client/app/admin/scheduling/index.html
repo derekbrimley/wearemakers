@@ -1,26 +1,6 @@
 <div class="admin-scheduling-section">
-    <class-calendar on-select="ctrl.sessionSelected" selected-session="ctrl.selectedSession"></class-calendar>
+    <class-calendar on-select="ctrl.sessionSelected(session)" selected-session="ctrl.selectedSession"></class-calendar>
     <div ng-show="ctrl.selectedSession" class="session-section">
-<!--
-        <div class="session-header">
-            <div class="class-name">
-                {{ctrl.selectedSession.Class.name}}
-            </div>
-            <div class="">
-                {{ctrl.selectedDate.format("M/D")}}
-            </div>
-        </div>
--->
-<!--
-        <div class="session-info">
-            <div class="time">
-                <strong>Start Time:</strong> {{ctrl.selectedSession.Class.startTime | date: 'HH:mm a'}}
-            </div>
-            <div class="location">
-                <strong>Location:</strong> {{ctrl.selectedSession.Class.location}}
-            </div>
-        </div>
--->
 
         <!-- session volunteer and student section -->
         <uib-tabset active="active">
@@ -44,7 +24,7 @@
                             <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">{{vol.plannedAttendance}}</td>
                             <td ng-if="!vol.saved && ctrl.selectedVolunteerEdit._id==vol._id">
                                 <select class="form-control" ng-model="vol.plannedAttendance" ng-options="attendance for attendance in ctrl.planned_attendance_options" ng-change="ctrl.changePlannedAttendance(vol)"></select>
-                                
+
 <!--                                <select class="form-control" ng-if="volunteer.saved == false && ctrl.selectedVolunteer==volunteer._id" ng-model="volunteer.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markAttendance(volunteer)"></select>-->
                             </td>
                             <td ng-if="vol.saved || ctrl.selectedVolunteerEdit._id!=vol._id">
@@ -69,7 +49,7 @@
                                 <button class="btn btn-primary" ng-click="ctrl.removeFromSession(volunteer)">Remove</button>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="interested-volunteers">
                         <h4>Interested</h4>
@@ -117,7 +97,7 @@
             <uib-tab index="1" heading="Students" ng-click="ctrl.createStudentSession()">
                 <h3>Attendance</h3>
 
-                
+
 
                     <div class="students-section">
                         <h4>Registered Students</h4>
