@@ -92,6 +92,13 @@ export class ClassCalendar {
         ctrl.selectedSession = err.data.session;
       })
   }
+
+  checkDate(course,date){
+      console.log(course,date);
+      var startDate = moment(course.startDate)
+      var endDate = moment(course.endDate)
+      return date.isSameOrBefore(endDate) && date.isSameOrAfter(startDate);
+  }
 }
 
 export default angular.module('components.classCalendar', [])

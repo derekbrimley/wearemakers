@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="day-body">
-                    <div class="session" ng-click="ctrl.createSession(class,day)" ng-repeat="class in ctrl.classes | filter:{day: day.format('dddd')} | orderBy: 'startTime'">
+                    <div class="session" ng-if="ctrl.checkDate(class,day)" ng-click="ctrl.createSession(class,day)" ng-repeat="class in ctrl.classes | filter:{day: day.format('dddd')} | orderBy: 'startTime'">
                         {{class.name}}
                     </div>
                 </div>
