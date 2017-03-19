@@ -1,7 +1,5 @@
 <div class="container">
   <h2>Welcome, {{ctrl.myUser.name}}</h2>
-
-
 <!-- LOOK AT https://angular-ui.github.io/bootstrap/ FOR
 DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
  IT IS JUST PLUG AND PLAY, NO IMPORTING OR ANYTHING REQUIRED-->
@@ -28,6 +26,8 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
         </table>
     </uib-tab>
     <uib-tab index="1" heading="Classes">
+
+        <class-calendar read-only="true" selected-session="ctrl.selectedSession" on-select="ctrl.onSelect(session)"></class-calendar>
         <h3>Session Sign-Up</h3>
         <div>
             <table class="table">

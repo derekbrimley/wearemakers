@@ -16,7 +16,7 @@ export class VolunteerController {
         .then(function(res){
             console.log("user",res);
             ctrl.myUser = res;
-            
+
             $http.get('/api/sessions/'+ctrl.myUser._id+'/mine')
             .then(function(res){
                 console.log("my sessions",res);
@@ -27,17 +27,17 @@ export class VolunteerController {
 //                _.filter(res.data,{type:'student'});
             })
         });
-        
-        
-        
-        
+
+
+
+
 //        $http.get('/api/classes/' + ctrl.myUser._id + '/mine')
 //        .then(function(res){
 //            console.log("my sessions",res);
 //            ctrl.my_sessions = res.data;
 //        });
 //        /api/classes/:class/sessions/:session/volunteers
-        
+
 
         $http.get('/api/classes/')
         .then(function(res) {
@@ -49,16 +49,16 @@ export class VolunteerController {
             })
         });
 
-        
-        
+
+
         ctrl.userSessions = {};
-        
+
         $http.get('/api/sessions/')
         .then(function(res) {
             console.log("SESSIONS",res);
-            
+
             ctrl.sessions = res.data;
-            
+
             res.data.forEach(function(session) {
 
                 session.SessionVolunteers.forEach(function(sessionVolunteer) {
@@ -78,7 +78,7 @@ export class VolunteerController {
 //            console.log("SESSION Volunteers", res);
 //            ctrl.sessionVolunteers = res;
 //        })
-        
+
         ctrl.attendanceOptions = ['Yes','No','On Call'];
     }
 
@@ -89,57 +89,57 @@ export class VolunteerController {
 //        })
 //        return true;
 //    }
-//    
+//
     checkSession(id) {
         var ctrl = this;
         return id in ctrl.userSessions;
     }
-    
+
     updateAttendance(session) {
         var ctrl = this;
-        
+
         var body = {
             userID: ctrl.myUser._id,
             sessionID: session._id,
             plannedAttendance: ctrl.userSessions[session._id].plannedAttendance
         }
-        
+
         this.$http.put('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/' + ctrl.userSessions[session._id].id, body)
         .then(function(res) {
             console.log("UPDATE sessionvolunteer RES", res);
         })
-        
+
 //        this.$http.post('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/', body)
 //        .then(function(res) {
 //            console.log("RES", res);
 //            ctrl.attendanceMarked = true;
 //        })
-        
+
 //        this.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/')
     }
-    
+
     createAttendance(session) {
         var ctrl = this;
-        
+
         var body = {
             userID: ctrl.myUser._id,
             sessionID: session._id,
             plannedAttendance: ctrl.userSessions[session._id].plannedAttendance
         }
-        
+
         this.$http.post('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/', body)
         .then(function(res) {
             console.log("CREATE sessionvolunteer RES", res);
         })
-        
+
     }
-    
+
     showDetails(course) {
         var ctrl = this;
         ctrl.selectedCourse = course;
         console.log("course",ctrl.selectedCourse);
     }
-    
+
     showRequest(course) {
         var ctrl = this;
         var volunteers = [];
@@ -182,6 +182,9 @@ export class VolunteerController {
             console.log("UPDATE",res)
         })
 
+    }
+    onSelect(session){
+        console.log("SESSION SELECTED",session);
     }
 
 }

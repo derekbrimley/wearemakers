@@ -1,7 +1,7 @@
 <div class="class-calendar">
     <div class="calendar">
         <div class="nav-buttons">
-            <button class="btn btn-primary" ng-click="ctrl.previousWeek()">Previous</button>
+            <button class="btn btn-primary"  ng-click="ctrl.previousWeek()">Previous</button>
             <button class="btn btn-primary" ng-click="ctrl.currentWeek()">Current</button>
             <button class="btn btn-primary" ng-click="ctrl.nextWeek()">Next</button>
         </div>
@@ -18,6 +18,11 @@
                 <div class="day-body">
                     <div class="session" ng-if="ctrl.checkDate(class,day)" ng-click="ctrl.createSession(class,day)" ng-repeat="class in ctrl.classes | filter:{day: day.format('dddd')} | orderBy: 'startTime'">
                         {{class.name}}
+                    </div>
+                    <!-- ng-if="ctrl.checkSession(session,day)" -->
+                    <!--  This is the read only version, this one only shows the sessions already created rather than classes available-->
+                    <div class="session" ng-if="ctrl.checkDate(session.Class,day)" ng-click="ctrl.onSelect({session:session})" ng-repeat="session in (ctrl.filteredSessions=(ctrl.sessions | filter:{date: day.toString()} | orderBy: 'startTime'))">
+                        {{session.Class.name}}
                     </div>
                 </div>
             </div>
