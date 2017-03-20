@@ -49,7 +49,7 @@ export default function(sequelize, DataTypes) {
     phone: DataTypes.STRING,
     gender: DataTypes.STRING,
     community: DataTypes.STRING,
-    grade: DataTypes.INTEGER,
+    grade: DataTypes.STRING,
     primaryLanguage: DataTypes.STRING,
 
 

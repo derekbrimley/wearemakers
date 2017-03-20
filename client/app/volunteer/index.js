@@ -11,7 +11,7 @@ export class VolunteerController {
         var ctrl = this;
 
         this.$http = $http;
-
+        
         Auth.getCurrentUser()
         .then(function(res){
             console.log("user",res);
@@ -19,12 +19,16 @@ export class VolunteerController {
             
             $http.get('/api/sessions/'+ctrl.myUser._id+'/mine')
             .then(function(res){
+                ctrl.myUpcomingSessions = [];
                 console.log("my sessions",res);
-//                ctrl.mySessions = res.data;
-                ctrl.mySessions = _.filter(res.data,function(value) {
-                    return value.ClassSession.date > new Date();
+                _.filter(res.data,function(value) {
+                    var sessDate = new Date(value.ClassSession.date);
+                    var today = new Date ();
+                    if(sessDate > today) {
+                        ctrl.myUpcomingSessions.push(value);
+                    }
                 });
-//                _.filter(res.data,{type:'student'});
+                console.log("filtered sessions",ctrl.myUpcomingSessions);
             })
         });
         
@@ -57,7 +61,24 @@ export class VolunteerController {
         .then(function(res) {
             console.log("SESSIONS",res);
             
-            ctrl.sessions = res.data;
+            ctrl.upcomingSessions = [];
+            _.filter(res.data, function(value) {
+                var sessDate = new Date(value.date);
+                var today = new Date ();
+                var endDate = new Date(+new Date + 12096e5)
+                if(sessDate > today && sessDate < endDate) {
+                    ctrl.upcomingSessions.push(value);
+                }
+            })
+            ctrl.upcomingSessions.sort(function(a,b) {
+                return new Date(a.date) - new Date(b.date); 
+            });
+            console.log("upcoming sessions",ctrl.upcomingSessions);
+            
+            ctrl.totalSessions = ctrl.upcomingSessions.length;
+            ctrl.currentPage = 1;
+            ctrl.itemsPerPage = 10;
+            ctrl.itemsPerPageOptions = [10,20,50,100];
             
             res.data.forEach(function(session) {
 
@@ -81,7 +102,16 @@ export class VolunteerController {
         
         ctrl.attendanceOptions = ['Yes','No','On Call'];
     }
-
+    
+    setPage(pageNum) {
+        var ctrl = this;
+        ctrl.currentPage = pageNum;
+    }
+    
+    pageChanged() {
+        var ctrl = this;
+        console.log("page changed to " + ctrl.currentPage);
+    }
 //    checkSession(session) {
 //        this.$http.get('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/')
 //        .then(function(res) {
@@ -107,10 +137,11 @@ export class VolunteerController {
         this.$http.put('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/' + ctrl.userSessions[session._id].id, body)
         .then(function(res) {
             console.log("UPDATE sessionvolunteer RES", res);
+            
         })
         
 //        this.$http.post('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/', body)
-//        .then(function(res) {
+//        .then(function(res) { 
 //            console.log("RES", res);
 //            ctrl.attendanceMarked = true;
 //        })
@@ -130,6 +161,9 @@ export class VolunteerController {
         this.$http.post('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/', body)
         .then(function(res) {
             console.log("CREATE sessionvolunteer RES", res);
+//            if(res.data.plannedAttendance == "Yes" ||res.data.plannedAttendance == "On Call") {
+//                ctrl.myUpcomingSessions.push(res.data);
+//            }
         })
         
     }
@@ -186,6 +220,21 @@ export class VolunteerController {
 
 }
 
+
+//nameSpace.filter("myfilter", function() {
+//    return function(items) {
+//        var arrayToReturn = [];        
+//        for (var i=0; i<items.length; i++){
+//            var date = items[i].date;
+//            if (date > new Date())  {
+//                arrayToReturn.push(items[i]);
+//            }
+//        }
+//
+//        return arrayToReturn;
+//    };
+//});
+
 export default angular.module('refugeeApp.volunteer', [uiRouter])
   .config(routes)
   .component('volunteer', {
@@ -194,3 +243,18 @@ export default angular.module('refugeeApp.volunteer', [uiRouter])
     controllerAs: 'ctrl'
   })
   .name;
+//  .filter('dateFilter', function() {
+//    return function(input) {
+//        var output = [];
+//        
+//        angular.forEach(input, function(item) {
+//            var sessDate = new Date(item.ClassSession.date);
+//            var today = new Date();
+//            if(sessDate > today) {
+//                output.push(item);
+//            }
+//        })
+//        
+//        return output;
+//    }
+//  });

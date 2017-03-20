@@ -34,7 +34,7 @@
 <!--            <td>Classes</td>-->
 <!--            <td>Action</td>-->
         </tr>
-        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
+        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
             <td ng-click="ctrl.openEditModal(vol)">{{vol.User.name}}</td>
             <td ng-click="ctrl.openEditModal(vol)">{{vol.User.email}}</td>
             <td ng-click="ctrl.openEditModal(vol)">{{vol.User.phone}}</td>
@@ -51,6 +51,7 @@
 -->
         </tr>
     </table>
+    <ul uib-pagination total-items="ctrl.totalVolunteers" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
 <!--
     {{ctrl.selectedVolunteerEdit}}
     {{vol.saved}}
