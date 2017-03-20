@@ -1,7 +1,5 @@
 <div class="container">
   <h2>Welcome, {{ctrl.myUser.name}}</h2>
-
-
 <!-- LOOK AT https://angular-ui.github.io/bootstrap/ FOR
 DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
  IT IS JUST PLUG AND PLAY, NO IMPORTING OR ANYTHING REQUIRED-->
@@ -34,6 +32,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
         <label for="itemsPerPageSelect">Sessions per page</label>
         <select class="form-control" ng-model="ctrl.itemsPerPage" ng-options="num as num for num in ctrl.itemsPerPageOptions" id="itemsPerPageSelect">
         </select>
+        <class-calendar read-only="true" selected-session="ctrl.selectedSession" on-select="ctrl.onSelect(session)"></class-calendar>
         <h3>Session Sign-Up</h3>
         <div>
             <table class="table">

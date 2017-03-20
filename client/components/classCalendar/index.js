@@ -21,14 +21,79 @@ export class ClassCalendar {
     ctrl.days = days;
 
     this.$http = $http;
+    if(this.readOnly){
+        $http.get('/api/sessions')
+        .then(function(res) {
+            var sessions = res.data;
+            for(var i in sessions){
+                var session = sessions[i];
+                session.date = moment(session.date).toDate();
+            }
+            ctrl.sessions = sessions
+        })
+    }
+    else{
+        $http.get('/api/classes')
+        .then(function(res) {
+            ctrl.classes = res.data;
 
-    $http.get('/api/classes')
-      .then(function(res) {
-        ctrl.classes = res.data;
-
-      })
+        })
+    }
   }
-
+  // checkPrevious(){
+  //     if(!this.readOnly)
+  //     return false;
+  //     var startOfWeek = this.days[0].clone().subtract(7, 'd');
+  //     var endOfWeek = startOfWeek.clone().add(6, 'd');
+  //
+  //     var days = [];
+  //     var day = startOfWeek;
+  //     while (day <= endOfWeek) {
+  //       days.push(day);
+  //       day = day.clone().add(1, 'd');
+  //     }
+  //
+  //   //   Check if there are any valid sessions in the previous week, if so then enable the button
+  //     for(var i in days){
+  //         day = days[i];
+  //         for(var y in this.filteredSessions){
+  //             var session = this.filteredSessions[i];
+  //             if(this.checkDate(session.Class,day)){
+  //                 return false;
+  //             }
+  //         }
+  //     }
+  //     return true;
+  //
+  // }
+  // checkNext(){
+  //     if(!this.readOnly)
+  //     return false;
+  //
+  //     var startOfWeek = this.days[0].clone().add(7, 'd');
+  //     var endOfWeek = startOfWeek.clone().add(6, 'd');
+  //
+  //     var days = [];
+  //     var day = startOfWeek;
+  //     while (day <= endOfWeek) {
+  //       days.push(day);
+  //       day = day.clone().add(1, 'd');
+  //     }
+  //
+  //   //   Check if there are any valid sessions in the previous week, if so then enable the button
+  //     for(var i in days){
+  //         day = days[i];
+  //         for(var y in this.filteredSessions){
+  //             var session = this.filteredSessions[i];
+  //             if(this.checkDate(session.Class,day)){
+  //                 return false;
+  //             }
+  //         }
+  //     }
+  //     return true;
+  //
+  //
+  // }
   previousWeek() {
     // Get current week
     var startOfWeek = this.days[0].subtract(7, 'd');
@@ -73,6 +138,7 @@ export class ClassCalendar {
 
   createSession(course, date) {
     var ctrl = this;
+    ctrl.onSelect({session:ctrl.selectedSession});
     var body = {
       classID: course._id,
       date: date.toDate()
@@ -92,6 +158,16 @@ export class ClassCalendar {
         ctrl.selectedSession = err.data.session;
       })
   }
+
+  checkDate(course,date){
+      var startDate = moment(course.startDate)
+      var endDate = moment(course.endDate)
+      return date.isSameOrBefore(endDate) && date.isSameOrAfter(startDate);
+  }
+  checkSession(session,day){
+      var date = moment(session.date);
+      return this.checkDate(session.Class,day) && date.isSame(day)
+  }
 }
 
 export default angular.module('components.classCalendar', [])
@@ -100,7 +176,9 @@ export default angular.module('components.classCalendar', [])
     controller: ClassCalendar,
     controllerAs: 'ctrl',
     bindings: {
-      selectedSession: '='
+      selectedSession: '=',
+      onSelect: '&',
+      readOnly: '<?'
     }
   })
   .name;
