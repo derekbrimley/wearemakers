@@ -8,25 +8,30 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
 
     <uib-tab index="0" heading="My Classes">
         <h3>Upcoming Class Sessions</h3>
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Location</th>
-                <th>Time</th>
-                <th>Planned Attendance</th>
-            </tr>
-            <tr ng-repeat="session in ctrl.mySessions | filter:{plannedAttendance:'!'+'No'}"}>
-                <td>{{session.ClassSession.Class.name}}</td>
-                <td>{{session.ClassSession.date | date}}</td>
-                <td>{{session.ClassSession.Class.location}}</td>
-                <td>{{session.ClassSession.Class.startTime | date: 'HH:mm a' }}</td>
-                <td>{{session.plannedAttendance}}</td>
-            </tr>
-        </table>
+        <div ng-if="ctrl.myUpcomingSessions.length !== 0">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Time</th>
+                    <th>Planned Attendance</th>
+                </tr>
+                <tr ng-repeat="session in ctrl.myUpcomingSessions | filter:{plannedAttendance:'!'+'No'} | orderBy:'date':true  "}>
+                    <td>{{session.ClassSession.Class.name}}</td>
+                    <td>{{session.ClassSession.date | date}}</td>
+                    <td>{{session.ClassSession.Class.location}}</td>
+                    <td>{{session.ClassSession.Class.startTime | date: 'HH:mm a' }}</td>
+                    <td>{{session.plannedAttendance}}</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-if="ctrl.myUpcomingSessions.length === 0">You have no upcoming sessions. Sign up for some in the "Classes" tab!</div>
     </uib-tab>
     <uib-tab index="1" heading="Classes">
-
+        <label for="itemsPerPageSelect">Sessions per page</label>
+        <select class="form-control" ng-model="ctrl.itemsPerPage" ng-options="num as num for num in ctrl.itemsPerPageOptions" id="itemsPerPageSelect">
+        </select>
         <class-calendar read-only="true" selected-session="ctrl.selectedSession" on-select="ctrl.onSelect(session)"></class-calendar>
         <h3>Session Sign-Up</h3>
         <div>
@@ -37,7 +42,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                     <th>Time</th>
                     <th>Attending</th>
                 </tr>
-                <tr ng-repeat="session in ctrl.sessions">
+                <tr ng-repeat="session in ctrl.upcomingSessions.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage))">
                     <td>{{session.Class.name}}</td>
                     <td>{{session.date | date}}</td>
                     <td>{{session.Class.startTime | date: 'HH:mm a'}}</td>
@@ -50,6 +55,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                     </td>
                 </tr>
             </table>
+            <ul uib-pagination total-items="ctrl.totalSessions" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
         </div>
 <!--        <class-calendar on-select="ctrl.sessionSelected" selected-session="ctrl.selectedSession"></class-calendar>-->
 <!--

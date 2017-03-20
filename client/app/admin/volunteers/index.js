@@ -25,6 +25,7 @@ export class AdminVolunteers {
             ctrl.volunteers = res.data;
             ctrl.pending_volunteers = _.filter(res.data,{status:'pending'});
             ctrl.inactive_volunteers = _.filter(res.data,{status:'inactive'});
+            ctrl.totalVolunteers = ctrl.volunteers.length;
         })
         
         $http.get('/api/classes')
@@ -40,7 +41,23 @@ export class AdminVolunteers {
         ctrl.orders = ['User.name','User.date','User.organization'];
         ctrl.selected_order = ctrl.orders[0];
         
+        
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
+        ctrl.itemsPerPageOptions = [10,20,50,100];
+        
     }
+
+    setPage(pageNum) {
+        var ctrl = this;
+        ctrl.currentPage = pageNum;
+    }
+    
+    pageChanged() {
+        var ctrl = this;
+        console.log("page changed to " + ctrl.currentPage);
+    }
+
 //
 //    addVolunteer(){
 //        var ctrl = this;
