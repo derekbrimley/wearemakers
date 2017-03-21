@@ -40,6 +40,9 @@
             </tr>
         </table>
         <div>
+            <h4 ng-if="ctrl.attendance.attendancePercent">Current Class Attendance: {{ctrl.attendance.attendancePercent}}%</h4>
+        </div>
+        <div>
             <h3>Students Registered For {{ctrl.$resolve.class.name}}</h3>
             <table class="table">
                 <tr>
