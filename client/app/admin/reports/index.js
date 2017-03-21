@@ -34,17 +34,18 @@ export class AdminReports {
     //     })
     // }
 
-    aggregate(){
+    aggregateStudents() {
         var ctrl = this;
         var attendance = {}
         var count;
 
 
-        angular.forEach(ctrl.classes, function(value, key) {
+        angular.forEach(ctrl.classes, function(course, key) {
 
-            ctrl.$http.get('/api/classes/reports/attendance/'+value._id)
+            ctrl.$http.get('/api/classes/reports/studentAttendance/'+course._id)
             .then(function(res){
-                attendance[value.name]={
+                console.log("RES",res.data);
+                attendance[course.name]={
                     data : res.data,
                     absent : "",
                     attended : "",
@@ -55,21 +56,62 @@ export class AdminReports {
                 console.log("ERR",err);
             }).then(function(){
                 
-                for(count = 0; count < attendance[value.name].data.length; count++){
-                    if(attendance[value.name].data[count].attendance == 'Absent'){
-                        attendance[value.name].absent = Number(attendance[value.name].data[count].count)
-                    } else if (attendance[value.name].data[count].attendance == 'Attended'){
-                        attendance[value.name].attended = Number(attendance[value.name].data[count].count)
-                    } else if (attendance[value.name].data[count].attendance == 'Excused'){
-                        attendance[value.name].excused = Number(attendance[value.name].data[count].count)
+                for(count = 0; count < attendance[course.name].data.length; count++){
+                    if(attendance[course.name].data[count].attendance == 'Absent'){
+                        attendance[course.name].absent = Number(attendance[course.name].data[count].count)
+                    } else if (attendance[course.name].data[count].attendance == 'Attended'){
+                        attendance[course.name].attended = Number(attendance[course.name].data[count].count)
+                    } else if (attendance[course.name].data[count].attendance == 'Excused'){
+                        attendance[course.name].excused = Number(attendance[course.name].data[count].count)
                     } 
                 }
-                attendance[value.name].attendancePercent = 100 * (attendance[value.name].attended  / (attendance[value.name].absent + attendance[value.name].attended + attendance[value.name].excused))
+                attendance[course.name].attendancePercent = (100 * (attendance[course.name].attended  / (attendance[course.name].absent + attendance[course.name].attended + attendance[course.name].excused))).toFixed(2);
                 
             });
         });
     
-        ctrl.attendance =  attendance   
+        ctrl.studentAttendance =  attendance;
+        console.log("studentAttendance",ctrl.studentAttendance);
+    }
+    
+    aggregateVolunteers() {
+        var ctrl = this;
+        var attendance = {}
+        var count;
+        
+        angular.forEach(ctrl.classes, function(course, key) {
+
+            ctrl.$http.get('/api/classes/reports/volunteerAttendance/'+course._id)
+            .then(function(res){
+                console.log("RES",res.data);
+                attendance[course.name]={
+                    data : res.data,
+                    absent : "",
+                    attended : "",
+                    excused : "",
+                    attendancePercent: ""
+                }
+            },function(err){
+                console.log("ERR",err);
+            }).then(function(){
+                
+                for(count = 0; count < attendance[course.name].data.length; count++){
+                    if(attendance[course.name].data[count].attendance == 'Absent'){
+                        attendance[course.name].absent = Number(attendance[course.name].data[count].count)
+                    } else if (attendance[course.name].data[count].attendance == 'Attended'){
+                        attendance[course.name].attended = Number(attendance[course.name].data[count].count)
+                    } else if (attendance[course.name].data[count].attendance == 'Excused'){
+                        attendance[course.name].excused = Number(attendance[course.name].data[count].count)
+                    } 
+                }
+                attendance[course.name].attendancePercent = (100 * (attendance[course.name].attended  / (attendance[course.name].absent + attendance[course.name].attended + attendance[course.name].excused))).toFixed(2);
+                
+            });
+        });
+    
+        ctrl.volunteerAttendance =  attendance;
+        console.log("volunteerAttendance",ctrl.volunteerAttendance);
+        
     }
 }
 
