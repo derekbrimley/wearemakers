@@ -65,8 +65,7 @@ export class VolunteerController {
             _.filter(res.data, function(value) {
                 var sessDate = new Date(value.date);
                 var today = new Date ();
-                var endDate = new Date(+new Date + 12096e5)
-                if(sessDate > today && sessDate < endDate) {
+                if(sessDate > today) {
                     ctrl.upcomingSessions.push(value);
                 }
             })
@@ -218,8 +217,10 @@ export class VolunteerController {
         })
 
     }
+    
     onSelect(session){
         console.log("SESSION SELECTED",session);
+        
     }
 
 }

@@ -18,6 +18,7 @@ import {User} from '../../sqldb';
 
 //for Reporting
 import {SessionStudent} from '../../sqldb';
+import {SessionVolunteer} from '../../sqldb';
 import {ClassSession} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -213,7 +214,7 @@ export function classStudentCount(req, res) {
 }
 
 // get count of students by class
-export function attendance(req, res) {
+export function studentAttendance(req, res) {
  
  return SessionStudent.count({
    attributes: ['ClassSession.classID','attendance'],
@@ -228,15 +229,18 @@ export function attendance(req, res) {
   })
 }
 
-// export function test(req, res) {
+// get count of volunteers by class
+export function volunteerAttendance(req, res) {
  
-//  return SessionStudent.count({
-//    attributes: ['ClassSession.classID','attendance'],
-//    group: ['ClassSession.classID','attendance'],
-//    include:[{
-//           model:ClassSession
-//       }]
-//  }).then(function(c) {
-//     res.json(c);
-//   })
-// }
+ return SessionVolunteer.count({
+   attributes: ['ClassSession.classID','attendance'],
+   group: ['ClassSession.classID','attendance'],
+   include:[{
+          model:ClassSession,
+          attributes: ['classID'],
+          where:{classID:req.params.classid}
+      }]
+ }).then(function(c) {
+    res.json(c);
+  })
+}
