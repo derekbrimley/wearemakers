@@ -32,7 +32,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
         <label for="itemsPerPageSelect">Sessions per page</label>
         <select class="form-control" ng-model="ctrl.itemsPerPage" ng-options="num as num for num in ctrl.itemsPerPageOptions" id="itemsPerPageSelect">
         </select>
-        <class-calendar read-only="true" selected-session="ctrl.selectedSession" on-select="ctrl.onSelect(session)"></class-calendar>
+<!--        <class-calendar read-only="true" selected-session="ctrl.selectedSession" on-select="ctrl.onSelect(session)"></class-calendar>-->
         <h3>Session Sign-Up</h3>
         <div>
             <table class="table">
@@ -56,6 +56,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 </tr>
             </table>
             <ul uib-pagination total-items="ctrl.totalSessions" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
+            {{ctrl.totalSessions}}
         </div>
 <!--        <class-calendar on-select="ctrl.sessionSelected" selected-session="ctrl.selectedSession"></class-calendar>-->
 <!--
@@ -97,6 +98,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <th>Name</th>
                 <th>Location</th>
                 <th>Day</th>
+                <th>Dates</th>
                 <th>Time</th>
 <!--                <th>Details</th>-->
 <!--                <th>Action</th>-->
@@ -105,6 +107,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <td>{{course.name}}</td>
                 <td>{{course.location}}</td>
                 <td>{{course.day}}</td>
+                <td>{{course.startDate | date}} to {{course.endDate | date}}</td>
                 <td>{{course.startTime | date: 'HH:mm a' }} to {{course.endTime | date: 'HH:mm a'}}</td>
 <!--
                 <td>
