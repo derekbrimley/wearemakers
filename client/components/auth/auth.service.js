@@ -27,6 +27,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
    * @param {String} role - role to check against
    */
   var hasRole = function(userRole, role) {
+//      console.log("Role",userRoles.indexOf(userRole) >= userRoles.indexOf(role))
     return userRoles.indexOf(userRole) >= userRoles.indexOf(role);
   };
 
@@ -191,6 +192,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @return {Promise}
      */
     hasRole(role, callback) {
+//        console.log("here",role)
       return Auth.getCurrentUser(undefined)
         .then(user => {
           let has = hasRole(_.get(user, 'role'), role);
