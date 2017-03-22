@@ -12,34 +12,55 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
         <p>Number of total Volunteers: {{ctrl.numOfVolunteers}}</p>
     </uib-tab>
 
-    <uib-tab index="1" heading="Classes" ng-click="ctrl.aggregateStudents()">
+    <uib-tab index="1" heading="Classes" ng-click="ctrl.aggregateClasses()">
         <table class="table" style="width:100%;">
             <thead>
                 <tr >
                     <th>Class</th>
-                    <th>Percent Attended</th>
+                    <th>Number Enrolled</th>
+                    <th>Student Percentage Attended</th>
+                    <th>Volunteer Percentage Attended</th>
                 </tr>
             </thead>
-            <tr ng-repeat="(name, attendance) in ctrl.studentAttendance">
-                <td> {{name}}</td>
-                <td> {{attendance.attendancePercent}}%</td>
+            <tr ng-repeat="attendance in ctrl.attendances">
+                <td>{{attendance.name}}</td>
+                <td>{{attendance.numEnrolled}}</td>
+                <td>
+                    <span ng-if="attendance.studentAttendancePercent!='NaN'">{{attendance.studentAttendancePercent}}%</span>
+                </td>
+                <td>
+                    <span ng-if="attendance.volunteerAttendancePercent!='NaN'">{{attendance.volunteerAttendancePercent}}%</span>
+                </td>
             </tr>
         </table>
     </uib-tab>
 
-    <uib-tab index="2" heading="Students">
-        
+    <uib-tab index="2" heading="Students" ng-click="ctrl.aggregateStudents()">
+        <table class="table" style="width:100%;">
+            <tr>
+                <th>Name</th>
+                <th>Percent Attended</th>
+            </tr>
+            <tr ng-repeat="attendance in ctrl.attendances">
+                <td>{{attendance.name}}</td>
+                <td>
+                    {{attendance.percent}}<span ng-if="attendance.percent !== null">%</span>
+                </td>
+            </tr>
+        </table>
     </uib-tab>
 
     <uib-tab index="3" heading="Volunteers" ng-click="ctrl.aggregateVolunteers()">
         <table class="table" style="width:100%;">
             <tr>
-                <th>Class</th>
+                <th>Name</th>
                 <th>Percent Attended</th>
             </tr>
-            <tr ng-repeat="(name, attendance) in ctrl.volunteerAttendance">
-                <td> {{name}}</td>
-                <td> {{attendance.attendancePercent}}%</td>
+            <tr ng-repeat="attendance in ctrl.attendances">
+                <td>{{attendance.name}}</td>
+                <td>
+                    {{attendance.percent}}<span ng-if="attendance.percent !== null">%</span>
+                </td>
             </tr>
         </table>
     </uib-tab>

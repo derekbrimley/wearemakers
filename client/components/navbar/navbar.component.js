@@ -17,7 +17,7 @@ export class NavbarComponent {
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
-    this.isVolunteer = Auth.hasRole('volunteer');
+    this.hasRole = Auth.hasRoleSync;
   }
 
 }
