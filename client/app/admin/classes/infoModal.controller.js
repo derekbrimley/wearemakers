@@ -17,7 +17,7 @@ export class InfoModalController {
 
         var attendance = {}
         var count;
-        ctrl.$http.get('/api/classes/reports/attendance/'+this.$resolve.class._id)
+        ctrl.$http.get('/api/classes/reports/studentAttendance/'+this.$resolve.class._id)
         .then(function(res){
             attendance={
                 data : res.data,

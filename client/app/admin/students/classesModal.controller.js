@@ -22,33 +22,9 @@ export class classesModalController {
         this.$uibModalInstance = $uibModalInstance;
         this.Auth = Auth;
         this.$state = $state;
-
-        var isStud;
-        var addedStudents = {}
-        var notAddedStudents = {}
         var stud = this.$resolve.student;
-        
-        ctrl.thisStudent = stud;
-
-        this.$http.get('/api/classes/')
-        .then(function(res){
-            ctrl.selectedStudent = res.data
-            angular.forEach(ctrl.selectedStudent, function(classStud, key) {
-                isStud = 0;
-                angular.forEach(classStud.ClassStudents,function(student,key2){
-                    if(stud._id ==student.userID){
-                        addedStudents[classStud.name]=student
-                        isStud = 1;
-                    }
-                });
-                if(isStud == 0){
-                    notAddedStudents[classStud.name]=classStud
-                }
-            });
-        })
-        ctrl.addedStudents = addedStudents
-        ctrl.notAddedStudents = notAddedStudents
-
+        ctrl.thisStudent = stud
+        ctrl.showStudents(stud)       
     }
 
     close(){
@@ -80,14 +56,40 @@ export class classesModalController {
             ctrl.showStudents(ctrl.thisStudent)
         })
     }
+
+    totalAttendance(attendance){
+        var studentsTotalAttendance = {}
+        var  totalSessions = 0;
+        var  attended = 0;
+        angular.forEach(attendance,function(val,key){
+            if(val.attendance == 'Absent'){
+                totalSessions = Number(totalSessions) + Number(val.count)
+            }else if(val.attendance == 'Excused'){
+                totalSessions = Number(totalSessions) + Number(val.count)
+            }else if(val.attendance == 'Attended'){
+                totalSessions = Number(totalSessions) + Number(val.count)
+                attended = Number(val.count)
+            }
+        });
+        studentsTotalAttendance = {
+            totalSessions : totalSessions,
+            attended : attended,
+            percent : attended/totalSessions
+        }
+        return (studentsTotalAttendance)
+    }
     
     showStudents(stud){
         var ctrl = this;
         var isStud;
+        var result;
+        // var totalSessions = 0;
+        // var totalAttended = 0;
         var addedStudents = {}
         var notAddedStudents = {}
-
-        ctrl.thisStudent = stud
+        var stud = this.$resolve.student;
+        
+        ctrl.thisStudent = stud;
 
         this.$http.get('/api/classes/')
         .then(function(res){
@@ -96,10 +98,29 @@ export class classesModalController {
                 isStud = 0;
                 angular.forEach(classStud.ClassStudents,function(student,key2){
                     if(stud._id ==student.userID){
-                        addedStudents[classStud.name]=student
+                        var body = {
+                            classid:classStud._id,
+                            studentid:student.userID
+                        };
+
+                        ctrl.$http.post('/api/classes/1/sessions/1/students/reports/individualStudentAttendance/',body)
+                        .then(function(res){
+                            addedStudents[classStud.name]={
+                                attendance:res.data,
+                                classData:student
+                            }
+                            result = ctrl.totalAttendance(addedStudents[classStud.name].attendance)          
+                        },function(err){
+                                addedStudents[classStud.name]={
+                                attendance:res.data,
+                                classData:student
+                            }
+                        });
+                        
                         isStud = 1;
                     }
                 });
+                
                 if(isStud == 0){
                     notAddedStudents[classStud.name]=classStud
                 }
