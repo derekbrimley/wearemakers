@@ -3,7 +3,7 @@
 import jsonpatch from 'fast-json-patch';
 import _ from 'lodash';
 import {
-  SessionStudent,User,ClassStudent
+  SessionStudent,User,ClassStudent,ClassSession
 } from '../../../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -113,4 +113,23 @@ export function destroy(req, res) {
       res.status(200).send();
     })
     .catch(handleError(res));
+}
+
+
+// get count of students by class
+export function individualStudentAttendance(req, res) {
+ return SessionStudent.count({
+   attributes: ['attendance'],
+   group: ['attendance'],
+   where:{userID:req.body.studentid}
+   ,
+   include:[{
+          model:ClassSession,
+          attributes: ['classID'],
+          where:{classID:req.body.classid}
+      }]
+ }).then(function(c) {
+    res.json(c);
+    console.log(c)
+  })
 }

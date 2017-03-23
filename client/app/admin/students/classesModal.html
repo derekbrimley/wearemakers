@@ -2,21 +2,28 @@
     <div class="modal-header">
         <h3>{{ctrl.$resolve.student.name}} Classes</h3>
     </div>
+    <p>{{ctrl.$resolve.student.name}}s total sessions: {{ctrl.totalSessions}}. Attended: {{ctrl.totalAttended}}</p>
     <div class="modal-body" id="modal-body">
         <table class="table table-sm">
             <tr>
                 <th>Class Name</th>
                 <th>Student Status</th>
+                <th>Attendance</th>
                 <th>Action</th>
             </tr>
             <tr ng-repeat="(key, studClass) in ctrl.addedStudents">
                 <td>{{key}}</td>
-                <td>{{studClass.status}}</td>
-                <td ng-if="studClass.status == 'Active'">
-                    <button class="btn btn-warning" ng-click="ctrl.approveStudent(studClass)">Remove</button>
+                <td>{{studClass.classData.status}}</td>
+                <td>
+                    <ul ng-repeat="attend in studClass.attendance" style="padding-left: 0px;">
+                        <li ng-if="attend.attendance">{{attend.attendance}}: {{attend.count}}</li>
+                    </ul>
                 </td>
-                <td ng-if="studClass.status != 'Active'">
-                    <button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass)">Approve</button>
+                <td ng-if="studClass.classData.status == 'Active'">
+                    <button class="btn btn-warning" ng-click="ctrl.approveStudent(studClass.classData)">Remove</button>
+                </td>
+                <td ng-if="studClass.classData.status != 'Active'">
+                    <button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass.classData)">Approve</button>
                 </td>
             </tr>
         </table>
