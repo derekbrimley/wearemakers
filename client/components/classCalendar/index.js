@@ -138,7 +138,7 @@ export class ClassCalendar {
 
   createSession(course, date) {
     var ctrl = this;
-    ctrl.onSelect({session:ctrl.selectedSession});
+    ctrl.activeSession = course._id + date.toString();
     var body = {
       classID: course._id,
       date: date.toDate()
@@ -150,12 +150,14 @@ export class ClassCalendar {
         ctrl.selectedDate = date;
         ctrl.selectedSession = res.data;
         ctrl.selectedSession.SessionVolunteers = [];
+        ctrl.onSelect({session:ctrl.selectedSession});
       }, function(err) {
         var selectedCourse = _.cloneDeep(course);
         selectedCourse.startTime = new Date(course.startTime);
         err.data.session.Class = selectedCourse;
         ctrl.selectedDate = date;
         ctrl.selectedSession = err.data.session;
+        ctrl.onSelect({session:ctrl.selectedSession});
       })
   }
 
