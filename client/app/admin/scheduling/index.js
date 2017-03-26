@@ -114,14 +114,11 @@ export class AdminScheduling {
     markStudentAttendance(student) {
         var ctrl = this;
         var body = {
-            attendance: student.attendance
+            attendance: student.SessionStudent.attendance
         }
-        ctrl.selectedStudent = student._id;
-        console.log("MARK ATTENDANCE",body);
-        ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/students/' + student._id, body)
+        ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/students/' + student.SessionStudent._id, body)
         .then(function(res) {
             console.log("RES", res);
-            student.showSave = true;
         })
     }
 
@@ -130,24 +127,33 @@ export class AdminScheduling {
         student.saved = false;
         ctrl.selectedStudent = student._id;
     }
+
     sessionSelected(session){
-        
+        if(!session.SessionStudents){
+            return;
+        }
+        for(var i in session.SessionStudents){
+            var sessionStudent = session.SessionStudents[i];
+            var student = _.find(session.Class.ClassStudents,{userID:sessionStudent.userID})
+            student.SessionStudent = sessionStudent;
+        }
     }
-    createStudentSession(){
-        var ctrl = this;
-        var length = ctrl.selectedSession.Class.ClassStudents.length
 
-        angular.forEach(ctrl.selectedSession.Class.ClassStudents, function(value, key) {
-              ctrl.$http.post('/api/classes/'+ctrl.selectedSession.Class._id+'/sessions/'+ctrl.selectedSession._id+'/students/register' ,{userID:value.userID})
-            .then(function(res){
-                console.log("RES",res);
+    createStudentSession(student){
+        this.$http.post('/api/classes/'+this.selectedSession.Class._id+'/sessions/'+this.selectedSession._id+'/students/register' ,{userID:student.userID,attendance:student.SessionStudent.attendance})
+        .then(res=>{
+            console.log("RES",res);
+            student.SessionStudent = res.data;
+        })
+    }
 
-            },function(err){
-                console.log("ERR",err);
-
-            })
-        });
-
+    updateAttendance(student){
+        if(student.SessionStudent._id){
+            this.markStudentAttendance(student)
+        }
+        else{
+            this.createStudentSession(student);
+        }
     }
 }
 

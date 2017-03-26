@@ -94,7 +94,7 @@
 
             </uib-tab>
 
-            <uib-tab index="1" heading="Students" ng-click="ctrl.createStudentSession()">
+            <uib-tab index="1" heading="Students">
                 <h3>Attendance</h3>
 
 
@@ -104,19 +104,14 @@
                         <table class="table">
                             <tr>
                                 <th>Name</th>
-                                <th>Attended</th>
-                                <th>Action</th>
+                                <th style="text-align:center;">Attendance</th>
                             </tr>
-                            <tr class="student" ng-repeat="student in ctrl.selectedSession.SessionStudents">
+                            <tr class="student" ng-repeat="student in ctrl.selectedSession.Class.ClassStudents">
                                 <td>{{student.User.name}}</td>
-                                <td>
-                                    <select class="form-control" ng-if="student.saved == false && ctrl.selectedStudent==student._id" ng-model="student.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.markStudentAttendance(student)"></select>
-                                    <p ng-if="student.saved != false || ctrl.selectedStudent!=student._id">{{student.attendance}}</p><br>
+                                <td class="right-col">
+                                    <select class="form-control" ng-model="student.SessionStudent.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.updateAttendance(student)"></select>
                                 </td>
-                                <td>
-                                    <button ng-if="student.saved == false && ctrl.selectedStudent==student._id" ng-click="ctrl.saveStudentAttendance(student)" class="btn btn-primary">Save</button>
-                                    <button ng-if="student.saved == true || ctrl.selectedStudent != student._id" ng-click="ctrl.editStudentAttendance(student)" class="btn btn-warning">Edit</button>
-                                </td>
+
                             </tr>
                         </table>
                     </div>

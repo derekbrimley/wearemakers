@@ -16,4 +16,12 @@
     }
     .interested-volunteers{
     }
+    .students-section{
+        .student {
+            .right-col{
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+    }
 }

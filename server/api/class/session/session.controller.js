@@ -154,7 +154,7 @@ export function create(req, res) {
         },{
             model:SessionStudent,
             include:[User]
-        }]})
+        },Class]})
     .then(function(entity){
         if(entity){
             res.status(403).json({message:'Session already exists for given date',session:entity})

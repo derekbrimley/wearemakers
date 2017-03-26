@@ -70,7 +70,7 @@ export function register(req, res) {
 
   SessionStudent.find({
     where:{sessionID:req.classSession._id,
-          userID:req.body.userID      
+          userID:req.body.userID
   }})
   .then(function(entity){
     if(entity){
@@ -78,7 +78,7 @@ export function register(req, res) {
             return;
         }
         else{
-            return SessionStudent.create({sessionID:req.classSession._id, userID:req.body.userID,attendance:''})
+            return SessionStudent.create({sessionID:req.classSession._id, userID:req.body.userID,attendance:req.body.attendance})
             .then(respondWithResult(res, 201))
             .catch(handleError(res));
         }
