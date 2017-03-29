@@ -1,10 +1,28 @@
-<ul class="list-group user-list">
-  <li class="list-group-item" ng-repeat="user in ctrl.users">
-    <div class="user-info">
-        <strong>{{user.name}}</strong><br>
-        <span class="text-muted">{{user.email}}</span><br>
-        <span class="text-muted">{{user.type}}</span>
+<div class="admin-users-section">
+    <div class="row">
+        <div>
+            <form>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="$ctrl.query">
+                </div>
+            </form>
+        </div>
     </div>
-      <a ng-click="ctrl.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
-  </li>
-</ul>
+</div>
+
+<div class="pane">
+  <table class="table" style="width:100%;">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Type</th>
+        <th>Delete</th>
+    </tr>
+    <tr class="user_row" ng-repeat="user in ctrl.users | filter:$ctrl.query">
+        <td ng-click="ctrl.openEditModal(user)">{{user.name}}</td>
+        <td ng-click="ctrl.openEditModal(user)">{{user.email}}</td>
+        <td ng-click="ctrl.openEditModal(user)">{{user.type}}</td>
+        <td style="cursor:pointer;"><a ng-click="ctrl.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a></td>
+    </tr>
+  </table>
+</div>
