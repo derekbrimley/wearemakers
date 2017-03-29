@@ -23,8 +23,10 @@ export class classesModalController {
         this.Auth = Auth;
         this.$state = $state;
         var stud = this.$resolve.student;
-        ctrl.thisStudent = stud
-        ctrl.showStudents(stud)       
+        this.thisStudent = stud;
+        this.showStudents(stud);
+        this.totalSessions = 0;
+        this.totalAttended = 0;
     }
 
     close(){
@@ -58,23 +60,25 @@ export class classesModalController {
     }
 
     totalAttendance(attendance){
+        var ctrl = this;
         var studentsTotalAttendance = {}
-        var  totalSessions = 0;
-        var  attended = 0;
+        var attended = 0;
+
         angular.forEach(attendance,function(val,key){
             if(val.attendance == 'Absent'){
-                totalSessions = Number(totalSessions) + Number(val.count)
+                ctrl.totalSessions = Number(ctrl.totalSessions) + Number(val.count)
             }else if(val.attendance == 'Excused'){
-                totalSessions = Number(totalSessions) + Number(val.count)
+                ctrl.totalSessions = Number(ctrl.totalSessions) + Number(val.count)
             }else if(val.attendance == 'Attended'){
-                totalSessions = Number(totalSessions) + Number(val.count)
-                attended = Number(val.count)
+                ctrl.totalSessions = Number(ctrl.totalSessions) + Number(val.count)
+                attended = Number(val.count);
+                ctrl.totalAttended = attended;
             }
         });
         studentsTotalAttendance = {
-            totalSessions : totalSessions,
+            totalSessions : ctrl.totalSessions,
             attended : attended,
-            percent : attended/totalSessions
+            percent : attended/ctrl.totalSessions
         }
         return (studentsTotalAttendance)
     }

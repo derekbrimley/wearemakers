@@ -2,7 +2,6 @@
     <div class="modal-header">
         <h3>{{ctrl.$resolve.student.name}} Classes</h3>
     </div>
-    <p>{{ctrl.$resolve.student.name}}s total sessions: {{ctrl.totalSessions}}. Attended: {{ctrl.totalAttended}}</p>
     <div class="modal-body" id="modal-body">
         <table class="table table-sm">
             <tr>
@@ -25,6 +24,19 @@
                 <td ng-if="studClass.classData.status != 'Active'">
                     <button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass.classData)">Approve</button>
                 </td>
+            </tr>
+            <tr>
+                <th>Totals</th>
+                <td></td>
+            </tr>
+            
+            <tr>
+              <td>Total Sessions</td>
+              <td>{{ctrl.totalSessions}}</td>
+            </tr>
+            <tr>
+              <td>Total Attended</td>
+              <td>{{ctrl.totalAttended}}</td>
             </tr>
         </table>
         <h3>Not Registered Classes</h3>

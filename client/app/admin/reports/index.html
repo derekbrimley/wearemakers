@@ -26,10 +26,10 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <td>{{attendance.name}}</td>
                 <td>{{attendance.numEnrolled}}</td>
                 <td>
-                    <span ng-if="attendance.studentAttendancePercent!='NaN'">{{attendance.studentAttendancePercent}}%</span>
+                    <span ng-if="attendance.studentAttendancePercent!='NaN'">{{attendance.studentAttendancePercent | number : 2}}%</span>
                 </td>
                 <td>
-                    <span ng-if="attendance.volunteerAttendancePercent!='NaN'">{{attendance.volunteerAttendancePercent}}%</span>
+                    <span ng-if="attendance.volunteerAttendancePercent!='NaN'">{{attendance.volunteerAttendancePercent | number : 2}}%</span>
                 </td>
             </tr>
         </table>
@@ -44,7 +44,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
             <tr ng-repeat="attendance in ctrl.attendances">
                 <td>{{attendance.name}}</td>
                 <td>
-                    {{attendance.percent}}<span ng-if="attendance.percent !== null">%</span>
+                    {{attendance.percent | number : 2}}<span ng-if="attendance.percent !== null">%</span>
                 </td>
             </tr>
         </table>
@@ -59,7 +59,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
             <tr ng-repeat="attendance in ctrl.attendances">
                 <td>{{attendance.name}}</td>
                 <td>
-                    {{attendance.percent}}<span ng-if="attendance.percent !== null">%</span>
+                    {{attendance.percent | number : 2}}<span ng-if="attendance.percent !== null">%</span>
                 </td>
             </tr>
         </table>
