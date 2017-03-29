@@ -10,6 +10,18 @@ export default function routes($stateProvider) {
     controllerAs: 'ctrl',
     authenticate: 'admin'
   })
+  .state('admin.users', {
+    url: '/users',
+    template: '<admin-users></admin-users>',
+    authenticate: 'admin',
+    parent:'admin'
+  })
+  .state('admin.admins', {
+    url: '/admins',
+    template: '<admin-admins></admin-admins>',
+    authenticate: 'admin',
+    parent:'admin'
+  })
   .state('admin.classes', {
     url: '/classes',
     template: '<admin-classes></admin-classes>',
@@ -25,12 +37,6 @@ export default function routes($stateProvider) {
   .state('admin.volunteers', {
     url: '/volunteers',
     template: '<admin-volunteers></admin-volunteers>',
-    authenticate: 'admin',
-    parent:'admin'
-  })
-  .state('admin.scheduling', {
-    url: '/scheduling',
-    template: '<admin-scheduling></admin-scheduling>',
     authenticate: 'admin',
     parent:'admin'
   })
