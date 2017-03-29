@@ -177,7 +177,7 @@ export class AdminReports {
             
             var volunteer_user_id = volunteer.userID;
             
-            ctrl.$http.get('/api/sessions/' + volunteer_user_id + '/mine')
+            ctrl.$http.get('/api/sessions/' + volunteer_user_id + '/getSessionVolunteers')
             .then((res) => {
                 //ALL SESSIONS
                 var sessions = res.data;

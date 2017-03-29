@@ -168,7 +168,7 @@ export function create(req, res) {
     })
 }
 
-export function getMine(req, res) {
+export function getSessionVolunteers(req, res) {
     return SessionVolunteer.findAll({
         where: {
             userID: req.params.user
