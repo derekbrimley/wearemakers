@@ -1,12 +1,15 @@
 <div class="class-calendar">
     <div class="calendar">
         <div class="nav-buttons">
-            <button class="btn btn-primary"  ng-click="ctrl.previousWeek()">Previous</button>
+            <button class="btn btn-success"  ng-click="ctrl.previousWeek()">Previous</button>
             <button class="btn btn-primary" ng-click="ctrl.currentWeek()">Current</button>
-            <button class="btn btn-primary" ng-click="ctrl.nextWeek()">Next</button>
+            <button class="btn btn-success" ng-click="ctrl.nextWeek()">Next ></button>
+            <h2 class="scheduleHeader">Attendance</h2>
         </div>
+        
         <div class="day-section">
             <div class="day" ng-repeat="day in ctrl.days">
+                
                 <div class="day-header">
                     <div class="day-name">
                         {{day.format("ddd")}}
