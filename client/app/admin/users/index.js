@@ -12,7 +12,6 @@ export class AdminUsers {
       
         this.$http = $http;
         this.users = User.query(function(users){
-            console.log("USERS",users);
             ctrl.admins = _.filter(users,{role:'admin'})
         })
     }
@@ -24,7 +23,6 @@ export class AdminUsers {
 
     promote(user){
         var ctrl = this;
-        console.log("TEST",user);
         this.$http.get('/api/users/'+user._id+'/promote')
         .then(function(res){
             if(res.status == 200){
@@ -70,7 +68,6 @@ export class AdminUsers {
       this.$http.get('/api/users/')
       .then(res => {
           ctrl.users = res.data;
-          console.log("USERS",ctrl.users);
       })
   }
 

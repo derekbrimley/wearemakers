@@ -161,9 +161,9 @@ export class VolunteerController {
         this.$http.post('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/', body)
         .then(function(res) {
             console.log("CREATE sessionvolunteer RES", res);
-//            if(res.data.plannedAttendance == "Yes" ||res.data.plannedAttendance == "On Call") {
-//                ctrl.myUpcomingSessions.push(res.data);
-//            }
+            if(res.data.plannedAttendance == "Yes" ||res.data.plannedAttendance == "On Call") {
+                ctrl.myUpcomingSessions.push(res.data);
+            }
         })
 
     }
