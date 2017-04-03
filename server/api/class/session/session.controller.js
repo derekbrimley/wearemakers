@@ -112,7 +112,7 @@ export function index(req, res) {
         }
         else{
             return ClassSession.findAll({
-                include: [Class],
+                include: [Class, SessionVolunteer, SessionStudent],
                 where:{
                     date:{
                         $gte:new Date()

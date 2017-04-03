@@ -17,7 +17,7 @@ export class VolunteerController {
             console.log("user",res);
             ctrl.myUser = res;
 
-            $http.get('/api/sessions/'+ctrl.myUser._id+'/mine')
+            $http.get('/api/sessions/'+ctrl.myUser._id+'/getSessionVolunteers')
             .then(function(res){
                 ctrl.myUpcomingSessions = [];
                 console.log("my sessions",res);
@@ -80,8 +80,8 @@ export class VolunteerController {
             ctrl.itemsPerPageOptions = [10,20,50,100];
             
             ctrl.sessions = res.data;
-            res.data.forEach(function(session) {
-
+            ctrl.sessions.forEach(function(session) {
+                console.log("session",session);
                 session.SessionVolunteers.forEach(function(sessionVolunteer) {
                     if(sessionVolunteer.userID == ctrl.myUser._id) {
                         ctrl.userSessions[sessionVolunteer.sessionID] = {

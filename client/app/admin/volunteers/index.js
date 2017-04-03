@@ -2,16 +2,8 @@
 import editModal from './editModal.controller.js';
 import notesModal from './notesModal.controller.js';
 export class AdminVolunteers {
-    newVolunteer = {
-        name: '',
-        email: '',
-        role: 'user',
-        type: 'volunteer',
-        organization: '',
-        status: '',
-        password: ''
-    }
-    /*@ngInject*/
+
+  /*@ngInject*/
     constructor($http, $uibModal){
         'ngInject'
 
@@ -46,6 +38,7 @@ export class AdminVolunteers {
         ctrl.itemsPerPageOptions = [10,20,50,100];
         
     }
+
 
     setPage(pageNum) {
         var ctrl = this;
@@ -101,6 +94,53 @@ export class AdminVolunteers {
         });
     
     }
+    
+    volunteerAttendance() {
+        var ctrl = this;
+        ctrl.volunteersWithAttendance = [];
+        
+        //ATTENDANCE PERCENTAGE = NUMBER OF SESSIONS ATTENDED / NUMBER OF SESSIONS TOTAL - NUMBER OF EXCUSED SESSIONS
+        
+        //GET NUMBER OF SESSIONS TOTAL
+        angular.forEach(ctrl.volunteers, function(volunteer) {
+            
+            var volunteer_user_id = volunteer.userID;
+            
+            ctrl.$http.get('/api/sessions/' + volunteer_user_id + '/getSessionVolunteers')
+            .then((res) => {
+                console.log("RES",res)
+                //ALL SESSIONS
+                var sessions = res.data;
+                //GET NUMBER OF SESSIONS ATTENDED
+                var attendedSessions = res.data.filter((session) => {
+                    return session.attendance == 'Attended' ? true : false; 
+                })
+                
+                //GET NUMBER OF SESSIONS EXCUSED
+                var excusedSessions = res.data.filter((session) => {
+                    return session.attendance == 'Excused' ? true : false; 
+                })
+                console.log("sessions",res.data);
+                console.log("attended sessions",attendedSessions);
+                console.log("excused sessions",excusedSessions);
+                
+                var sessionPercent = 100 * attendedSessions.length / (sessions.length - excusedSessions.length);
+                console.log("sessionPercent", sessionPercent);
+                
+                ctrl.volunteersWithAttendance.push({
+                    name: volunteer.User.name,
+                    email: volunteer.User.email,
+                    phone: volunteer.User.phone,
+                    organization: volunteer.User.organization,
+                    status: volunteer.status,
+                    percent: isNaN(sessionPercent) ? null : sessionPercent
+                });
+                console.log("VWA",ctrl.volunteersWithAttendance);
+                
+            });
+        });
+    
+    }
 
     select(volunteer,saved){
         var ctrl = this;
@@ -114,10 +154,6 @@ export class AdminVolunteers {
         
         volunteer.saved=saved
         
-//        this.$http.get('/api/class/volunteer/' + this.selectedVolunteer._id + '/getClasses')
-//        .then(function(res) {
-//            console.log("v")  
-//        })
     }
 
     openEditModal(volunteer){
