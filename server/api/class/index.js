@@ -12,6 +12,7 @@ router.get('/', controller.index);
 router.get('/:user/mine', auth.isAuthenticated(), controller.showMine);
 //router.get('/notmine', auth.isAuthenticated(), controller.showNotMine);
 router.get('/:id', controller.show);
+router.get('/unArchive/:id', auth.hasRole('admin'), controller.unArchive);
 router.get('/reports/classStudentCount/:classid', controller.classStudentCount);
 router.get('/reports/studentAttendance/:classid', controller.studentAttendance);
 router.get('/reports/volunteerAttendance/:classid', controller.volunteerAttendance);
