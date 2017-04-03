@@ -29,17 +29,23 @@
             <td>Phone</td>
             <td>Organization</td>
             <td>Status</td>
+            <td>Attendance</td>
             <td>Notes</td>
 <!--            <td>Role</td>-->
 <!--            <td>Classes</td>-->
 <!--            <td>Action</td>-->
         </tr>
-        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteers.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.name}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.email}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.phone}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.User.organization}}</td>
+        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteersWithAttendance.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.name}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.email}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.phone}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">{{vol.organization}}</td>
             <td ng-click="ctrl.openEditModal(vol)">{{vol.status}}</td>
+            <td ng-click="ctrl.openEditModal(vol)">
+                <span ng-if="vol.percent !== null">
+                    {{vol.percent | number : 2}}%  
+                </span>
+            </td>
             <td>
                 <button class="btn btn-primary" ng-click="ctrl.openNotesModal(vol)">View</button>
             </td>
