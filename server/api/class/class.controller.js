@@ -52,7 +52,6 @@ function handleError(res, statusCode) {
 // Gets a list of Classs
 export function index(req, res) {
   return Class.findAll({
-      where:{active:true},
       include:[{
           model:ClassStudent,
           include:[User]
@@ -63,7 +62,7 @@ export function index(req, res) {
         })
     .then(respondWithResult(res))
     .catch(handleError(res));
-}
+} 
 
 // Gets a list of Classs
 export function showMine(req, res) {
@@ -181,6 +180,20 @@ export function upsert(req, res) {
   })
     .then(respondWithResult(res))
     .catch(handleError(res));
+}
+
+// Deletes a Class from the DB
+export function unArchive(req, res) {
+    return Class.update({active:true},{
+      where: {
+        _id: req.params.id
+      }
+    })
+      .then(handleEntityNotFound(res))
+      .then(function(entity){
+          res.status(200).send();
+      })
+      .catch(handleError(res));
 }
 
 // Deletes a Class from the DB

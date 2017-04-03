@@ -1,5 +1,14 @@
 <div class="admin-classes-section">
     <div class="pane">
+        <div class="form-group row">
+            <label for="status" class="col-2 col-form-label">Status</label>
+            <div class="col-10">
+                <select ng-click="getClasses()" class="form-control" ng-model="ctrl.selected_status"  ng-change="ctrl.filterChanged()" id="status">
+                      <option value="true" selected>Active</option>
+                        <option value="false">Archived</option>
+                </select>
+            </div>
+        </div>
         <button class="btn btn-success" ng-click="ctrl.openAddModal()">Add Class</button>
       
         <div class="classes-section">
@@ -12,36 +21,22 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Info</th>
-<!--                    <th>Volunteer Info</th>-->
-<!--                    <th>Edit</th>-->
                     <th>Remove</th>
                 </tr>
-                <tr class="class_row" ng-repeat="class in ctrl.classes">
+                <tr class="class_row" ng-repeat="class in ctrl.classes | filter:{active:ctrl.selected_status}">
                     <td ng-click="ctrl.openModal(class)">{{class.name}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.location}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.day}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.startTime | date:'shortTime'}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.startDate | date}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.endDate | date}}</td>
-<!--                    <td>{{class.info}}</td>-->
-<!--                    <td style="max-width:50px; overflow:hidden;">{{class.volunteerInfo}}</td>-->
-<!--
-                    <td>
-                        <button ng-click="" class="btn btn-primary">Info</button>
-                    </td>
--->
-<!--
-                    <td>
-                        <button ng-click="ctrl.showStudents(class)" class="btn btn-primary">Show</button>
-                    </td>
--->
+
                     <td ng-click="ctrl.openInfoModal(class)">
                         <button class="btn btn-primary">Info</button>
-                        <!-- <button ng-if="class.saved || ctrl.selectedClassEdit._id!=class._id" ng-click="ctrl.select(class,false)" class="btn btn-primary">Edit</button> -->
-<!--                        <button ng-if="!class.saved && ctrl.selectedClassEdit._id==class._id" ng-click="ctrl.select(class,true)" class="btn btn-warning">Save</button>-->
                     </td>
                     <td>
-                        <button class="btn btn-warning" ng-click="ctrl.removeClass(class)">Remove</button>
+                        <button ng-if="class.active" class="btn btn-warning" ng-click="ctrl.removeClass(class)">Remove</button>
+                        <button ng-if="!class.active" class="btn btn-success" ng-click="ctrl.unArchiveClass(class)">Activate</button>
                     </td>
                 </tr>
             </table>
@@ -57,152 +52,4 @@
                     </tr>
                 </table>
             </div>
-<!--
-            <h3>Classes</h3>
-            <div class="class" ng-repeat="course in ctrl.classes">
-                <div>
-                    <span class="class-name" ng-click="ctrl.select(course)"> {{course.name}} <span ng-if="(course.ClassStudents | filter:{status:'pending'}).length" class="badge" ng-bind="(course.ClassStudents | filter:{status:'pending'}).length"></span></span>
-                </div>
-                <div>
-                    <span class="glyphicon glyphicon-remove" ng-click="ctrl.removeClass(class)"></span>
-                </div>
-            </div>
-        </div>
-        <div class="btn btn-primary" ng-click="ctrl.showAdd = true" ng-hide="ctrl.showAdd" >Add</div>
-
-        <div ng-if="!ctrl.showAdd && ctrl.selectedClass" class="edit-class-section">
-            <h3>Edit {{ctrl.selectedClass.name}}</h3>
-            <div class="form-group">
-                <label>Name</label>
-                <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedClass.name"/>
-            </div>
-
-            <div class="form-group">
-                <label>Description</label>
-                <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedClass.info"/>
-            </div>
-
-            <div class="form-group">
-                <label>Location</label>
-                <input ng-blur="ctrl.updateClass()" type="text" class="form-control" ng-model="ctrl.selectedClass.location"/>
-            </div>
-
-            <div class="form-group">
-                <label>Day</label>
-                <div>
-                    <span>Sunday</span>
-                    <input type="radio" name="day" value="Sunday" class="" ng-model="ctrl.selectedClass.day"/>
-                </div>
-                <div>
-                    <span>Monday</span>
-                    <input type="radio" name="day" value="Monday" class="" ng-model="ctrl.selectedClass.day"/>
-                </div>
-                <div>
-                    <span>Tuesday</span>
-                    <input type="radio" name="day" value="Tuesday" class="" ng-model="ctrl.selectedClass.day"/>
-                </div>
-                <div>
-                    <span>Wednesday</span>
-                    <input type="radio" name="day" value="Wednesday" class="" ng-model="ctrl.selectedClass.day"/>
-                </div>
-                <div>
-                    <span>Thursday</span>
-                    <input type="radio" name="day" value="Thursday" class="" ng-model="ctrl.selectedClass.day"/>
-                </div>
-                <div>
-                    <span>Friday</span>
-                    <input type="radio" name="day" value="Friday" class="" ng-model="ctrl.selectedClass.day"/>
-                </div>
-                <div>
-                    <span>Saturday</span>
-                    <input type="radio" name="day" value="Saturday" class="" ng-model="ctrl.selectedClass.day"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Start Time</label>
-                <input ng-blur="ctrl.updateClass()" type="time" class="form-control" ng-model="ctrl.selectedClass.startTime" placeholder="HH:mm" required />
-            </div>
-
-            <div class="form-group">
-                <label>End Time</label>
-                <input ng-blur="ctrl.updateClass()" type="time" class="form-control" ng-model="ctrl.selectedClass.endTime" placeholder="HH:mm" required />
-            </div>
-            <button class="btn btn-primary" ng-click="ctrl.updateClass()">Save</button>
-        </div>
-        <div ng-show="ctrl.showAdd" class="new-class-section">
-            <h3>Add a new class</h3>
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" ng-model="ctrl.newClass.name"/>
-            </div>
-
-            <div class="form-group">
-                <label>Description</label>
-                <input type="text" class="form-control" ng-model="ctrl.newClass.info"/>
-            </div>
-
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" class="form-control" ng-model="ctrl.newClass.location"/>
-            </div>
-
-            <div class="form-group">
-                <label>Day</label>
-                <div>
-                    <span>Sunday</span>
-                    <input type="radio" name="day" value="Sunday" class="form-control" ng-model="ctrl.newClass.day"/>
-                </div>
-                <div>
-                    <span>Monday</span>
-                    <input type="radio" name="day" value="Monday" class="form-control" ng-model="ctrl.newClass.day"/>
-                </div>
-                <div>
-                    <span>Tuesday</span>
-                    <input type="radio" name="day" value="Tuesday" class="form-control" ng-model="ctrl.newClass.day"/>
-                </div>
-                <div>
-                    <span>Wednesday</span>
-                    <input type="radio" name="day" value="Wednesday" class="form-control" ng-model="ctrl.newClass.day"/>
-                </div>
-                <div>
-                    <span>Thursday</span>
-                    <input type="radio" name="day" value="Thursday" class="form-control" ng-model="ctrl.newClass.day"/>
-                </div>
-                <div>
-                    <span>Friday</span>
-                    <input type="radio" name="day" value="Friday" class="form-control" ng-model="ctrl.newClass.day"/>
-                </div>
-                <div>
-                    <span>Saturday</span>
-                    <input type="radio" name="day" value="Saturday" class="form-control" ng-model="ctrl.newClass.day"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Start Time</label>
-                <input type="time" class="form-control" ng-model="ctrl.newClass.startTime" placeholder="HH:mm" required />
-            </div>
-
-            <div class="form-group">
-                <label>End Time</label>
-                <input type="time" class="form-control" ng-model="ctrl.newClass.endTime" placeholder="HH:mm" required />
-            </div>
-            <div class="form-group">
-                <label>Start Date</label>
-                <input type="date" class="form-control" ng-model="ctrl.newClass.startDate" required />
-            </div>
-            <div class="form-group">
-                <label>End Date</label>
-                <input type="date" class="form-control" ng-model="ctrl.newClass.endDate" required />
-            </div>
-            <button class="btn btn-primary" ng-click="ctrl.addClass()">Add</button>
-        </div>
-    </div>
--->
-<!--
-    <div>
-        <class-editor class="ctrl.selectedClass"></class-editor>
-    </div>
--->
 </div>

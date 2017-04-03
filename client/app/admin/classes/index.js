@@ -14,7 +14,20 @@ export class AdminClasses {
         var ctrl = this;
         this.$http = $http;
         this.$uibModal = $uibModal;
+
+        ctrl.statuses = ['true','false'];
+        ctrl.selected_status = ctrl.statuses[0];
+
         $http.get('/api/classes')
+        .then(function(res){
+            console.log("classes",res);
+            ctrl.classes = res.data;
+        })
+    }
+
+    getClasses(){
+        var ctrl = this;
+        this.$http.get('/api/classes')
         .then(function(res){
             console.log("classes",res);
             ctrl.classes = res.data;
@@ -39,9 +52,21 @@ export class AdminClasses {
     removeClass(course){
         var ctrl = this;
         this.$http.delete('/api/classes/'+course._id)
-        .then(function(res){
-            console.log("RES",res);
+        .then(res =>{
+            // console.log("RES",res);
             ctrl.classes.splice(ctrl.classes.indexOf(course),1);
+            this.getClasses();
+        })
+    }
+
+    unArchiveClass(selectedClass){
+        var ctrl = this;
+        this.$http.get('/api/classes/unArchive/'+selectedClass._id)
+        .then(res =>{
+            // console.log("RES Updates",res);
+            ctrl.classes.splice(ctrl.classes.indexOf(selectedClass),1);
+            // var ctrl = this;
+            this.getClasses();
         })
     }
 
