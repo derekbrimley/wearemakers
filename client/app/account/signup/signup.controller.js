@@ -30,6 +30,10 @@ export default class SignupController {
     this.submitted = true;
 
     if(form.$valid) {
+        if(this.user.password != this.user.confirmPassword){
+            this.passwordsMatch = false;
+            return;
+        }
       return this.Auth.createUser({
         name: this.user.name,
         email: this.user.email,
