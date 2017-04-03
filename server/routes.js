@@ -20,6 +20,7 @@ export default function(app) {
   app.use('/api/users', require('./api/user'));
   app.use('/api/volunteers', require('./api/volunteer'));
   app.use('/api/preSignup', require('./api/pre_signup'));
+  app.use('/api/reports', require('./api/report'));
 
   app.use('/auth', require('./auth').default);
 
