@@ -135,18 +135,19 @@ export class VolunteerController {
         }
 
         this.$http.put('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/' + ctrl.userSessions[session._id].id, body)
-        .then(function(res) {
+        .then(res => {
             console.log("UPDATE sessionvolunteer RES", res);
-            
+            this.refreshSessions();
+//            console.log(ctrl.myUpcomingSessions);
+//            ctrl.myUpcomingSessions.filter(session => {
+//                console.log(session,session.plannedAttendance=='Yes' || session.plannedAttendance=='On Call');
+//                return session.plannedAttendance=='Yes' || session.plannedAttendance=='On Call';
+//            })
+//                ctrl.$http
+//                var index = ctrl.myUpcomingSessions.indexOf()
+//                ctrl.myUpcomingSessions.splice()
         })
 
-//        this.$http.post('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/', body)
-//        .then(function(res) { 
-//            console.log("RES", res);
-//            ctrl.attendanceMarked = true;
-//        })
-
-//        this.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/')
     }
 
     createAttendance(session) {
@@ -159,15 +160,29 @@ export class VolunteerController {
         }
 
         this.$http.post('/api/classes/' + session.Class._id + '/sessions/' + session._id + '/volunteers/', body)
-        .then(function(res) {
-            console.log("CREATE sessionvolunteer RES", res);
-            if(res.data.plannedAttendance == "Yes" ||res.data.plannedAttendance == "On Call") {
-                ctrl.myUpcomingSessions.push(res.data);
-            }
+        .then(res => {
+            this.refreshSessions();
         })
 
     }
-
+    refreshSessions() {
+        var ctrl = this;
+        ctrl.$http.get('/api/sessions/'+ctrl.myUser._id+'/getSessionVolunteers')
+        .then(function(res){
+            ctrl.myUpcomingSessions = [];
+            console.log("my sessions",res);
+            _.filter(res.data,function(value) {
+                var sessDate = new Date(value.ClassSession.date);
+                var today = new Date ();
+                if(sessDate > today) {
+                    ctrl.myUpcomingSessions.push(value);
+                }
+            });
+            console.log("filtered sessions",ctrl.myUpcomingSessions);
+        })
+      
+    }
+  
     showDetails(course) {
         var ctrl = this;
         ctrl.selectedCourse = course;

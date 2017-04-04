@@ -3,7 +3,7 @@ branch-defaults:
     environment: refugee-prod
     group_suffix: null
   master:
-    environment: wearemakers-dev
+    environment: Sample-env
     group_suffix: null
 global:
   application_name: wearemakers

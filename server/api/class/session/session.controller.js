@@ -131,7 +131,8 @@ export function show(req, res) {
   return ClassSession.find({
       where: {
         _id: req.params.id
-      }
+      },
+      include: [Class]
     })
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))

@@ -14,5 +14,5 @@ module.exports = {
   },
   domain:'localhost:3000',
   // Seed database on startup
-  seedDB: true
+  seedDB: false
 };

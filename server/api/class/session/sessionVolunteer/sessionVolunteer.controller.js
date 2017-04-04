@@ -3,7 +3,7 @@
 import jsonpatch from 'fast-json-patch';
 import _ from 'lodash';
 import {
-  SessionVolunteer,User
+  SessionVolunteer,User, ClassSession
 } from '../../../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -102,7 +102,9 @@ export function create(req, res) {
 //        return;
 //    }
 
-  return SessionVolunteer.create(req.body,{include:[User]})
+    return SessionVolunteer.create(req.body,
+        {include:[User,ClassSession]}
+    )
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
