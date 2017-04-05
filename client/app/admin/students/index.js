@@ -34,11 +34,11 @@ export class AdminStudents {
         $http.get('/api/users')
         .then(function(res){
             ctrl.students = _.filter(res.data,{type:'student'});
+            console.log(ctrl.students)
         })
 
         ctrl.grades = ['1','2','3','4','5','6','7','8','9','10','11','12'];
-
-        // ctrl.grades = ctrl.grades[0];
+        
     }
 
     showStudents(stud){

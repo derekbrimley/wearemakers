@@ -25,7 +25,6 @@
                 <td>Date Added</td>
                 <td>Classes</td>
                 <td>Notes</td>
-<!--                <td>Edit</td>-->
             </tr>
             <tr class="student_row" ng-repeat="stud in ctrl.students | filter:$ctrl.query">
 
@@ -43,51 +42,8 @@
                 <td>
                     <button class="btn btn-primary" ng-click="ctrl.openNotesModal(stud)">View</button>
                 </td>
-<!--
-                <td>
-                    <button class="btn btn-primary" ng-click="ctrl.openEditModal(stud)">Edit</button>
-                </td>
--->
             </tr>
         </table>
-
-<!--
-        <div ng-if="!ctrl.showAdd && ctrl.selectedStudent">
-            <h3>Selected Students Classes</h3>
-            <table class="table table-sm">
-                <tr>
-                    <th>Class Name</th>
-                    <th>Student Status</th>
-                    <th>Action</th>
-                </tr>
-                <tr ng-repeat="(key, studClass) in ctrl.addedStudents">
-                    <td>{{key}}</td>
-                    <td>{{studClass.status}}</td>
-                    <td ng-if="studClass.status == 'Active'">
-                        <button class="btn btn-warning" ng-click="ctrl.approveStudent(studClass)">Remove</button>
-                    </td>
-                    <td ng-if="studClass.status != 'Active'">
-                        <button class="btn btn-primary" ng-click="ctrl.approveStudent(studClass)">Approve</button>
-                    </td>
-                </tr>
-            </table>
-            <h3>Not Registered Classes</h3>
-            <table class="table table-sm">
-                <tr>
-                    <th>Class Name</th>
-                    <th>Student Status</th>
-                    <th>Action</th>
-                </tr>
-                <tr ng-repeat="(key, studClass) in ctrl.notAddedStudents">
-                    <td>{{key}}</td>
-                    <td>Not Registered</td>
-                    <td>
-                        <button class="btn btn-primary" ng-click="ctrl.registerStudent(studClass)">Register</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
--->
     </div>
 
 </div>
