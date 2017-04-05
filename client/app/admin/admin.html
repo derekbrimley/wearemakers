@@ -61,7 +61,7 @@
                                         <th>Name</th>
                                         <th style="text-align:center;">Attendance</th>
                                     </tr>
-                                    <tr class="student" ng-repeat="student in ctrl.selectedSession.Class.ClassStudents">
+                                    <tr ng-if="student.status != 'pending'" class="student" ng-repeat="student in ctrl.selectedSession.Class.ClassStudents">
                                         <td>{{student.User.name}}</td>
                                         <td class="right-col">
                                             <select class="form-control" ng-model="student.SessionStudent.attendance" ng-options="attendance for attendance in ctrl.attendance_options" ng-change="ctrl.updateAttendance(student)"></select>
