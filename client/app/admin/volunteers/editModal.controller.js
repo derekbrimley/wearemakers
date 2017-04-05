@@ -22,7 +22,16 @@ export class EditVolunteerController {
     updateVolunteer(volunteer){
         console.log("volunteer",volunteer);
         var ctrl = this;
-
+        
+        volunteer.User = {
+            name: volunteer.name,
+            email: volunteer.email,
+            phone: volunteer.phone,
+            organization: volunteer.organization,
+            status: volunteer.status,
+            notes: volunteer.notes,
+        }
+      
         this.$http.put('/api/users/' + volunteer.userID + '/upsert',volunteer.User)
         .then(res => {
             console.log("RES User update", res);

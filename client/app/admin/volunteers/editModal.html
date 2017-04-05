@@ -5,17 +5,17 @@
     <div class="modal-body" id="modal-body">
         <form>
             <label for="name">Name</label>
-            <input class="form-control" id="name" ng-model="ctrl.$resolve.volunteer.User.name" />
+            <input class="form-control" id="name" ng-model="ctrl.$resolve.volunteer.name" />
             <label for="location">Email</label>
-            <input class="form-control" id="location" ng-model="ctrl.$resolve.volunteer.User.email" />
+            <input class="form-control" id="location" ng-model="ctrl.$resolve.volunteer.email" />
             <label for="startTime">Phone Number</label>
-            <input class="form-control" id="phone" ng-model="ctrl.$resolve.volunteer.User.phone" />
+            <input class="form-control" id="phone" ng-model="ctrl.$resolve.volunteer.phone" />
             <label for="endTime">Organization</label>
-            <input class="form-control" id="organization" ng-model="ctrl.$resolve.volunteer.User.organization"/>
+            <input class="form-control" id="organization" ng-model="ctrl.$resolve.volunteer.organization"/>
             <label for="startDate">Status</label>
             <select class="form-control" ng-model="ctrl.$resolve.volunteer.status" id="status" ng-options="status for status in ctrl.statuses"></select>
             <label for="endDate">Notes</label>
-            <textarea rows="5" class="form-control" id="notes" ng-model="ctrl.$resolve.volunteer.User.notes"></textarea>
+            <textarea rows="5" class="form-control" id="notes" ng-model="ctrl.$resolve.volunteer.notes"></textarea>
         </form>
     </div>
     <div class="modal-footer">
