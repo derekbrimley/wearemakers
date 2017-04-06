@@ -6,7 +6,7 @@
 - Node.js and npm Node >= 4.x.x, npm >= 2.x.x
 - Gulp (npm install --global gulp)
 - Postgresql needs to be installed and running
-- (Windows only) You need some packages that can only be obtained by downloading Visual Studio 2015 community version
+- (Windows only) You need some packages that can only be obtained by downloading Visual Studio 2015 (community version is fine)
 
 ## Preparation
 - After you clone the project, run npm install in the project directory. Make sure you do so from a console with admin privileges otherwise you will have to run it again.
