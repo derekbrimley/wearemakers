@@ -14,6 +14,9 @@ export class AdminUsers {
         this.users = User.query(function(users){
             ctrl.admins = _.filter(users,{role:'admin'})
         })
+      
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
     }
 
     delete(user) {
@@ -29,6 +32,17 @@ export class AdminUsers {
                 ctrl.admins.push(user);
             }
         })
+      
+        
+    }
+
+    setPage(pageNum) {
+        var ctrl = this;
+        ctrl.currentPage = pageNum;
+    }
+    
+    pageChanged() {
+        var ctrl = this;
     }
 
   revoke(user){

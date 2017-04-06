@@ -23,7 +23,7 @@
                     <th>Info</th>
                     <th>Remove</th>
                 </tr>
-                <tr class="class_row" ng-repeat="class in ctrl.classes | filter:{active:ctrl.selected_status}">
+                <tr class="class_row" ng-repeat="class in ctrl.classes.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:{active:ctrl.selected_status}">
                     <td ng-click="ctrl.openModal(class)">{{class.name}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.location}}</td>
                     <td ng-click="ctrl.openModal(class)">{{class.day}}</td>
@@ -40,6 +40,7 @@
                     </td>
                 </tr>
             </table>
+            <ul uib-pagination total-items="ctrl.classes.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
             <div ng-if="ctrl.selectedClass">
                 <table class="table">
                     <tr>

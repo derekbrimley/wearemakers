@@ -18,11 +18,12 @@
         <th>Type</th>
         <th>Delete</th>
     </tr>
-    <tr class="user_row" ng-repeat="user in ctrl.users | filter:$ctrl.query">
+    <tr class="user_row" ng-repeat="user in ctrl.users.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:$ctrl.query">
         <td ng-click="ctrl.openEditModal(user)">{{user.name}}</td>
         <td ng-click="ctrl.openEditModal(user)">{{user.email}}</td>
         <td ng-click="ctrl.openEditModal(user)">{{user.type}}</td>
         <td style="cursor:pointer;"><a ng-click="ctrl.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a></td>
     </tr>
   </table>
+  <ul uib-pagination total-items="ctrl.users.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
 </div>

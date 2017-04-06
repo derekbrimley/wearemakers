@@ -26,8 +26,7 @@
                 <td>Classes</td>
                 <td>Notes</td>
             </tr>
-            <tr class="student_row" ng-repeat="stud in ctrl.students | filter:$ctrl.query">
-
+            <tr class="student_row" ng-repeat="stud in ctrl.students.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:$ctrl.query">
                 <td ng-click="ctrl.openEditModal(stud)">{{stud.name}}</td>
                 <td ng-click="ctrl.openEditModal(stud)">{{stud.email}}</td>
                 <td ng-click="ctrl.openEditModal(stud)">{{stud.phone}}</td>
@@ -44,6 +43,7 @@
                 </td>
             </tr>
         </table>
+        <ul uib-pagination total-items="ctrl.students.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
     </div>
 
 </div>

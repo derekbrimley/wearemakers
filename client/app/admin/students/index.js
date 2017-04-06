@@ -6,20 +6,6 @@ import notesModal from './notesModal.controller'
 import classesModal from './classesModal.controller'
 
 export class AdminStudents {
-    user = {
-        name: '',
-        email: '',
-        role: 'user',
-        type: 'student',
-        status: '',
-        grade: '',
-        community: '',
-        phone: '',
-        gender: '',
-        primaryLanguage: '',
-        password: ''
-    }
-    submitted = false;
     /*@ngInject*/
     constructor($http, Auth, $state, $uibModal){
         'ngInject'
@@ -38,7 +24,18 @@ export class AdminStudents {
         })
 
         ctrl.grades = ['1','2','3','4','5','6','7','8','9','10','11','12'];
-        
+
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
+    }
+
+    setPage(pageNum) {
+        var ctrl = this;
+        ctrl.currentPage = pageNum;
+    }
+    
+    pageChanged() {
+        var ctrl = this;
     }
 
     showStudents(stud){
