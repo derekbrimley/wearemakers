@@ -33,6 +33,9 @@ export class AdminReports {
             ctrl.students = _.filter(res.data,{type:'student'});;
             console.log('students',ctrl.students);
         })
+      
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
     }
 
     //////////////classes tab//////////////
@@ -44,7 +47,15 @@ export class AdminReports {
     //         return(res.data)
     //     })
     // }
-
+    setPage(pageNum) {
+        var ctrl = this;
+        ctrl.currentPage = pageNum;
+    }
+    
+    pageChanged() {
+        var ctrl = this;
+    }
+  
     aggregateClasses() {
         var ctrl = this;
         var studentAttendance = {};
@@ -163,6 +174,8 @@ export class AdminReports {
                 })
             })
         });
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
     }
     
     aggregateVolunteers() {
@@ -204,7 +217,8 @@ export class AdminReports {
             });
             
         });
-    
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
     }
     
     

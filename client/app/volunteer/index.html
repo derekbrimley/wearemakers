@@ -16,7 +16,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                     <th>Time</th>
                     <th>Planned Attendance</th>
                 </tr>
-                <tr ng-repeat="session in ctrl.myUpcomingSessions | filter:{plannedAttendance:'!'+'No'} | orderBy:'date':true  "}>
+                <tr ng-repeat="session in ctrl.myUpcomingSessions.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:{plannedAttendance:'!'+'No'} | orderBy:'date':true  "}>
                     <td>{{session.ClassSession.Class.name}}</td>
                     <td>{{session.ClassSession.date | date}}</td>
                     <td>{{session.ClassSession.Class.location}}</td>
@@ -24,6 +24,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                     <td>{{session.plannedAttendance}}</td>
                 </tr>
             </table>
+            <ul uib-pagination total-items="ctrl.myUpcomingSessions.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
         </div>
         <div ng-if="ctrl.myUpcomingSessions.length === 0">You have no upcoming sessions. Sign up for some in the "Classes" tab!</div>
     </uib-tab>
@@ -65,7 +66,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <th>Dates</th>
                 <th>Time</th>
             </tr>
-            <tr ng-repeat="course in ctrl.classes"  ng-click="ctrl.showDetails(course)" style="cursor:pointer">
+            <tr ng-repeat="course in ctrl.classes.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter :{active:true}"  ng-click="ctrl.showDetails(course)" style="cursor:pointer">
                 <td>{{course.name}}</td>
                 <td>{{course.location}}</td>
                 <td>{{course.day}}</td>
@@ -73,6 +74,7 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <td>{{course.startTime | date: 'HH:mm a' }} to {{course.endTime | date: 'HH:mm a'}}</td>
             </tr>
         </table>
+        <ul uib-pagination total-items="ctrl.classes.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
         <div ng-if="ctrl.selectedCourse">
             <h3>{{ctrl.selectedCourse.name}} Information</h3>
             <div>{{ctrl.selectedCourse.info}}</div><br><br>

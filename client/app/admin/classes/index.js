@@ -23,6 +23,18 @@ export class AdminClasses {
             console.log("classes",res);
             ctrl.classes = res.data;
         })
+      
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
+    }
+
+    setPage(pageNum) {
+        var ctrl = this;
+        ctrl.currentPage = pageNum;
+    }
+    
+    pageChanged() {
+        var ctrl = this;
     }
 
     getClasses(){
