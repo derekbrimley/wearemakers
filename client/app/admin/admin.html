@@ -2,7 +2,7 @@
   <uib-tabset active="ctrl.tab">
     <uib-tab index="0" heading="Scheduling" ui-sref='admin'>
         <div class="admin-scheduling-section">
-            <class-calendar on-select="ctrl.sessionSelected(session)" selected-session="ctrl.selectedSession"></class-calendar>
+            <class-calendar ng-if="ctrl.tab==0" on-select="ctrl.sessionSelected(session)" selected-session="ctrl.selectedSession"></class-calendar>
             <div ng-show="ctrl.selectedSession" class="session-section">
 
                 <!-- session volunteer and student section -->
