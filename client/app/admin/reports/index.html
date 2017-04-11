@@ -41,13 +41,14 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <th>Name</th>
                 <th>Percent Attended</th>
             </tr>
-            <tr ng-repeat="attendance in ctrl.attendances">
+            <tr ng-repeat="attendance in ctrl.attendances.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage))">
                 <td>{{attendance.name}}</td>
                 <td>
                     {{attendance.percent | number : 2}}<span ng-if="attendance.percent !== null">%</span>
                 </td>
             </tr>
         </table>
+        <ul uib-pagination total-items="ctrl.attendances.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
     </uib-tab>
 
     <uib-tab index="3" heading="Volunteers" ng-click="ctrl.aggregateVolunteers()">
@@ -56,13 +57,15 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
                 <th>Name</th>
                 <th>Percent Attended</th>
             </tr>
-            <tr ng-repeat="attendance in ctrl.attendances">
+            <tr ng-repeat="attendance in ctrl.attendances.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage))">
                 <td>{{attendance.name}}</td>
                 <td>
                     {{attendance.percent | number : 2}}<span ng-if="attendance.percent !== null">%</span>
                 </td>
             </tr>
         </table>
+        <ul uib-pagination total-items="ctrl.attendances.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
+        
     </uib-tab>
     <uib-tab index="4" heading="Data Downloads">
         <a href="/api/reports/students" class="btn btn-primary" target="_blank"><span class="fa fa-download"> </span> Student Report</a><br>

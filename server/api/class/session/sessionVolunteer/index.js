@@ -13,7 +13,7 @@ router.get('/:id',auth.hasRole('admin'), controller.show);
 router.get('/find', auth.hasRole('admin'), controller.findSession);
 //router.get('/:id',auth.hasRole('admin'), controller.show);
 router.post('/', auth.hasRole('user'), controller.create);
-router.put('/:id', auth.hasRole('admin'), controller.update);
+router.put('/:id', auth.hasRole('user'), controller.update);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 
 module.exports = router;

@@ -11,7 +11,7 @@ Angular UI Bootstrap: https://angular-ui.github.io
 - [Git](https://git-scm.com/)
 - [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
 - [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
-- [SQLite](https://www.sqlite.org/quickstart.html)
+- Postgresql
 
 ### Developing
 
@@ -28,4 +28,4 @@ Run `gulp build` for building and `gulp serve` for preview.
 Running `npm test` will run the unit tests with karma.
 =======
 
-##[Instructions](docs/instructions.md)
+## [Detailed Instructions](docs/instructions.md)

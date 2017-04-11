@@ -12,9 +12,11 @@ export class AdminUsers {
       
         this.$http = $http;
         this.users = User.query(function(users){
-            console.log("USERS",users);
             ctrl.admins = _.filter(users,{role:'admin'})
         })
+      
+        ctrl.currentPage = 1;
+        ctrl.itemsPerPage = 10;
     }
 
     delete(user) {
@@ -24,13 +26,23 @@ export class AdminUsers {
 
     promote(user){
         var ctrl = this;
-        console.log("TEST",user);
         this.$http.get('/api/users/'+user._id+'/promote')
         .then(function(res){
             if(res.status == 200){
                 ctrl.admins.push(user);
             }
         })
+      
+        
+    }
+
+    setPage(pageNum) {
+        var ctrl = this;
+        ctrl.currentPage = pageNum;
+    }
+    
+    pageChanged() {
+        var ctrl = this;
     }
 
   revoke(user){
@@ -70,7 +82,6 @@ export class AdminUsers {
       this.$http.get('/api/users/')
       .then(res => {
           ctrl.users = res.data;
-          console.log("USERS",ctrl.users);
       })
   }
 
