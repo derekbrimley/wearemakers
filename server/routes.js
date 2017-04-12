@@ -12,6 +12,8 @@ export default function(app) {
   app.use('/api/things', require('./api/thing'));
   app.use('/api/classes', require('./api/class'));
   app.use('/api/sessions', require('./api/class/session/'));
+  app.use('/api/class/session/sessionStudent', require('./api/class/session/sessionStudent'));
+  app.use('/api/class/session/sessionVolunteer', require('./api/class/session/sessionVolunteer'));
     app.use('/api/classes/:class/students', require('./api/class/student'));
     app.use('/api/classes/:class/volunteers', require('./api/class/volunteer'));
     app.use('/api/classes/:class/sessions', require('./api/class/session'));
