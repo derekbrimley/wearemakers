@@ -82,6 +82,8 @@ export function students(req, res) {
             "Student Name":"Student Name",
             "Class Name": "Class Name",
             "Attendance":"Attendance",
+            "Gender": "Gender",
+            "Community": "Community",
             "Date":"Date"
         }];
         for(var i in entities){
@@ -90,6 +92,8 @@ export function students(req, res) {
                 "Student Name":student.User.name,
                 "Class Name": student.ClassSession.Class.name,
                 "Attendance":student.attendance,
+                "Gender": student.User.gender,
+                "Community": student.User.community,
                 "Date":student.ClassSession.date
             })
         }
