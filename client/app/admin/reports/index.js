@@ -32,9 +32,32 @@ export class AdminReports {
             ctrl.students = _.filter(res.data,{type:'student'});;
         })
       
+        this.$http.get('/api/class/session/sessionStudent/')
+        .then(res => {
+            console.log(res);
+            ctrl.studentSessionsAttended = _.filter(res.data,{attendance:'Attended'});
+            ctrl.studentSessionsAbsent = _.filter(res.data,{attendance:'Absent'});
+          
+            this.$http.get('/api/class/session/sessionVolunteer/')
+            .then(res => {
+                ctrl.volunteerSessionsAttended = _.filter(res.data,{attendance:'Attended'});
+                ctrl.volunteerSessionsAbsent = _.filter(res.data,{attendance:'Absent'});
+                
+              
+                const attendanceNum = ctrl.studentSessionsAttended.length + ctrl.volunteerSessionsAttended.length;
+                const totalNum = ctrl.studentSessionsAttended.length + ctrl.studentSessionsAbsent.length + ctrl.volunteerSessionsAttended.length + ctrl.volunteerSessionsAbsent.length
+                
+                ctrl.overallAttendance = Number(100 * attendanceNum / totalNum);
+            });
+        });
+        
         ctrl.currentPage = 1;
         ctrl.itemsPerPage = 10;
+      
+        
     }
+  
+//    overallpercentage = numstudentsessionsattended + numvolunteerclassesattended / numstudentsessions + numvolunteersessions - numstudentsessionsexcused - numvolunteersessionsexcused
 
     setPage(pageNum) {
         var ctrl = this;
@@ -84,7 +107,7 @@ export class AdminReports {
                             studentAttendance[course.name].studentExcused = Number(studentAttendance[course.name].studentData[count].count)
                         } 
                     }
-                    studentAttendance[course.name].studentAttendancePercent = Number(100 * (studentAttendance[course.name].studentAttended  / (studentAttendance[course.name].studentAbsent + studentAttendance[course.name].studentAttended + studentAttendance[course.name].studentExcused))).toFixed(2);
+                    studentAttendance[course.name].studentAttendancePercent = Number(100 * (studentAttendance[course.name].studentAttended  / (studentAttendance[course.name].studentAbsent + studentAttendance[course.name].studentAttended))).toFixed(2);
                 
                     
                     for(count=0;count<volunteerAttendance[course.name].volunteerData.length;count++) {
@@ -96,7 +119,7 @@ export class AdminReports {
                             volunteerAttendance[course.name].volunteerExcused = Number(volunteerAttendance[course.name].volunteerData[count].count)
                         } 
                     }
-                    volunteerAttendance[course.name].volunteerAttendancePercent = Number(100 * (volunteerAttendance[course.name].volunteerAttended  / (volunteerAttendance[course.name].volunteerAbsent + volunteerAttendance[course.name].volunteerAttended + volunteerAttendance[course.name].volunteerExcused))).toFixed(2);
+                    volunteerAttendance[course.name].volunteerAttendancePercent = Number(100 * (volunteerAttendance[course.name].volunteerAttended  / (volunteerAttendance[course.name].volunteerAbsent + volunteerAttendance[course.name].volunteerAttended))).toFixed(2);
                     
                     ctrl.$http.get('/api/classes/reports/classStudentCount/' + course._id)
                     .then(res => {

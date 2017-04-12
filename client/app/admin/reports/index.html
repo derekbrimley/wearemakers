@@ -8,8 +8,22 @@ DOCS ON USEFUL COMPONENTS TO USE FOR THE UI (like uib-tabset),
   <uib-tabset active="active">
 
     <uib-tab index="0" heading="General Stats">
-        <p>Number of total Students: {{ctrl.numOfStudents}}</p>
-        <p>Number of total Volunteers: {{ctrl.numOfVolunteers}}</p>
+        <table class="table" style="width:50%">
+            <tr>
+                  <th>Number of total students</th>
+                  <td>{{ctrl.numOfStudents}}</td>
+            </tr>
+            <tr>
+                  <th>Number of total volunteers</th>
+                  <td>{{ctrl.numOfVolunteers}}</td>
+            </tr>
+            <tr>
+                  <th>Overall attendance percentage</th>
+                  <td>
+                      <span ng-if="ctrl.overallAttendance!='NaN'">{{ctrl.overallAttendance | number : 2 }}%</span>
+                  </td>
+            </tr>
+        </table>
     </uib-tab>
 
     <uib-tab index="1" heading="Classes" ng-click="ctrl.aggregateClasses()">
