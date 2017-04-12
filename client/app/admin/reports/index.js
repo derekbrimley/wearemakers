@@ -24,29 +24,18 @@ export class AdminReports {
 
         this.$http.get('/api/volunteers')
         .then((res) => {
-            console.log('volunteers',res.data);
             ctrl.volunteers = res.data;
         })
         
         this.$http.get('/api/users')
         .then((res) => {
             ctrl.students = _.filter(res.data,{type:'student'});;
-            console.log('students',ctrl.students);
         })
       
         ctrl.currentPage = 1;
         ctrl.itemsPerPage = 10;
     }
 
-    //////////////classes tab//////////////
-    // classes(courseID){
-    //     var ctrl = this;
-    //     this.$http.get('/api/classes/reports/classStudentCount/'+courseID)
-    //     .then(function(res){
-    //         // ctrl.classStudentCount = res.data
-    //         return(res.data)
-    //     })
-    // }
     setPage(pageNum) {
         var ctrl = this;
         ctrl.currentPage = pageNum;
@@ -61,35 +50,30 @@ export class AdminReports {
         var studentAttendance = {};
         var volunteerAttendance = {};
         var count;
-
+        
         ctrl.attendances = [];
 
         angular.forEach(ctrl.classes, function(course, key) {
             
             ctrl.$http.get('/api/classes/reports/studentAttendance/'+course._id)
-            .then(function(res){
-                console.log("RES",res.data);
-                studentAttendance[course.name]={
+            .then((res) => {
+                studentAttendance[course.name] = {
                     studentData: res.data,
                     studentAbsent : "",
                     studentAttended : "",
                     studentExcused : "",
                     studentAttendancePercent: "",
                 }
-                console.log("studentAttendance",studentAttendance);
-            },function(err){
-                console.log("ERR",err);
-            }).then(function() {
+            }).then(() => {
                 ctrl.$http.get('/api/classes/reports/volunteerAttendance/'+course._id)
                 .then(function(res){
-                    volunteerAttendance[course.name]={
+                    volunteerAttendance[course.name] = {
                         volunteerData: res.data,
                         volunteerAbsent : "",
                         volunteerAttended : "",
                         volunteerExcused : "",
                         volunteerAttendancePercent: "",
                     }
-//                    console.log("volunteerAttendance",res.data);
                     
                     for(count = 0; count < studentAttendance[course.name].studentData.length; count++){
                         if(studentAttendance[course.name].studentData[count].attendance == 'Absent'){
@@ -114,24 +98,25 @@ export class AdminReports {
                     }
                     volunteerAttendance[course.name].volunteerAttendancePercent = Number(100 * (volunteerAttendance[course.name].volunteerAttended  / (volunteerAttendance[course.name].volunteerAbsent + volunteerAttendance[course.name].volunteerAttended + volunteerAttendance[course.name].volunteerExcused))).toFixed(2);
                     
-                    var classAttendance = {
-                        name: course.name,
-                        numEnrolled: 1,
-                        studentAttendancePercent: studentAttendance[course.name].studentAttendancePercent,
-                        volunteerAttendancePercent: volunteerAttendance[course.name].volunteerAttendancePercent
-                    }
+                    ctrl.$http.get('/api/classes/reports/classStudentCount/' + course._id)
+                    .then(res => {
+                        var classAttendance = {
+                            name: course.name,
+                            numEnrolled: res.data,
+                            studentAttendancePercent: studentAttendance[course.name].studentAttendancePercent,
+                            volunteerAttendancePercent: volunteerAttendance[course.name].volunteerAttendancePercent
+                        }
 
-                    ctrl.attendances.push(classAttendance);
+                        ctrl.attendances.push(classAttendance);
+                    });
                 });
             })
         });
     
-        console.log("attendances",ctrl.attendances)
         ctrl.studentAttendance =  studentAttendance;
         ctrl.volunteerAttendance =  volunteerAttendance;
         
         Object.assign(ctrl.studentAttendance,ctrl.volunteerAttendance);
-        console.log("studentAttendance",ctrl.studentAttendance);
     }
     
     aggregateStudents() {
@@ -160,13 +145,8 @@ export class AdminReports {
                 var excusedSessions = res.data.filter((session) => {
                     return session.attendance == 'Excused' ? true : false; 
                 })
-                console.log("sessions",res.data);
-                console.log("attended sessions",attendedSessions);
-                console.log("excused sessions",excusedSessions);
                 
                 var sessionPercent = 100 * attendedSessions.length / (sessions.length - excusedSessions.length);
-                console.log("sessionPercent", sessionPercent);
-                
                 
                 ctrl.attendances.push({
                     name: student.name,
@@ -203,12 +183,8 @@ export class AdminReports {
                 var excusedSessions = res.data.filter((session) => {
                     return session.attendance == 'Excused' ? true : false; 
                 })
-                console.log("sessions",res.data);
-                console.log("attended sessions",attendedSessions);
-                console.log("excused sessions",excusedSessions);
                 
                 var sessionPercent = 100 * attendedSessions.length / (sessions.length - excusedSessions.length);
-                console.log("sessionPercent", sessionPercent);
                 
                 ctrl.attendances.push({
                     name: volunteer.User.name,
