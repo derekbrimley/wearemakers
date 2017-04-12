@@ -15,7 +15,14 @@ export class VolunteerController {
         Auth.getCurrentUser()
         .then(function(res){
             ctrl.myUser = res;
-
+            
+            $http.get('/api/volunteers/'+ctrl.myUser._id+'/getByUserId')
+            .then(res => {
+                if(res.data.status != 'active') {
+                    $state.go('main');
+                }
+              
+            });
             $http.get('/api/sessions/'+ctrl.myUser._id+'/getSessionVolunteers')
             .then(function(res){
                 ctrl.myUpcomingSessions = [];
@@ -165,7 +172,6 @@ export class VolunteerController {
 
         this.$http.get('/api/classes/'+course._id+'/volunteers/register', body)
         .then(function(res) {
-            console.log("RES Request", res)
             course.added=true
         })
     }

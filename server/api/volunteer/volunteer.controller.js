@@ -84,6 +84,18 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+export function getByUserId(req, res) {
+  return Volunteer.find({
+    where: {
+      userID: req.params.id
+    },
+    include: [User]
+  })
+  .then(handleEntityNotFound(res))
+  .then(respondWithResult(res))
+  .catch(handleError(res));
+}
+
 export function getClasses(req, res) {
     return ClassVolunteer.findAll({
         where: {
