@@ -49,7 +49,7 @@ export default class SignupController {
         .then(() => {
           // Account created, redirect to home
           //this.$state.go('');
-//          ctrl.submitted = true;
+         ctrl.addedSuccessfully = true;
         })
         .catch(err => {
           err = err.data;
