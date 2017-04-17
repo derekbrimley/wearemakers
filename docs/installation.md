@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-- Git
-- Node.js and npm Node >= 4.x.x, npm >= 2.x.x
-- Gulp (npm install --global gulp)
+- [Git](https://git-scm.com/)
+- [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
+- [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
 - Postgresql needs to be installed and running
 - (Windows only) You need some packages that can only be obtained by downloading Visual Studio 2015 (community version is fine)
 
@@ -30,4 +30,7 @@ Run `gulp build` for building and `gulp serve` for preview.
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+
+## Additional Resources
+Angular UI Bootstrap: https://angular-ui.github.io
 
