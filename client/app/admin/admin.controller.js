@@ -8,7 +8,6 @@ export default class AdminController {
     // Use the User $resource to fetch all users
     var ctrl = this;
     this.users = User.query(function(users){
-        console.log("USERS",users);
         ctrl.admins = _.filter(users,{role:'admin'})
     })
     this.$http = $http;
@@ -48,7 +47,6 @@ export default class AdminController {
         var ctrl = this;
 
         ctrl.selectedVolunteerEdit = vol;
-//        vol.plannedAttendance = ctrl.selectedVolunteerEdit.plannedAttendance;
         vol.saved = saved;
     }
 
@@ -63,20 +61,16 @@ export default class AdminController {
 
         this.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + vol._id, body)
         .then(function(res) {
-            console.log("UPDATE sessionvolunteer RES", res);
         })
     }
 
     assignToSession(volunteer){
         var ctrl = this;
-        console.log(ctrl.selectedSession);
         ctrl.$http.post('/api/classes/'+ctrl.selectedSession.classID+'/sessions/'+ctrl.selectedSession._id+'/volunteers',{userID:volunteer.User._id})
         .then(function(res){
-            console.log("RES",res);
             volunteer._id = res.data._id
             ctrl.selectedSession.SessionVolunteers.push(volunteer);
         },function(err){
-            console.log("ERR",err);
         })
     }
 
@@ -84,10 +78,8 @@ export default class AdminController {
         var ctrl = this;
         ctrl.$http.delete('/api/classes/'+ctrl.selectedSession.classID+'/sessions/'+ctrl.selectedSession._id+'/volunteers/'+volunteer._id)
         .then(function(res){
-            console.log("RES",res)
             ctrl.selectedSession.SessionVolunteers.splice(ctrl.selectedSession.SessionVolunteers.indexOf(volunteer),1);
         },function(err){
-            console.log("ERR",err);
         })
     }
 
@@ -98,7 +90,6 @@ export default class AdminController {
     getAttendance(volunteer) {
         var ctrl = this;
         var sessionVolunteer = _.find(ctrl.selectedSession.SessionVolunteers,{userID: volunteer.User._id})
-        console.log(sessionVolunteer.attendance);
     }
 
     markAttendance(volunteer) {
@@ -107,17 +98,14 @@ export default class AdminController {
             attendance: volunteer.attendance
         }
         ctrl.selectedVolunteer = volunteer._id;
-        console.log("MARK ATTENDANCE",body);
         ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + volunteer._id, body)
         .then(function(res) {
-            console.log("RES", res);
             volunteer.showSave = true;
         })
     }
 
     saveAttendance(volunteer) {
         volunteer.saved = true;
-        console.log(volunteer.showSave);
     }
 
     editAttendance(volunteer) {
@@ -131,14 +119,12 @@ export default class AdminController {
 
         ctrl.$http.get('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/volunteers/' + volunteer._id)
         .then(function(res) {
-            console.log("RES", res);
             return true;
         })
     }
 
     saveStudentAttendance(student) {
         student.saved = true;
-        console.log(student.showSave);
     }
 
     markStudentAttendance(student) {
@@ -148,7 +134,6 @@ export default class AdminController {
         }
         ctrl.$http.put('/api/classes/' + ctrl.selectedSession.Class._id + '/sessions/' + ctrl.selectedSession._id + '/students/' + student.SessionStudent._id, body)
         .then(function(res) {
-            console.log("RES", res);
         })
     }
 
@@ -172,7 +157,6 @@ export default class AdminController {
     createStudentSession(student){
         this.$http.post('/api/classes/'+this.selectedSession.Class._id+'/sessions/'+this.selectedSession._id+'/students/register' ,{userID:student.userID,attendance:student.SessionStudent.attendance})
         .then(res=>{
-            console.log("RES",res);
             student.SessionStudent = res.data;
         })
     }

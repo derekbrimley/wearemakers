@@ -18,7 +18,6 @@ export class ClassEditor {
         }
         this.$http.put('/api/classes/' + ClassStudent.classID + '/students/' + ClassStudent._id,ClassStudent)
         .then(res => {
-            console.log("RES User update", res);
         })
 
     }

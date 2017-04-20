@@ -56,7 +56,9 @@ export class AdminVolunteers {
     
     volunteerAttendance() {
         var ctrl = this;
-        ctrl.volunteersWithAttendance = [];
+        ctrl.activeVolunteersWithAttendance = [];
+        ctrl.pendingVolunteersWithAttendance = [];
+        ctrl.inactiveVolunteersWithAttendance = [];
         
         //ATTENDANCE PERCENTAGE = NUMBER OF SESSIONS ATTENDED / NUMBER OF SESSIONS TOTAL - NUMBER OF EXCUSED SESSIONS
         
@@ -81,69 +83,50 @@ export class AdminVolunteers {
                 
                 var sessionPercent = 100 * attendedSessions.length / (sessions.length - excusedSessions.length);
                 
-                ctrl.volunteersWithAttendance.push({
-                    _id: volunteer._id,
-                    userID: volunteer.userID,
-                    name: volunteer.User.name,
-                    email: volunteer.User.email,
-                    phone: volunteer.User.phone,
-                    organization: volunteer.User.organization,
-                    status: volunteer.status,
-                    percent: isNaN(sessionPercent) ? null : sessionPercent,
-                    User: volunteer.User,
-                });
+                if(volunteer.status == 'active') {
+                    ctrl.activeVolunteersWithAttendance.push({
+                      _id: volunteer._id,
+                      userID: volunteer.userID,
+                      name: volunteer.User.name,
+                      email: volunteer.User.email,
+                      phone: volunteer.User.phone,
+                      organization: volunteer.User.organization,
+                      status: volunteer.status,
+                      percent: isNaN(sessionPercent) ? null : sessionPercent,
+                      User: volunteer.User,
+                  });
+                } else if(volunteer.status == 'pending') {
+                    ctrl.pendingVolunteersWithAttendance.push({
+                      _id: volunteer._id,
+                      userID: volunteer.userID,
+                      name: volunteer.User.name,
+                      email: volunteer.User.email,
+                      phone: volunteer.User.phone,
+                      organization: volunteer.User.organization,
+                      status: volunteer.status,
+                      percent: isNaN(sessionPercent) ? null : sessionPercent,
+                      User: volunteer.User,
+                  });
+                } else if(volunteer.status == 'inactive') {
+                    ctrl.inactiveVolunteersWithAttendance.push({
+                      _id: volunteer._id,
+                      userID: volunteer.userID,
+                      name: volunteer.User.name,
+                      email: volunteer.User.email,
+                      phone: volunteer.User.phone,
+                      organization: volunteer.User.organization,
+                      status: volunteer.status,
+                      percent: isNaN(sessionPercent) ? null : sessionPercent,
+                      User: volunteer.User,
+                  });
+                }
+                
                 
             });
         });
     
     }
     
-//    volunteerAttendance() {
-//        var ctrl = this;
-//        ctrl.volunteersWithAttendance = [];
-//        
-//        //ATTENDANCE PERCENTAGE = NUMBER OF SESSIONS ATTENDED / NUMBER OF SESSIONS TOTAL - NUMBER OF EXCUSED SESSIONS
-//        
-//        //GET NUMBER OF SESSIONS TOTAL
-//        angular.forEach(ctrl.volunteers, function(volunteer) {
-//            
-//            var volunteer_user_id = volunteer.userID;
-//            
-//            ctrl.$http.get('/api/sessions/' + volunteer_user_id + '/getSessionVolunteers')
-//            .then((res) => {
-//                console.log("RES",res)
-//                //ALL SESSIONS
-//                var sessions = res.data;
-//                //GET NUMBER OF SESSIONS ATTENDED
-//                var attendedSessions = res.data.filter((session) => {
-//                    return session.attendance == 'Attended' ? true : false; 
-//                })
-//                
-//                //GET NUMBER OF SESSIONS EXCUSED
-//                var excusedSessions = res.data.filter((session) => {
-//                    return session.attendance == 'Excused' ? true : false; 
-//                })
-//                console.log("sessions",res.data);
-//                console.log("attended sessions",attendedSessions);
-//                console.log("excused sessions",excusedSessions);
-//                
-//                var sessionPercent = 100 * attendedSessions.length / (sessions.length - excusedSessions.length);
-//                console.log("sessionPercent", sessionPercent);
-//                
-//                ctrl.volunteersWithAttendance.push({
-//                    name: volunteer.User.name,
-//                    email: volunteer.User.email,
-//                    phone: volunteer.User.phone,
-//                    organization: volunteer.User.organization,
-//                    status: volunteer.status,
-//                    percent: isNaN(sessionPercent) ? null : sessionPercent
-//                });
-//                console.log("VWA",ctrl.volunteersWithAttendance);
-//                
-//            });
-//        });
-//    
-//    }
 
     select(volunteer,saved){
         var ctrl = this;
@@ -212,7 +195,6 @@ export class AdminVolunteers {
         var ctrl = this;
         this.$http.delete('/api/volunteers/'+volunteer._id)
         .then(function(res){
-//            console.log("RES",res);
             ctrl.volunteers.splice(ctrl.volunteers.indexOf(volunteer),1);
         })
     }
@@ -240,7 +222,6 @@ export class AdminVolunteers {
     }
 
     showApprove(course) {
-        console.log("course",course);
         this.$http.get('/api/classes/' + course._id + '/volunteers/' + this.selectedVolunteer._id)
         .then(res => {
             if(res.data.status.active=="pending") {

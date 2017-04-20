@@ -9,5 +9,3 @@ export default function($stateProvider) {
       authenticate: 'user'
     })
 }
-//test change
-//test

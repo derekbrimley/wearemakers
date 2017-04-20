@@ -54,7 +54,6 @@ export class ClassCalendar {
       day = day.clone().add(1, 'd');
     }
     this.days = days;
-    console.log('das',this.days);
     
   }
 
