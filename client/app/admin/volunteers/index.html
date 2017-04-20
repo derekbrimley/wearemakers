@@ -1,47 +1,107 @@
 <div class="admin-volunteers-section">
-    <div class="form-group row">
-        <label for="search" class="col-2 col-form-label">Search</label>
-        <div class="col-10">
-            <input type="text" class="form-control" placeholder="Search" id="search" ng-model="$ctrl.query" ng-change="ctrl.filterChanged()"/>
+    <div style="display: flex;">
+        <div class="form-group row" style="margin:15px;">
+            <label for="search" class="col-2 col-form-label">Search</label>
+            <div class="col-10">
+                <input type="text" class="form-control" placeholder="Search" id="search" ng-model="$ctrl.query" ng-change="ctrl.filterChanged()"/>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="status" class="col-2 col-form-label">Status</label>
-        <div class="col-10">
-            <select class="form-control" ng-model="ctrl.selected_status" ng-options="status for status in ctrl.statuses" ng-change="ctrl.filterChanged()" id="status">
-            </select>
+        <div class="form-group row" style="margin:15px;">
+            <label for="status" class="col-2 col-form-label">Status</label>
+            <div class="col-10">
+                <select class="form-control" ng-model="ctrl.selected_status" ng-options="status for status in ctrl.statuses" ng-change="ctrl.filterChanged()" id="status">
+                </select>
+            </div>
         </div>
     </div>
     <h3>Volunteers</h3>
-    <table class="volunteer_table table " style="width:100%;">
-        <tr>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Phone</td>
-            <td>Organization</td>
-            <td>Status</td>
-            <td>Attendance</td>
-            <td>Notes</td>
-        </tr>
-        <tr class="volunteer_row" ng-repeat="vol in ctrl.volunteersWithAttendance.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:{status:ctrl.selected_status}: true | filter:$ctrl.query">
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.name}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.email}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.phone}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.organization}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">{{vol.status}}</td>
-            <td ng-click="ctrl.openEditModal(vol)">
-                <span ng-if="vol.percent !== null">
-                    {{vol.percent | number : 2}}%  
-                </span>
-            </td>
-            <td>
-                <button class="btn btn-primary" ng-click="ctrl.openNotesModal(vol)">View</button>
-            </td>
-        </tr>
-    </table>
-    <ul uib-pagination total-items="ctrl.totalVolunteers" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
-    <div class="admin-volunteers-section">
-        <div class="pane">
-        </div>
+    <div ng-if="ctrl.selected_status=='active'">
+        <table class="volunteer_table table " style="width:100%;">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Organization</td>
+                <td>Status</td>
+                <td>Attendance</td>
+                <td>Notes</td>
+            </tr>
+            <tr class="volunteer_row" ng-repeat="vol in ctrl.activeVolunteersWithAttendance.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:$ctrl.query">
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.name}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.email}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.phone}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.organization}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.status}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">
+                    <span ng-if="vol.percent !== null">
+                        {{vol.percent | number : 2}}%  
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-primary" ng-click="ctrl.openNotesModal(vol)">View</button>
+                </td>
+            </tr>
+        </table>
+        <ul uib-pagination total-items="ctrl.activeVolunteersWithAttendance.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
+    </div>
+  
+    <div ng-if="ctrl.selected_status=='pending'">
+        <table class="volunteer_table table " style="width:100%;">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Organization</td>
+                <td>Status</td>
+                <td>Attendance</td>
+                <td>Notes</td>
+            </tr>
+            <tr class="volunteer_row" ng-repeat="vol in ctrl.pendingVolunteersWithAttendance.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:$ctrl.query">
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.name}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.email}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.phone}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.organization}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.status}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">
+                    <span ng-if="vol.percent !== null">
+                        {{vol.percent | number : 2}}%  
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-primary" ng-click="ctrl.openNotesModal(vol)">View</button>
+                </td>
+            </tr>
+        </table>
+        <ul uib-pagination total-items="ctrl.pendingVolunteersWithAttendance.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
+    </div>
+  
+    <div ng-if="ctrl.selected_status=='inactive'">
+        <table class="volunteer_table table " style="width:100%;">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Organization</td>
+                <td>Status</td>
+                <td>Attendance</td>
+                <td>Notes</td>
+            </tr>
+            <tr class="volunteer_row" ng-repeat="vol in ctrl.inactiveVolunteersWithAttendance.slice(((ctrl.currentPage-1)*ctrl.itemsPerPage), ((ctrl.currentPage)*ctrl.itemsPerPage)) | filter:$ctrl.query">
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.name}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.email}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.phone}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.organization}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">{{vol.status}}</td>
+                <td ng-click="ctrl.openEditModal(vol)">
+                    <span ng-if="vol.percent !== null">
+                        {{vol.percent | number : 2}}%  
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-primary" ng-click="ctrl.openNotesModal(vol)">View</button>
+                </td>
+            </tr>
+        </table>
+        <ul uib-pagination total-items="ctrl.inactiveVolunteersWithAttendance.length" ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></ul>
     </div>
 </div>

@@ -57,9 +57,7 @@ export class ModalController {
               // Update validity of form fields that match the sequelize errors
               if(err.name) {
                 angular.forEach(err.fields, field => {
-                    console.log(field,ctrl.errors);
                     ctrl.errors.push(err)
-                //   this.errors[field] = err.message;
                 });
               }
             });

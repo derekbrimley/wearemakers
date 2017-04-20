@@ -20,7 +20,6 @@ export class AdminClasses {
 
         $http.get('/api/classes')
         .then(function(res){
-            console.log("classes",res);
             ctrl.classes = res.data;
         })
       
@@ -41,7 +40,6 @@ export class AdminClasses {
         var ctrl = this;
         this.$http.get('/api/classes')
         .then(function(res){
-            console.log("classes",res);
             ctrl.classes = res.data;
         })
     }
@@ -50,7 +48,6 @@ export class AdminClasses {
         var ctrl = this;
         this.$http.post('/api/classes',this.newClass)
         .then(function(res){
-            console.log("RES",res);
             this.classes.push(res.data)
             ctrl.showAdd=false;
         })
@@ -65,7 +62,6 @@ export class AdminClasses {
         var ctrl = this;
         this.$http.delete('/api/classes/'+course._id)
         .then(res =>{
-            // console.log("RES",res);
             ctrl.classes.splice(ctrl.classes.indexOf(course),1);
             this.getClasses();
         })
@@ -75,9 +71,7 @@ export class AdminClasses {
         var ctrl = this;
         this.$http.get('/api/classes/unArchive/'+selectedClass._id)
         .then(res =>{
-            // console.log("RES Updates",res);
             ctrl.classes.splice(ctrl.classes.indexOf(selectedClass),1);
-            // var ctrl = this;
             this.getClasses();
         })
     }
@@ -94,7 +88,6 @@ export class AdminClasses {
     updateClass(){
         this.$http.put('/api/classes/'+this.selectedClassEdit._id,this.selectedClassEdit)
         .then(res =>{
-            console.log("RES Updates",res);
         })
     }
 
@@ -104,11 +97,9 @@ export class AdminClasses {
 
     showStudents(course) {
         var ctrl = this;
-//        course.showStudents = true;
 
         this.$http.get('/api/classes/getStudentsFromClass/' + course._id)
         .then(function(res) {
-            console.log("STUDENTS", res);
             ctrl.students = res.data;
             ctrl.selectedClass = true;
         })
@@ -166,14 +157,9 @@ export class AdminClasses {
 
     refresh(){
         var ctrl = this;
-//        this.$http.get('/api/users')
-//        .then(function(res){
-//            ctrl.students = _.filter(res.data,{type:'student'});
-//        })
         
         this.$http.get('/api/classes')
         .then(function(res){
-            console.log("classes",res);
             ctrl.classes = res.data;
         })
     }

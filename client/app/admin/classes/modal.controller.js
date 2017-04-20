@@ -123,32 +123,12 @@ export class AddModalController {
         var ctrl = this;
         this.$http.delete('/api/classes/'+course._id)
         .then(function(res){
-            console.log("RES",res);
             ctrl.classes.splice(ctrl.classes.indexOf(course),1);
         })
     }
 
     updateClass(course){
         var ctrl = this;
-//        var f = document.getElementById('file').files[0],
-//            r = new FileReader();
-//        console.log(f);
-//        course.volunteerInfo = f.name;
-//        if(f instanceof Blob) {
-//            console.log("is blob");
-//            r.onloadend = function(e){
-//                console.log("onloadend");
-//                console.log(e.target);
-//                var data = e.target.result;
-//                //send your binary data via $http or $resource or do anything else with it
-////                console.log(data);
-//                ctrl.$http.post('/api/classes/'+course._id+'/materials',data)
-//                .then(function(res) {
-//                    console.log("FILE",res);
-//                })
-//            }
-//            r.readAsBinaryString(f);
-//        }
 
         this.$http.put('/api/classes/'+course._id,course)
         .then(res =>{

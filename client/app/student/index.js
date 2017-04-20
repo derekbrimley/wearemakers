@@ -13,19 +13,15 @@ export class StudentController {
 
         $http.get('/api/classes')
         .then(function(res){
-            // console.log("classes",res);
             ctrl.classes = res.data;
         })
 
         Auth.getCurrentUser()
         .then(function(res){
-            // console.log("user",res);
             ctrl.myUser = res;
             $http.get('/api/classes/' + ctrl.myUser._id + '/mine')
             .then(function(res){
-                // console.log("my classes",res);
                 ctrl.my_classes = res.data;
-                // console.log(ctrl.my_classes)
             })
         });
 
@@ -35,19 +31,15 @@ export class StudentController {
         var ctrl = this;
         this.$http.get('/api/classes/' + ctrl.myUser._id + '/mine')
         .then(function(res){
-            // console.log("my classes",res);
             ctrl.my_classes = res.data;
-            console.log(ctrl.my_classes)
         })
     }
 
     registerStudent(course){
         var ctrl = this;
-        // console.log(course)
 
         this.$http.get('/api/classes/' + course._id +'/students/register' )
         .then(function(res){
-            // console.log("RES",res);
             course.added=true
 
         })

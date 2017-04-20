@@ -20,7 +20,6 @@ export class AdminStudents {
         $http.get('/api/users')
         .then(function(res){
             ctrl.students = _.filter(res.data,{type:'student'});
-            console.log(ctrl.students)
         })
 
         ctrl.grades = ['1','2','3','4','5','6','7','8','9','10','11','12'];
@@ -76,7 +75,6 @@ export class AdminStudents {
         student.gender = student.gender;
         student.primaryLanguage = student.primaryLanguage;
         ctrl.showStudentsEdit = student;
-        console.log(student)
         student.saved=saved
     }
 
@@ -91,7 +89,6 @@ export class AdminStudents {
         }
         this.$http.put('/api/classes/' + ClassStudent.classID + '/students/' + ClassStudent._id,ClassStudent)
         .then(res => {
-            console.log("RES User update", res);
         })
 
     }
@@ -100,7 +97,6 @@ export class AdminStudents {
         var ctrl = this;
         this.$http.delete('/api/students/'+course._id)
         .then(function(res){
-            console.log("RES",res);
             ctrl.students.splice(ctrl.students.indexOf(course),1);
         })
     }
@@ -117,10 +113,8 @@ export class AdminStudents {
     }
 
      updateStudent() {
-        console.log("USER ID", this.showStudentsEdit._id);
         this.$http.put('/api/users/' + this.showStudentsEdit._id + '/upsert',this.showStudentsEdit)
         .then(res => {
-            console.log("RES User update", res);
         })
     }
 

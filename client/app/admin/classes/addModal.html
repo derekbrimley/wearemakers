@@ -43,7 +43,6 @@
             </div>
             <label>Day</label>
             <select class="form-control" ng-model="ctrl.$resolve.class.day" ng-options="day as day for day in ctrl.dayOptions"></select>
-<!--            <input class="form-control" id="endDate" ng-model="ctrl.$resolve.class.endDate" />-->
             <label for="info">Info</label>
             <textarea rows="5" class="form-control" id="info" ng-model="ctrl.$resolve.class.info" ></textarea>
             <hr />
@@ -58,11 +57,6 @@
                 <div class="waiting" ng-show="ctrl.uploading">Please Wait...</div><br/>
             </div>
 
-<!--
-            <label for="fileUpload">Volunteer Info</label>
-            <input type="file" id="file" name="file"/>
--->
-<!--            <button ng-click="ctrl.addVolunteerDescription(ctrl.$resolve.class)"></button>-->
         </form>
     </div>
     <div class="modal-footer">

@@ -8,10 +8,8 @@ export class InfoModalController {
         this.$http = $http;
         this.$uibModalInstance = $uibModalInstance;
 
-        console.log(this.$resolve.class);
         this.$http.get('/api/classes/getStudentsFromClass/' + this.$resolve.class._id)
         .then(function(res) {
-            // console.log("STUDENTS", res);
             ctrl.students = res.data;
         })
 

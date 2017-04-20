@@ -8,8 +8,6 @@ export class EditVolunteerController {
         this.$http = $http;
         this.$uibModalInstance = $uibModalInstance;
 
-        console.log(this.$resolve);
-        
         ctrl.statuses = ['active','pending','inactive'];
         ctrl.selected_status = ctrl.statuses[0];
         
@@ -20,7 +18,6 @@ export class EditVolunteerController {
     }
 
     updateVolunteer(volunteer){
-        console.log("volunteer",volunteer);
         var ctrl = this;
         
         volunteer.User = {
@@ -34,12 +31,10 @@ export class EditVolunteerController {
       
         this.$http.put('/api/users/' + volunteer.userID + '/upsert',volunteer.User)
         .then(res => {
-            console.log("RES User update", res);
         })
     
         this.$http.put('/api/volunteers/'+volunteer._id,volunteer)
         .then(res =>{
-            console.log("RES Updates",res);
             this.$uibModalInstance.close();
         })
         

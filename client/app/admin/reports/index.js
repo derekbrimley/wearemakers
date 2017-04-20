@@ -34,7 +34,6 @@ export class AdminReports {
       
         this.$http.get('/api/class/session/sessionStudent/')
         .then(res => {
-            console.log(res);
             ctrl.studentSessionsAttended = _.filter(res.data,{attendance:'Attended'});
             ctrl.studentSessionsAbsent = _.filter(res.data,{attendance:'Absent'});
           
@@ -151,7 +150,6 @@ export class AdminReports {
         //GET NUMBER OF SESSIONS TOTAL
         
         angular.forEach(ctrl.students, function(student) {
-            console.log("here");
            var student_id = student._id;
             
             ctrl.$http.get('/api/sessions/' + student_id + '/getSessionStudents')
